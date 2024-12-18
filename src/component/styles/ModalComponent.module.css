@@ -1,0 +1,81 @@
+/* Modal Styles */
+.customOverlay {
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.customModal {
+    max-width: 90%; /* Set a maximum width */
+    max-height: 90%; /* Set a maximum height */
+    width: auto; /* Allow width to be dynamic */
+    height: auto; /* Allow height to be dynamic */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto; /* Allow scrolling if content exceeds the max height */
+}
+
+.modalTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.formField {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.openButton,
+.submitButton,
+.resetButton,
+.closeButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.openButton {
+    background-color: #007bff;
+    color: white;
+}
+
+.submitButton {
+    background-color: #28a745;
+    color: white;
+}
+
+.resetButton {
+    background-color: #ffc107;
+    color: white;
+}
+
+.closeButton {
+    background-color: #dc3545;
+    color: white;
+}

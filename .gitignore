@@ -1,0 +1,9 @@
+node_modules/
+.npm
+.env
+.next
+.env
+.env.test
+.env.production
+logs
+package-lock.json

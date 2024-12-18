@@ -1,0 +1,118 @@
+/* DataTableComponent.css */
+.card {
+  margin: 2rem;
+}
+.p-datatable {
+  background-color: #f5f5f5;
+}
+
+.p-button {
+  margin-right: 0.5rem;
+}
+
+.p-datatable .p-column-header {
+  font-weight: bold;
+}
+
+.custom-table-header {
+  background-color: #009c1a;
+  color: white;
+}
+
+.custom-table-row {
+  background-color: #f9f9f9;
+}
+
+.custom-table-row:hover {
+  background-color: #f1f1f1;
+}
+
+.p-datatable .p-datatable-tbody > tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.datatable-mainheader {
+  height: 40px;
+  line-height: 24px;
+  color: #fff;
+  background: #307ecc;
+  padding: 0;
+  font-size: 15px;
+}
+
+.p-datatable-thead {
+  border-bottom: none;
+  background: repeat-x #f2f2f2;
+  background-image: -webkit-linear-gradient(top, #f8f8f8 0, #ececec 100%);
+  background-image: -o-linear-gradient(top, #f8f8f8 0, #ececec 100%);
+  background-image: linear-gradient(to bottom, #f8f8f8 0, #ececec 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8', endColorstr='#ffececec', GradientType=0);
+  padding: 0 !important;
+  border-left: 1px solid #e1e1e1 !important;
+}
+
+.p-datatable .p-datatable-tbody > tr:nth-child(odd) {
+  background-color: #e8e9e4;
+  border-bottom: 1px solid #e1e1e1;
+  padding: 6px 4px;
+  border-color: #e1e1e1;
+  border-right-color: #c7d3a9;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  text-align: left;
+  /* padding: 0rem 1rem; */
+  padding: 10px 10px;
+  border: 1px solid #a4adb791;
+  font-family: "Open Sans";
+  font-size: 13px;
+  color: #393939;
+  line-height: 1.5;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  text-align: left;
+  /* padding: 1rem 1rem; */
+  padding: 10px 8px;
+  border: 1px solid rgb(221, 221, 221);
+  font-weight: 700;
+  background: repeat-x #f2f2f2;
+  transition: box-shadow 0.2s;
+  font-family: "Open Sans";
+  font-size: 14px;
+  color: #707070;
+  line-height: 1.42857143;
+}
+
+svg.p-icon {
+  pointer-events: auto;
+  height: 12px;
+  color: #707070;
+}
+
+.p-inputtext {
+  height: 31px;
+}
+
+.header-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.header-link:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+.table_add_btn {
+  display: inline-block;
+  background: #26b99a;
+  padding: 4px 20px;
+  color: #fff;
+  border: 1px dotted white;
+}
+
+.p-button {
+  padding: 6px 12px;
+  border-radius: 8px;
+}
