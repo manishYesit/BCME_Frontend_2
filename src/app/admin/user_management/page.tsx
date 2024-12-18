@@ -212,9 +212,12 @@ export default function UserManagement({}) {
   const [data, setData]: [any, Function] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
-  const [expandedRows, setExpandedRows] = useState([]);
-  const [inputTitle, setInputTitle] = useState<string | null>(null);
-  const [inputInformation, setInputInformation] = useState<string | null>(null);
+  const [inputName, setInputName] = useState<string | null>(null);
+  const [inputEmail, setInputEmail] = useState<string | null>(null);
+  const [inputPhone, setInputPhone] = useState<string | null>(null);
+  const [inputPassword, setInputPassword] = useState<string | null>(null);
+  const [plrbStatus, setPlrbStatus] = useState<number>(0);
+  const [termsCondition, setTermsCondition] = useState<number>(0);
   const [formError, setFormError] = useState<string | null>(null);
   const [linkRowId, setLinkRowId] = useState<string | null>(null);
   const [open, setOpen] = useState<any>(false);
@@ -303,11 +306,12 @@ export default function UserManagement({}) {
       header: "Actions",
       body: (rowData: any) => (
         <div className="" style={{ width: "120px" }}>
-          <Button
-            icon="pi pi-search-plus"
-            onClick={() => handleDelete(rowData)}
-            style={{ background: "none", color: "#478FCA", border: "none" }}
-          />
+          <Link href={`/admin/user_profile/${rowData.id}`}>
+            <Button
+              icon="pi pi-search-plus"
+              style={{ background: "none", color: "#478FCA", border: "none" }}
+            />
+          </Link>
           <Button
             icon="pi pi-pencil"
             onClick={() => handleEdit(rowData)}
@@ -331,11 +335,23 @@ export default function UserManagement({}) {
   ///crud------------
 
   const handleValidationForm = () => {
-    if (!inputTitle) {
+    if (!inputName) {
       setFormError("Required.");
       return false;
     }
-    if (!inputInformation) {
+    if (!inputEmail) {
+      setFormError("Required.");
+      return false;
+    }
+    if (!inputPhone) {
+      setFormError("Required.");
+      return false;
+    }
+    if (!inputPassword) {
+      setFormError("Required.");
+      return false;
+    }
+    if (!termsCondition) {
       setFormError("Required.");
       return false;
     }
@@ -350,13 +366,16 @@ export default function UserManagement({}) {
     try {
       const payload = {
         id: linkRowId,
-        title: inputTitle,
-        information: inputInformation,
-        linkType: 0,
+        fullname: inputName,
+        email: inputEmail,
+        phone: inputPhone,
+        password: inputPassword,
+        termscondtion_status: termsCondition,
+        status_plrb: plrbStatus
       };
       let apiUrl = linkRowId
-        ? apiEndpoints.updateRoofData
-        : apiEndpoints.addRoofData;
+        ? apiEndpoints.updateUser
+        : apiEndpoints.addUser;
 
       let method = linkRowId ? axios.put : axios.post;
       const result = await method(apiUrl, payload, {
@@ -380,8 +399,10 @@ export default function UserManagement({}) {
 
   // Handle Edit Data
   const handleEdit = (rowData: any) => {
-    setInputTitle(rowData.title);
-    setInputInformation(rowData.information);
+    setInputName(rowData.fullname);
+    setInputEmail(rowData.email);
+    setInputPhone(rowData.phone);
+    setInputPassword(rowData.password);
     setLinkRowId(rowData.id);
     setOpen(true);
   };
@@ -467,8 +488,10 @@ export default function UserManagement({}) {
 
   // Reset form fields
   const resetForm = () => {
-    setInputTitle(null);
-    setInputInformation(null);
+    setInputName(null);
+    setInputEmail(null);
+    setInputPhone(null);
+    setInputPassword(null);
     setFormError(null);
   };
 
@@ -540,18 +563,18 @@ export default function UserManagement({}) {
             <Box>
               <Box display="flex" alignItems="center" gap="12px" ml={2}>
                 <Box flex={1}>
-                  <label style={headerStyle}>Title</label>
+                  <label style={headerStyle}>Full Name*</label>
                 </Box>
                 <Box flex={3}>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Title"
-                    value={inputTitle || ""}
-                    onChange={(e) => setInputTitle(e.target.value)}
+                    placeholder="Full Name"
+                    value={inputName || ""}
+                    onChange={(e) => setInputName(e.target.value)}
                     style={{ width: "80%" }}
                   />
-                  {!inputTitle && (
+                  {!inputName && (
                     <Typography variant="body2" color="error">
                       {formError}
                     </Typography>
@@ -560,18 +583,18 @@ export default function UserManagement({}) {
               </Box>
               <Box display="flex" alignItems="center" gap="12px" mt={2} ml={2}>
                 <Box flex={1}>
-                  <label style={headerStyle}>Title</label>
+                  <label style={headerStyle}>Email*</label>
                 </Box>
                 <Box flex={3}>
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Title"
-                    value={inputTitle || ""}
-                    onChange={(e) => setInputTitle(e.target.value)}
+                    placeholder="Email"
+                    value={inputEmail || ""}
+                    onChange={(e) => setInputEmail(e.target.value)}
                     style={{ width: "80%" }}
                   />
-                  {!inputTitle && (
+                  {!inputEmail && (
                     <Typography variant="body2" color="error">
                       {formError}
                     </Typography>
@@ -580,29 +603,82 @@ export default function UserManagement({}) {
               </Box>
               <Box display="flex" alignItems="center" gap="12px" mt={2} ml={2}>
                 <Box flex={1}>
-                  <label style={headerStyle}>Information</label>
+                  <label style={headerStyle}>Phone*</label>
                 </Box>
                 <Box flex={3}>
-                  <textarea
+                  <input
+                    type="text"
                     className="form-control"
-                    placeholder="Information"
-                    value={inputInformation || ""}
-                    onChange={(e) => setInputInformation(e.target.value)}
-                    style={{
-                      width: "80%",
-                      height: "80px",
-                      overflowY: "auto",
-                      padding: "8px",
-                      fontSize: "14px",
-                    }}
+                    placeholder="Phone"
+                    value={inputPhone || ""}
+                    onChange={(e) => setInputPhone(e.target.value)}
+                    style={{ width: "80%" }}
                   />
-                  {!inputInformation && (
+                  {!inputPhone && (
                     <Typography variant="body2" color="error">
                       {formError}
                     </Typography>
                   )}
                 </Box>
               </Box>
+              {!linkRowId && (<Box display="flex" alignItems="center" gap="12px" mt={2} ml={2}>
+                <Box flex={1}>
+                  <label style={headerStyle}>Password*</label>
+                </Box>
+                <Box flex={3}>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={inputPassword || ""}
+                    onChange={(e) => setInputPassword(e.target.value)}
+                    style={{ width: "80%" }}
+                  />
+                  {!inputPassword && (
+                    <Typography variant="body2" color="error">
+                      {formError}
+                    </Typography>
+                  )}
+                </Box>
+              </Box>)}
+              <Box display="flex" alignItems="center" gap="12px" mt={2} ml={2}>
+                <Box flex={1}></Box>
+                <Box flex={3}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '16px' }}>
+                    <input
+                      name="plrbstatus"
+                      id="plrbstatus"
+                      className="ace-checkbox-2"
+                      type="checkbox"
+
+                      checked={plrbStatus === 1}
+                      onChange={
+                        (e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPlrbStatus(e.target.checked ? 1 : 0)
+                      }
+                    />
+                    <span className="lbl">I am PLRB member</span>
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <input
+                      name="termscondition"
+                      id="termscondition"
+                      className="ace-checkbox-2"
+                      type="checkbox"
+                      checked={termsCondition === 1}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setTermsCondition(e.target.checked ? 1 : 0)
+                      }
+                    />
+                    <span className="lbl">Terms and Conditions*</span>
+                  </label>
+                  {!termsCondition && (
+                    <Typography variant="body2" color="error">
+                      {formError}
+                    </Typography>
+                  )}
+                </Box>
+              </Box>
+
 
               <Box ml={8}>
                 <button
