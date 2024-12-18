@@ -953,7 +953,7 @@ export default function AskAnExpert() {
           <Button
             icon="pi pi-pencil"
             onClick={() => handleEdit(rowData)}
-            style={{ background: "none", color: "#2196f3", border: "none" }}
+            style={{ background: "none", color: "#69AA46", border: "none" }}
           />
           <Button
             icon="pi pi-trash"

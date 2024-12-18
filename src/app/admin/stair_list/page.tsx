@@ -300,7 +300,7 @@ export default function StairList({}) {
             onClick={() => handleEdit(rowData)}
             style={{
               background: "none",
-              color: "#2196f3",
+              color: "#69AA46",
               border: "none",
             }}
           />
