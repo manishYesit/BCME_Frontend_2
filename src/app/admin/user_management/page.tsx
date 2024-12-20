@@ -449,7 +449,7 @@ export default function UserManagement({}) {
       const payload = { id: rowData.id, status: newStatus };
 
       const response = await axios.post(
-        apiEndpoints.roofDataStatusUpdate,
+        apiEndpoints.userStatus,
         payload,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -640,10 +640,10 @@ export default function UserManagement({}) {
                   )}
                 </Box>
               </Box>)}
-              <Box display="flex" alignItems="center" gap="12px" mt={2} ml={2}>
-                <Box flex={1}></Box>
-                <Box flex={3}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '16px' }}>
+              <div className="" style={{display:"flex", fontSize:"10px", flexDirection:"row", justifyContent:"space-around", marginLeft:"180px", marginTop:"10px"}}>
+                
+                {/* <div > */}
+                  <label>
                     <input
                       name="plrbstatus"
                       id="plrbstatus"
@@ -656,9 +656,11 @@ export default function UserManagement({}) {
                         setPlrbStatus(e.target.checked ? 1 : 0)
                       }
                     />
-                    <span className="lbl">I am PLRB member</span>
+                    <span className="lbl ml-2 mb-2">I am PLRB member</span>
                   </label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  {/* <div/> */}
+                  {/* <div> */}
+                  <label >
                     <input
                       name="termscondition"
                       id="termscondition"
@@ -669,15 +671,16 @@ export default function UserManagement({}) {
                         setTermsCondition(e.target.checked ? 1 : 0)
                       }
                     />
-                    <span className="lbl">Terms and Conditions*</span>
+                    <span className="lbl  ml-2 mb-2">Terms and Conditions*</span>
                   </label>
+                  {/* </div> */}
                   {!termsCondition && (
                     <Typography variant="body2" color="error">
                       {formError}
                     </Typography>
                   )}
-                </Box>
-              </Box>
+                </div>
+              {/* </div> */}
 
 
               <Box ml={8}>

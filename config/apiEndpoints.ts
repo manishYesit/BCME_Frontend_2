@@ -24,6 +24,7 @@ const apiEndpoints = {
   deleteUser: `${API_BASE_URL}/tf_user/deleteUser`,
   addUser: `${API_BASE_URL}/tf_user/addUser`,
   getUserById: `${API_BASE_URL}/tf_user/getUserById`,
+  userStatus: `${API_BASE_URL}/tf_user/userStatus`,
 
   //roof--
   getRoofData: `${API_BASE_URL}/tf_roof/getAllData`,
