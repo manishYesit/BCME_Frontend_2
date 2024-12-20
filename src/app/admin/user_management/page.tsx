@@ -268,19 +268,18 @@ export default function UserManagement({}) {
     { field: "fullname", header: "Full Name" },
     { field: "email", header: "Email" },
     { field: "phone", header: "Phone" },
-    { field: "status_plrb", header: "PLRB Member" },
-    { field: "email_subscribed", header: "eMail Opt Out"},
-    {
-      field: "id",
-      header: "Link",
+    { 
+      field: "status_plrb", 
+      header: "PLRB Member",
       body: (rowData: any) => (
-        <>
-          {rowData.id && (
-            <Link href={`/admin/roof_list/link_list/${rowData.id} `}>
-              <p>Code</p>
-            </Link>
-          )}
-        </>
+        <p>{rowData.status_plrb === 1 ? "Yes" : "No"}</p>
+      ),
+    },
+    { 
+      field: "email_subscribed", 
+      header: "eMail Opt Out",
+      body: (rowData: any) => (
+        <p>{rowData.email_subscribed === 1 ? "Subscribed" : "Unsubscribed"}</p>
       ),
     },
     {
@@ -296,7 +295,7 @@ export default function UserManagement({}) {
             height: "20px",
           }}
           onClick={() =>
-            handleStatusUpdate(rowData, rowData.status === true ? 2 : 1)
+            handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
           }
         />
       ),
@@ -418,7 +417,7 @@ export default function UserManagement({}) {
       accept: async () => {
         try {
           await axios.post(
-            apiEndpoints.deleteRoofData,
+            apiEndpoints.deleteUser,
             { id: rowData.id },
             {
               headers: {
@@ -446,7 +445,7 @@ export default function UserManagement({}) {
 
   const handleStatusUpdate = async (rowData: any, newStatus: number) => {
     try {
-      const payload = { id: rowData.id, status: newStatus };
+      const payload = { token: rowData.token, status: newStatus };
 
       const response = await axios.post(
         apiEndpoints.userStatus,
