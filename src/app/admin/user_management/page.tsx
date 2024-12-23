@@ -405,6 +405,9 @@ export default function UserManagement({}) {
     setInputPhone(rowData.phone);
     setInputPassword(rowData.password);
     setLinkRowId(rowData.id);
+    setPlrbStatus(rowData.status_plrb);
+    setTermsCondition(rowData.termscondtion_status);
+    setEmailSubscription(rowData.email_subscribed);
     setOpen(true);
   };
 
