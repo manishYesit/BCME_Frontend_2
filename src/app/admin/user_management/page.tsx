@@ -218,6 +218,7 @@ export default function UserManagement({}) {
   const [inputPassword, setInputPassword] = useState<string | null>(null);
   const [plrbStatus, setPlrbStatus] = useState<number>(0);
   const [termsCondition, setTermsCondition] = useState<number>(0);
+  const [emailSubscribed, setEmailSubscription ] = useState<number>(0);
   const [formError, setFormError] = useState<string | null>(null);
   const [linkRowId, setLinkRowId] = useState<string | null>(null);
   const [open, setOpen] = useState<any>(false);
@@ -370,7 +371,8 @@ export default function UserManagement({}) {
         phone: inputPhone,
         password: inputPassword,
         termscondtion_status: termsCondition,
-        status_plrb: plrbStatus
+        status_plrb: plrbStatus,
+        email_subscribed: emailSubscribed
       };
       let apiUrl = linkRowId
         ? apiEndpoints.updateUser
@@ -678,6 +680,21 @@ export default function UserManagement({}) {
                       {formError}
                     </Typography>
                   )}
+                  {linkRowId && (
+                  <label >
+                    <input
+                      name="emailsubscribed"
+                      id="email_subscribed"
+                      className="ace-checkbox-2"
+                      type="checkbox"
+                      checked={emailSubscribed === 1}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setEmailSubscription(e.target.checked ? 1 : 0)
+                      }
+                    />
+                    <span className="lbl  ml-2 mb-2">Subscribed to emails</span>
+                  </label>
+                )}
                 </div>
               {/* </div> */}
 
