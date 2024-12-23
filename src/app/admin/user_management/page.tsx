@@ -644,7 +644,7 @@ export default function UserManagement({}) {
                   )}
                 </Box>
               </Box>)}
-              <div className="" style={{display:"flex", fontSize:"10px", flexDirection:"row", justifyContent:"space-around", marginLeft:"180px", marginTop:"10px"}}>
+              <div className="" style={{display:"flex", fontSize:"10px", flexDirection:"row", justifyContent:"space-between", marginLeft:"180px", marginTop:"10px"}}>
                 
                 {/* <div > */}
                   <label>
@@ -686,7 +686,7 @@ export default function UserManagement({}) {
                 </div>
 
                   {linkRowId && (
-                    <div className="" style={{display:"flex", fontSize:"10px", flexDirection:"row", justifyContent:"space-around", marginLeft:"180px", marginTop:"10px"}}>
+                    <div className="" style={{display:"flex", fontSize:"10px", flexDirection:"row", marginLeft:"180px", marginTop:"10px"}}>
                       <label >
                         <input
                           name="emailsubscribed"

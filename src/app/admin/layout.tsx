@@ -358,6 +358,18 @@ export default function RootLayout({
                     <p>Payment transaction</p>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link
+                    href="email_updates"
+                    className={
+                      "nav-link " +
+                      (pathName == "/admin/email_updates" ? "active" : "")
+                    }
+                  >
+                    <i className="nav-icon fas fa-table"></i>
+                    <p>eMail Updates</p>
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>
