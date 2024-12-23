@@ -15,6 +15,7 @@ import { LuClock9 } from "react-icons/lu";
 import { FaShare } from "react-icons/fa";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { IoHome } from "react-icons/io5";
 
 export default function ContactQuery({}) {
   const [refresh, setRefresh] = useState<any>(false);
@@ -292,18 +293,24 @@ export default function ContactQuery({}) {
     <>
       <section className="content-header">
         <div className="container-fluid">
-          <div className="row mb-2">
-            <div className="col-sm-6">
-              <h1>Contact Queries</h1>
-            </div>
-            <div className="col-sm-6">
-              <ol className="breadcrumb float-sm-right">
-                <li className="breadcrumb-item">
-                  <Link href="dashboard">Home</Link>
-                </li>
-                <li className="breadcrumb-item active">Contact Queries</li>
-              </ol>
-            </div>
+          <div
+            className="row mb-2 admin_setin_header"
+            style={{
+              background: "#E7F2F8",
+              borderRadius: "5px",
+              padding: "5px",
+              height: "40px",
+            }}
+          >
+            <ol className="breadcrumb float-sm-right">
+              <li className="breadcrumb-item">
+                <span className="homeIcon">
+                  <IoHome style={{ margin: "5px", marginBottom: "6px" }} />
+                </span>
+                <Link href="dashboard">Home</Link>
+              </li>
+              <li className="breadcrumb-item active">Contact Query List</li>
+            </ol>
           </div>
         </div>
       </section>

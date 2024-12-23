@@ -851,6 +851,8 @@ import { Button } from "primereact/button";
 import CustomTable from "../../../component/Custom_Table/CustomTable";
 import { unparse } from "json2csv"; // For CSV export
 import * as XLSX from "xlsx"; // For Excel import
+import { IoHome } from "react-icons/io5";
+import Link from "next/link";
 
 export default function AskAnExpert() {
   const [data, setData] = useState([]);
@@ -967,22 +969,47 @@ export default function AskAnExpert() {
   ];
 
   return (
-    <div>
-      <CustomTable
-        data={data}
-        columns={columns}
-        selectedRows={selectedRows}
-        setSelectedRows={setSelectedRows}
-        onAdd={handleAdd}
-        onDelete={handleDelete}
-        globalFilter={globalFilter}
-        setGlobalFilter={setGlobalFilter}
-        selectionMode="checkbox"
-        // onImport={handleImport}
-        expandedRows={expandedRows}
-        setExpandedRows={setExpandedRows}
-        showExportButton={true}
-      />
-    </div>
+    <>
+      <section className="content-header">
+          <div className="container-fluid">
+            <div
+              className="row mb-2 admin_setin_header"
+              style={{
+                background: "#E7F2F8",
+                borderRadius: "5px",
+                padding: "5px",
+                height: "40px",
+              }}
+            >
+              <ol className="breadcrumb float-sm-right">
+                <li className="breadcrumb-item">
+                  <span className="homeIcon">
+                    <IoHome style={{ margin: "5px", marginBottom: "6px" }} />
+                  </span>
+                  <Link href="dashboard">Home</Link>
+                </li>
+                <li className="breadcrumb-item active">Code Queries</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+      <div>
+        <CustomTable
+          data={data}
+          columns={columns}
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
+          onAdd={handleAdd}
+          onDelete={handleDelete}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
+          selectionMode="checkbox"
+          // onImport={handleImport}
+          expandedRows={expandedRows}
+          setExpandedRows={setExpandedRows}
+          showExportButton={true}
+        />
+      </div>
+    </>
   );
 }

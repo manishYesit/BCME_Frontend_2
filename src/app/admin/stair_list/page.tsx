@@ -192,6 +192,7 @@ import { MdDone } from "react-icons/md";
 import { VscDebugRestart } from "react-icons/vsc";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
+import { IoHome } from "react-icons/io5";
 
 export default function StairList({}) {
   const [refresh, setRefresh] = useState<any>(false);
@@ -462,18 +463,24 @@ export default function StairList({}) {
     <>
       <section className="content-header">
         <div className="container-fluid">
-          <div className="row mb-2">
-            <div className="col-sm-6">
-              <h1>Stair List</h1>
-            </div>
-            <div className="col-sm-6">
-              <ol className="breadcrumb float-sm-right">
-                <li className="breadcrumb-item">
-                  <Link href="dashboard">Home</Link>
-                </li>
-                <li className="breadcrumb-item active">Stair</li>
-              </ol>
-            </div>
+          <div
+            className="row mb-2 admin_setin_header"
+            style={{
+              background: "#E7F2F8",
+              borderRadius: "5px",
+              padding: "5px",
+              height: "40px",
+            }}
+          >
+            <ol className="breadcrumb float-sm-right">
+              <li className="breadcrumb-item">
+                <span className="homeIcon">
+                  <IoHome style={{ margin: "5px", marginBottom: "6px" }} />
+                </span>
+                <Link href="dashboard">Home</Link>
+              </li>
+              <li className="breadcrumb-item active">Stairs List</li>
+            </ol>
           </div>
         </div>
       </section>

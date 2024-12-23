@@ -10,6 +10,7 @@ import CustomTable from "../../../component/Custom_Table/CustomTable";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { saveAs } from "file-saver";
+import { IoHome } from "react-icons/io5";
 
 export default function ClickTrackList({}) {
   const [refresh, setRefresh] = useState<any>(false);
@@ -105,18 +106,24 @@ export default function ClickTrackList({}) {
     <>
       <section className="content-header">
         <div className="container-fluid">
-          <div className="row mb-2">
-            <div className="col-sm-6">
-              <h1>Clicks Tracking </h1>
-            </div>
-            <div className="col-sm-6">
-              <ol className="breadcrumb float-sm-right">
-                <li className="breadcrumb-item">
-                  <Link href="dashboard">Home</Link>
-                </li>
-                <li className="breadcrumb-item active">Clicks Tracking </li>
-              </ol>
-            </div>
+          <div
+            className="row mb-2 admin_setin_header"
+            style={{
+              background: "#E7F2F8",
+              borderRadius: "5px",
+              padding: "5px",
+              height: "40px",
+            }}
+          >
+            <ol className="breadcrumb float-sm-right">
+              <li className="breadcrumb-item">
+                <span className="homeIcon">
+                  <IoHome style={{ margin: "5px", marginBottom: "6px" }} />
+                </span>
+                <Link href="dashboard">Home</Link>
+              </li>
+              <li className="breadcrumb-item active">Clicks Tracking</li>
+            </ol>
           </div>
         </div>
       </section>
