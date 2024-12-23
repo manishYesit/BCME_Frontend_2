@@ -19,6 +19,7 @@ const apiEndpoints = {
   domainStatus: `${API_BASE_URL}/tf_plrb_domain/domainStatus`,
   importPlrb: `${API_BASE_URL}/tf_plrb_domain/importPlrb`,
 
+  //tf_users--
   getAllUsers: `${API_BASE_URL}/tf_user/getAllUsers`,
   updateUser: `${API_BASE_URL}/tf_user/updateUser`,
   deleteUser: `${API_BASE_URL}/tf_user/deleteUser`,
@@ -78,7 +79,6 @@ const apiEndpoints = {
 
   getTransactions: `${API_BASE_URL}/tf_transaction/getAllData`,
   getAllSettings: `${API_BASE_URL}/tf_setting/getAllSettings`,
-  getAskCodeData: `${API_BASE_URL}/tf_ask_code/getAllData`,
   changePassword: `${API_BASE_URL}/auth/changePassword`,
 
   //faq--
@@ -96,6 +96,11 @@ const apiEndpoints = {
   getContact_Details: `${API_BASE_URL}/tf_contact/getAllData`,
   get_Queries_Chat: `${API_BASE_URL}/tf_contact/get_queries`,
   send_QueryMessage: `${API_BASE_URL}/tf_contact/saveMessage`,
+
+  //code_query--
+  getAskCodeData: `${API_BASE_URL}/tf_ask_code/getAllData`,
+  getCodeQueryById: `${API_BASE_URL}/tf_ask_code/getCodeQueryById`
+  
 };
 
 export default apiEndpoints;

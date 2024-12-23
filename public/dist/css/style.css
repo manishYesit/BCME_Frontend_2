@@ -630,3 +630,30 @@ form .button input:hover {
 .modal_send_btn:hover {
   color: #23527c;
 }
+
+/* code query module css */
+.page-header {
+  margin: 0 0 12px;
+  border-bottom: 1px dotted #E2E2E2;
+  padding-bottom: 16px;
+  padding-top: 7px;
+}
+
+.page-header h1 {
+  padding: 0;
+  margin: 0 8px;
+  font-size: 24px;
+  font-weight: lighter;
+  color: #2679B5;
+}
+
+.page-header h1 small {
+  margin: 0 6px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #8089A0;
+}
+
+.ace-icon {
+  text-align: center;
+}
