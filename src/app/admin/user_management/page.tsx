@@ -552,7 +552,7 @@ export default function UserManagement({}) {
         >
           <Box sx={modalStyle}>
             <div id="modal-modal-title" className="modal_header">
-              <div>{linkRowId ? "Update" : "Add"}</div>
+              <div>{linkRowId ? "Update User" : "Add User"}</div>
               <div
                 style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
                 onClick={handleClose}
@@ -680,22 +680,25 @@ export default function UserManagement({}) {
                       {formError}
                     </Typography>
                   )}
-                  {linkRowId && (
-                  <label >
-                    <input
-                      name="emailsubscribed"
-                      id="email_subscribed"
-                      className="ace-checkbox-2"
-                      type="checkbox"
-                      checked={emailSubscribed === 1}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setEmailSubscription(e.target.checked ? 1 : 0)
-                      }
-                    />
-                    <span className="lbl  ml-2 mb-2">Subscribed to emails</span>
-                  </label>
-                )}
                 </div>
+
+                  {linkRowId && (
+                    <div className="" style={{display:"flex", fontSize:"10px", flexDirection:"row", justifyContent:"space-around", marginLeft:"180px", marginTop:"10px"}}>
+                      <label >
+                        <input
+                          name="emailsubscribed"
+                          id="email_subscribed"
+                          className="ace-checkbox-2"
+                          type="checkbox"
+                          checked={emailSubscribed === 1}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setEmailSubscription(e.target.checked ? 1 : 0)
+                          }
+                        />
+                        <span className="lbl  ml-2 mb-2">Subscribed to emails</span>
+                      </label>
+                    </div>
+                  )}
               {/* </div> */}
 
 
