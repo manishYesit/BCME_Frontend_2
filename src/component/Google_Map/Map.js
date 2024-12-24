@@ -40,7 +40,7 @@ function Map({ markers = [] }) {
     });
   }, [markers]);
 
-  return <div style={{ height: "400px", width: "80%", left:"10%" }} ref={mapRef} />;
+  return <div style={{ height: "400px", width: "90%", left:"5%" }} ref={mapRef} />;
 }
 
 export default Map;

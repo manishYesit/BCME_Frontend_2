@@ -5,6 +5,8 @@ import { RootState } from "../../../store/index";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import apiEndpoints from "../../../../config/apiEndpoints";
+import { IoHome } from "react-icons/io5";
+import Link from "next/link";
 
 export default function MyPage() {
 
@@ -44,7 +46,31 @@ export default function MyPage() {
 
     return (
         <div>
-            <h1>My Page</h1>
+            <section className="content-header">
+              <div className="container-fluid">
+                <div
+                  className="row mb-2 admin_setin_header"
+                  style={{
+                    background: "#E7F2F8",
+                    borderRadius: "5px",
+                    padding: "5px",
+                    height: "40px",
+                  }}
+                >
+                  <ol className="breadcrumb float-sm-right">
+                    <li className="breadcrumb-item">
+                      <span className="homeIcon">
+                        <IoHome style={{ margin: "5px", marginBottom: "6px" }} />
+                      </span>
+                      <Link href="dashboard">Home</Link>
+                    </li>
+                    <li className="breadcrumb-item">
+                      <Link href="ask_an_expert">Code Queries</Link>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </section>
             <Map markers={data} />
         </div>
     );
