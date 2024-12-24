@@ -716,6 +716,7 @@ form .button input:hover {
 
     input[type="radio"] {
       accent-color: #C6487E;
+      display: block;
     }
   }
 }

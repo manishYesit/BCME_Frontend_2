@@ -99,7 +99,9 @@ const apiEndpoints = {
 
   //code_query--
   getAskCodeData: `${API_BASE_URL}/tf_ask_code/getAllData`,
-  getCodeQueryById: `${API_BASE_URL}/tf_ask_code/getCodeQueryById`
+  getCodeQueryById: `${API_BASE_URL}/tf_ask_code/getCodeQueryById`,
+
+  sendEmailUpdates: `${API_BASE_URL}/mailqueue/sendEmailUpdates`,
   
 };
 
