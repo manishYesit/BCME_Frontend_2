@@ -168,7 +168,7 @@ const CustomTable = ({
             </Button>
           )}
         </div>
-        <div className="datatable-mainheader">{headingText}</div>
+        {headerText!=="Header" && (<div className="datatable-mainheader">{headingText}</div>)}
         <div
           className={`collapse ${!isCollapsed ? "show" : ""}`}
           id="collapseExample"
