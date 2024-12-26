@@ -213,7 +213,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { IoHome } from "react-icons/io5";
 
-export default function AskAnExpert({}) {
+export default function AskAnExpert({ }) {
   const [refresh, setRefresh] = useState<any>(false);
   const token = useSelector((state: RootState) => state.auth.token);
   const [data, setData]: [any, Function] = useState([]);
@@ -291,6 +291,54 @@ export default function AskAnExpert({}) {
       console.error("Error fetching chat data:", error);
     }
   }
+
+  const handleExportData = async (e:any) => {
+    e.preventDefault(); // Prevent default navigation
+    try {
+      // Call the API for exporting data
+      const response = await axios.get(apiEndpoints.createXLS, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add Bearer token here
+        },
+        responseType: 'blob', // Important for handling binary data
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'exported_data.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (error) {
+      console.error('Error exporting data:', error);
+    }
+  };
+
+  const handleExportAddressData = async (e:any) => {
+    e.preventDefault(); // Prevent default navigation
+    try {
+      // Call the API for exporting address data
+      const response = await axios.get(apiEndpoints.exportSearchData, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add Bearer token here
+        },
+        responseType: 'blob', // Important for handling binary data
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'exported_address_data.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (error) {
+      console.error('Error exporting address data:', error);
+    }
+  };
+
+
   const handleStatusUpdate = async (rowData: any, newStatus: number) => {
     try {
       const payload = { domain_id: rowData.domain_id, status: newStatus };
@@ -391,7 +439,7 @@ export default function AskAnExpert({}) {
       header: "Actions",
       body: (rowData: any) => (
         <div className="" style={{ width: "120px" }}>
-          
+
           <Button
             icon="pi pi-trash"
             severity="danger"
@@ -528,31 +576,39 @@ export default function AskAnExpert({}) {
         </div>
       </section>
       <div className="page-header">
-				<h1>
-					Code Queries
-					<small>
-						<i className="ace-icon fa fa-angle-double-right"></i>
-						List
-					</small>
-					<div style={{float: "right", fontSize: "14px"}}>
-						<a style={{margin: "auto", color:"#307ecc"}} href="https://staging.mybcme.com/master/viewsearchdata">
-							View Data
-						</a>
-						&nbsp;&nbsp;
-						<a style={{margin: "auto", color:"#307ecc"}} href="https://staging.mybcme.com/master/map_view">
-							View Data On Map
-						</a>
-						&nbsp;&nbsp;
-						<a style={{margin: "auto", color:"#307ecc"}} href="https://staging.mybcme.com/master/createXLS">
-							Export Data
-						</a>
-						&nbsp;&nbsp;
-						<a style={{margin: "auto", color:"#307ecc"}} href="https://staging.mybcme.com/master/exportsearchdata">
-							Export Address Data
-						</a>
-					</div>
-				</h1>
-			</div>
+        <h1>
+          Code Queries
+          <small>
+            <i className="ace-icon fa fa-angle-double-right"></i>
+            List
+          </small>
+          <div style={{ float: "right", fontSize: "14px" }}>
+            <Link href="/admin/view_search_data" style={{ margin: 'auto', color: '#307ecc' }}>
+              View Data
+            </Link>
+            &nbsp;&nbsp;
+            <Link href="/admin/map_view" style={{ margin: 'auto', color: '#307ecc' }}>
+              View Data On Map
+            </Link>
+            &nbsp;&nbsp;
+            <a
+              href="#"
+              style={{ margin: 'auto', color: '#307ecc' }}
+              onClick={handleExportData}
+            >
+              Export Data
+            </a>
+            &nbsp;&nbsp;
+            <a
+              href="#"
+              style={{ margin: 'auto', color: '#307ecc' }}
+              onClick={handleExportAddressData}
+            >
+              Export Address Data
+            </a>
+          </div>
+        </h1>
+      </div>
       {data.length ? (
         <div>
           <CustomTable

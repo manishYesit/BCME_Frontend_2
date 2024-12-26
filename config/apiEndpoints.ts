@@ -100,6 +100,8 @@ const apiEndpoints = {
   //code_query--
   getAskCodeData: `${API_BASE_URL}/tf_ask_code/getAllData`,
   getCodeQueryById: `${API_BASE_URL}/tf_ask_code/getCodeQueryById`,
+  createXLS: `${API_BASE_URL}/tf_ask_code/createXLS`,
+  exportSearchData: `${API_BASE_URL}/tf_ask_code/exportSearchData`,
 
   sendEmailUpdates: `${API_BASE_URL}/mailqueue/sendEmailUpdates`,
   
