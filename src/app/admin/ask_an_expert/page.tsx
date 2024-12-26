@@ -218,7 +218,8 @@ export default function AskAnExpert({ }) {
   const token = useSelector((state: RootState) => state.auth.token);
   const [data, setData]: [any, Function] = useState([]);
   const [globalFilter, setGlobalFilter] = useState(null);
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedRows, setSelectedRows] = useState<any[]>([]);
+  const [selectedQueryRows, setSelectedQueryRows] = useState([]);
   const [inpuChatValue, setInpuChatValue] = useState<string | null>(null);
   const [chatData, setChatData] = useState<any | null>(null);
   const [inputAmount, setInputAmount] = useState<any | null>(null);
@@ -232,7 +233,7 @@ export default function AskAnExpert({ }) {
       fetchData(token);
       fetchChatData(token);
     }
-  }, [refresh, token, selectedRows]);
+  }, [refresh, token, selectedQueryRows]);
 
   async function fetchData(token: any) {
     try {
@@ -263,7 +264,7 @@ export default function AskAnExpert({ }) {
 
   async function fetchChatData(token: any) {
     try {
-      const fetchData = { id: selectedRows };
+      const fetchData = { id: selectedQueryRows };
 
       const response = await axios.post(
         apiEndpoints.getCodeQueryById,
@@ -292,7 +293,7 @@ export default function AskAnExpert({ }) {
     }
   }
 
-  const handleExportData = async (e:any) => {
+  const handleExportData = async (e: any) => {
     e.preventDefault(); // Prevent default navigation
     try {
       // Call the API for exporting data
@@ -315,7 +316,7 @@ export default function AskAnExpert({ }) {
     }
   };
 
-  const handleExportAddressData = async (e:any) => {
+  const handleExportAddressData = async (e: any) => {
     e.preventDefault(); // Prevent default navigation
     try {
       // Call the API for exporting address data
@@ -335,6 +336,15 @@ export default function AskAnExpert({ }) {
       a.remove();
     } catch (error) {
       console.error('Error exporting address data:', error);
+    }
+  };
+
+  const handleDelete = (selectedRows:any) => {
+    if (selectedRows.length > 0) {
+      setData(data.filter((row:any) => !selectedRows.includes(row))); // Filter out selected rows from data
+      alert("Deleted selected rows");
+    } else {
+      alert("No rows selected");
     }
   };
 
@@ -371,7 +381,7 @@ export default function AskAnExpert({ }) {
   const handleSendMessage = async () => {
     try {
       const payload = {
-        contactId: selectedRows,
+        contactId: selectedQueryRows,
         msg: inpuChatValue,
         amount: inputAmount,
         type: inputAmount ? "amount" : "",
@@ -438,7 +448,7 @@ export default function AskAnExpert({ }) {
       field: "actions",
       header: "Actions",
       body: (rowData: any) => (
-        <div className="" style={{ width: "120px" }}>
+        <div className="" style={{ width: "120px", display: 'flex' }}>
 
           <Button
             icon="pi pi-trash"
@@ -449,6 +459,21 @@ export default function AskAnExpert({ }) {
           <Button
             icon="pi pi-envelope"
             style={{ background: "none", color: "#337ab7", border: "none" }}
+          />
+          <input
+            type="checkbox"
+            checked={selectedRows.some((row: any) => row.sn === rowData.sn)}
+            onChange={(e: any) => {
+              if (e.target.checked) {
+                // Add row to selected rows
+                setSelectedRows((prev: any[]) => [...prev, rowData]);
+              } else {
+                // Remove row from selected rows
+                setSelectedRows((prev: any[]) =>
+                  prev.filter((row: any) => row.sn !== rowData.sn)
+                );
+              }
+            }}
           />
         </div>
       ),
@@ -469,7 +494,7 @@ export default function AskAnExpert({ }) {
   };
 
   const rowExpansionTemplate = (data: any) => {
-    setSelectedRows(data?.contact_id);
+    setSelectedQueryRows(data?.contact_id);
 
     return (
       <div className="chat-container">
@@ -620,7 +645,7 @@ export default function AskAnExpert({ }) {
             setGlobalFilter={setGlobalFilter}
             rowExpansionTemplate={rowExpansionTemplate}
             showExportButton={false}
-            showDeleteButton={false}
+            showDeleteButton={true}
             showImportButton={false}
             showExpandButton={true}
             showAddButton={false}
