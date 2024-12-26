@@ -339,13 +339,82 @@ export default function AskAnExpert({ }) {
     }
   };
 
-  const handleDelete = (selectedRows:any) => {
-    if (selectedRows.length > 0) {
-      setData(data.filter((row:any) => !selectedRows.includes(row))); // Filter out selected rows from data
-      alert("Deleted selected rows");
-    } else {
-      alert("No rows selected");
-    }
+  const handleDelete = (rowData: any) => {
+    confirmDialog({
+      message: "Do you want to delete this record?",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
+      defaultFocus: "reject",
+      acceptClassName: "p-button-danger",
+
+      accept: async () => {
+        try {
+          await axios.post(
+            apiEndpoints.deleteCodeQuery,
+            { contact_id: rowData.contact_id },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          toast.current?.show({
+            severity: "warn",
+            detail: "Row deleted successfully!",
+            life: 3000,
+          });
+          fetchData(token);
+        } catch (error) {
+          console.error("Error deleting:", error);
+          toast.current?.show({
+            severity: "error",
+            detail: "Error deleting the row.",
+            life: 3000,
+          });
+        }
+      },
+    });
+  };
+
+  const handleMultiDelete = (selectedRows:any) => {
+    console.log("selected rows is", selectedRows);
+    // return;
+    confirmDialog({
+      message: "Do you want to delete these records?",
+      header: "Delete Confirmation",
+      icon: "pi pi-info-circle",
+      defaultFocus: "reject",
+      acceptClassName: "p-button-danger",
+
+      accept: async () => {
+        try {
+          for (const row of selectedRows) {
+            await axios.post(
+              apiEndpoints.deleteCodeQuery,
+              { contact_id: row.contact_id },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+          }
+          toast.current?.show({
+            severity: "warn",
+            detail: "Rows deleted successfully!",
+            life: 3000,
+          });
+          fetchData(token);
+        } catch (error) {
+          console.error("Error deleting:", error);
+          toast.current?.show({
+            severity: "error",
+            detail: "Error deleting the row.",
+            life: 3000,
+          });
+        }
+      },
+    });
   };
 
 
@@ -643,6 +712,7 @@ export default function AskAnExpert({ }) {
             setSelectedRows={setSelectedRows}
             globalFilter={globalFilter}
             setGlobalFilter={setGlobalFilter}
+            onDelete={handleMultiDelete}
             rowExpansionTemplate={rowExpansionTemplate}
             showExportButton={false}
             showDeleteButton={true}
