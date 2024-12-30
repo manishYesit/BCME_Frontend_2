@@ -298,8 +298,7 @@ export default function AskAnExpert({ }) {
                         showExpandButton={false}
                         showAddButton={false}
                         showCollapseButton={false}
-                        showGlobalSearch={false}
-                    />
+                        showGlobalSearch={false} onAdd={undefined} onDelete={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectionMode={undefined}                    />
                 </div>
             ) : (
                 <div

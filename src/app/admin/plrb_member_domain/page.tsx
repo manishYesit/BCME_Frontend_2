@@ -400,8 +400,7 @@ export default function PLRBDomainList({ params }: any) {
             showImportButton={false}
             showExpandButton={false}
             showGlobalSearch={false}
-            headerText="PLRB Member Domain List "
-          />
+            headerText="PLRB Member Domain List " onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

@@ -388,8 +388,7 @@ export default function StairToolList({}) {
             showDeleteButton={false}
             showImportButton={false}
             showExpandButton={false}
-            headerText="Stair Repairing Tools List "
-          />
+            headerText="Stair Repairing Tools List " onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

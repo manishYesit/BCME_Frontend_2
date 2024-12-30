@@ -284,8 +284,7 @@ export default function viewList({ params }: any) {
             showImportButton={false}
             showExpandButton={false}
             showGlobalSearch={false}
-            headerText="FAQ List"
-          />
+            headerText="FAQ List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

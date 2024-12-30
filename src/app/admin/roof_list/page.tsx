@@ -326,8 +326,7 @@ export default function roofList({}) {
             showImportButton={false}
             showExpandButton={false}
             headerText="Roof List"
-            setImageHeaderText="Set On Image"
-          />
+            setImageHeaderText="Set On Image" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

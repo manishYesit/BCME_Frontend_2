@@ -156,7 +156,7 @@ export default function StairList({ params }: any) {
       field: "sn",
       header: "S.N",
       sortable: true,
-      body: (_, { rowIndex }) => rowIndex + 1,
+      body: (_: any, { rowIndex }: any) => rowIndex + 1,
     },
     { field: "title", header: "Title", sortable: true },
     { field: "data", header: "Data", sortable: true },
@@ -305,8 +305,7 @@ export default function StairList({ params }: any) {
             showImportButton={false}
             showExpandButton={false}
             showGlobalSearch={false}
-            headerText="Link List"
-          />
+            headerText="Link List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

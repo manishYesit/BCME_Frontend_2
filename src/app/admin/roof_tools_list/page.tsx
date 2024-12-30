@@ -389,8 +389,7 @@ export default function roofToolList({}) {
             showDeleteButton={false}
             showImportButton={false}
             showExpandButton={false}
-            headerText="Roof Repairing Tools List "
-          />
+            headerText="Roof Repairing Tools List " onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

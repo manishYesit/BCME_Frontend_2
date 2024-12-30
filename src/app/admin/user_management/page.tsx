@@ -539,8 +539,7 @@ export default function UserManagement({}) {
             showDeleteButton={false}
             showImportButton={false}
             showExpandButton={false}
-            headerText="User List"
-          />
+            headerText="User List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

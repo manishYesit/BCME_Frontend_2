@@ -330,8 +330,7 @@ export default function ContactQuery({}) {
             showExpandButton={true}
             showAddButton={false}
             showCollapseButton={true}
-            headerText="Contact Queries"
-          />
+            headerText="Contact Queries" onAdd={undefined} onDelete={undefined} exportToCSV={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

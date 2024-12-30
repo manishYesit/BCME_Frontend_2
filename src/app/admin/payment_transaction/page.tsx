@@ -108,8 +108,7 @@ export default function transactions({}) {
             showImportButton={false}
             showExpandButton={false}
             showAddButton={false}
-            headerText="Transaction Detail"
-          />
+            headerText="Transaction Detail" onAdd={undefined} onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

@@ -142,8 +142,7 @@ export default function ClickTrackList({}) {
             showImportButton={false}
             showExpandButton={false}
             showAddButton={false}
-            headerText="Clicks Tracking "
-          />
+            headerText="Clicks Tracking " onAdd={undefined} onDelete={undefined} rowExpansionTemplate={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

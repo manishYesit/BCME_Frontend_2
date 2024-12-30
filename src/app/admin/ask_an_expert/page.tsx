@@ -720,8 +720,7 @@ export default function AskAnExpert({ }) {
             showExpandButton={true}
             showAddButton={false}
             showCollapseButton={true}
-            headerText="Code Queries"
-          />
+            headerText="Code Queries" onAdd={undefined} exportToCSV={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

@@ -152,7 +152,7 @@ export default function StairToolList({ params }: any) {
   };
 
   const columns = [
-    { field: "sn", header: "S.N", body: (_, { rowIndex }) => rowIndex + 1 },
+    { field: "sn", header: "S.N", body: (_:any, { rowIndex }:any) => rowIndex + 1 },
     { field: "title", header: "Title" },
     { field: "data", header: "Data" },
     {
@@ -298,8 +298,7 @@ export default function StairToolList({ params }: any) {
             showImportButton={false}
             showExpandButton={false}
             showGlobalSearch={false}
-            headerText="Link List"
-          />
+            headerText="Link List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div

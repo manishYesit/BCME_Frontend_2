@@ -299,8 +299,7 @@ export default function addProfession({}) {
             showDeleteButton={false}
             showImportButton={false}
             showExpandButton={false}
-            headerText="Profession List"
-          />
+            headerText="Profession List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div
