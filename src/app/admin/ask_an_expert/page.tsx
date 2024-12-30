@@ -209,7 +209,11 @@ import { BsChatFill } from "react-icons/bs";
 import { Toast } from "primereact/toast";
 import { LuClock9 } from "react-icons/lu";
 import { FaShare } from "react-icons/fa";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+
+// Dynamically import ReactQuill with SSR disabled
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { IoHome } from "react-icons/io5";
 
@@ -303,14 +307,15 @@ export default function AskAnExpert({ }) {
         },
         responseType: 'blob', // Important for handling binary data
       });
-
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'exported_data.xlsx';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      if (typeof window !== "undefined") {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'exported_data.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
     } catch (error) {
       console.error('Error exporting data:', error);
     }
@@ -326,14 +331,15 @@ export default function AskAnExpert({ }) {
         },
         responseType: 'blob', // Important for handling binary data
       });
-
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'exported_address_data.xlsx';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      if (typeof window !== "undefined") {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'exported_address_data.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
     } catch (error) {
       console.error('Error exporting address data:', error);
     }
@@ -720,7 +726,7 @@ export default function AskAnExpert({ }) {
             showExpandButton={true}
             showAddButton={false}
             showCollapseButton={true}
-            headerText="Code Queries" onAdd={undefined} exportToCSV={undefined} selectionMode={undefined}          />
+            headerText="Code Queries" onAdd={undefined} exportToCSV={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div

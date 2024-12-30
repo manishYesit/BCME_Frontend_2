@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+
+// Dynamically import ReactQuill with SSR disabled
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { MdDone } from "react-icons/md";
 import axios from "axios";
@@ -50,7 +54,12 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
   const [titleError, setTitleError] = useState<string | null>(null);
   const [descriptionError, setDescriptionError] = useState<string | null>(null);
 
-  const token = localStorage.getItem("adminToken");
+  // const token = localStorage.getItem("adminToken");
+  let token = null;
+
+  if (typeof window !== "undefined") {
+    token = localStorage.getItem("adminToken");
+  }
 
   useEffect(() => {
     if (open && selectedDetails) {

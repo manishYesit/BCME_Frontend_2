@@ -7,7 +7,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/index";
 import { FaPencilAlt } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+
+// Dynamically import ReactQuill with SSR disabled
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/router";
 

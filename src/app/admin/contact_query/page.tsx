@@ -13,7 +13,11 @@ import { BsChatFill } from "react-icons/bs";
 import { Toast } from "primereact/toast";
 import { LuClock9 } from "react-icons/lu";
 import { FaShare } from "react-icons/fa";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+
+// Dynamically import ReactQuill with SSR disabled
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { IoHome } from "react-icons/io5";
 

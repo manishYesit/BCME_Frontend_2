@@ -62,6 +62,7 @@ import { CiLock } from "react-icons/ci";
 import { CiUnlock } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { RootState } from "@/store";
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -75,7 +76,7 @@ const validationSchema = Yup.object({
     .matches(/[\W_]/, "Password must contain at least one special character"),
   confirmPassword: Yup.string()
     .required("Confirm password is required")
-    .oneOf([Yup.ref("newPassword"), null], "Passwords must match"),
+    .oneOf([Yup.ref("newPassword")], "Passwords must match"),
 });
 
 const ChangePassword = () => {
