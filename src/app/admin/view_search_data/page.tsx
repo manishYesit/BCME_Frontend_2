@@ -35,6 +35,67 @@ export default function AskAnExpert({ }) {
     console.log("checkiiinpuQuil", chatData);
     const toast = useRef<Toast>(null);
 
+    const stateList:Record<string, string> = {
+        AL: 'Alabama',
+        AK: 'Alaska',
+        AZ: 'Arizona',
+        AR: 'Arkansas',
+        CA: 'California',
+        CO: 'Colorado',
+        CT: 'Connecticut',
+        DE: 'Delaware',
+        FL: 'Florida',
+        GA: 'Georgia',
+        HI: 'Hawaii',
+        ID: 'Idaho',
+        IL: 'Illinois',
+        IN: 'Indiana',
+        IA: 'Iowa',
+        KS: 'Kansas',
+        KY: 'Kentucky',
+        LA: 'Louisiana',
+        ME: 'Maine',
+        MD: 'Maryland',
+        MA: 'Massachusetts',
+        MI: 'Michigan',
+        MN: 'Minnesota',
+        MS: 'Mississippi',
+        MO: 'Missouri',
+        MT: 'Montana',
+        NE: 'Nebraska',
+        NV: 'Nevada',
+        NH: 'New Hampshire',
+        NJ: 'New Jersey',
+        NM: 'New Mexico',
+        NY: 'New York',
+        NC: 'North Carolina',
+        ND: 'North Dakota',
+        OH: 'Ohio',
+        OK: 'Oklahoma',
+        OR: 'Oregon',
+        PA: 'Pennsylvania',
+        RI: 'Rhode Island',
+        SC: 'South Carolina',
+        SD: 'South Dakota',
+        TN: 'Tennessee',
+        TX: 'Texas',
+        UT: 'Utah',
+        VT: 'Vermont',
+        VA: 'Virginia',
+        WA: 'Washington',
+        WV: 'West Virginia',
+        WI: 'Wisconsin',
+        WY: 'Wyoming',
+        DC: 'District of Columbia',
+        AS: 'American Samoa',
+        GU: 'Guam',
+        MP: 'Northern Mariana Islands',
+        PR: 'Puerto Rico',
+        VI: 'U.S. Virgin Islands',
+        UM: 'U.S. Minor Outlying Islands',
+    };
+
+
     useEffect(() => {
         if (token) {
             fetchData(token);
@@ -56,6 +117,13 @@ export default function AskAnExpert({ }) {
                             ...row,
                             sn: index++,
                             fullname: row.user.fullname,
+                            addressData: row.abbreviation ? row.abbreviation.replace(/\s+/g, '') : 'Not Found',
+                            date: new Date(row.contact_created).toLocaleDateString('en-US', {
+                                month: '2-digit',
+                                day: '2-digit',
+                                year: 'numeric',
+                            }),
+                            state: stateList[row.stateStr?.toUpperCase()] || 'Unknown',
                         };
                     }
                     return null;
@@ -168,18 +236,22 @@ export default function AskAnExpert({ }) {
             header: "Full Name",
         },
         {
-            field: "fullname",
+            field: "muniStr",
             header: "Municipality",
         },
         {
-            field: "fullname",
+            field: "state",
             header: "State",
         },
         {
-            field: "abbreviation",
+            field: "addressData",
             header: "Auto Search Result",
         },
-        
+        {
+            field: "date",
+            header: "Search Date",
+        },
+
     ];
 
     const modules = {
@@ -302,7 +374,7 @@ export default function AskAnExpert({ }) {
                         showExpandButton={false}
                         showAddButton={false}
                         showCollapseButton={false}
-                        showGlobalSearch={false} onAdd={undefined} onDelete={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectionMode={undefined}                    />
+                        showGlobalSearch={false} onAdd={undefined} onDelete={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectionMode={undefined} />
                 </div>
             ) : (
                 <div
