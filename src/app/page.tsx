@@ -40,21 +40,30 @@ export default function SignIn() {
 
   return (
     <div className="login-page">
+      <h1><i className="fa-solid fa-building"></i> <span>BCme</span> Application</h1>
+      <p>© Building Codes Made Eaiser</p>
       <div className="form">
+        <h2><i className="fa-solid fa-mug-saucer"></i> Please Enter Your Information</h2>
         <form className="login-form" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">login</button>
+          <label>
+            <i className="fa-solid fa-envelope"></i>
+            <input
+              type="text"
+              placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+          <label>
+            <i className="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              placeholder="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+          <button type="submit"><i className="fa-solid fa-key"></i> login</button>
           {error && <p className="error-message">{error}</p>}
         </form>
       </div>

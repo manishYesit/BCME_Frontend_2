@@ -339,7 +339,7 @@ export default function PLRBDomainList({ params }: any) {
       {data.length ? (
         <div>
           <div
-            className="col-sm-12 btn-container"
+            className="col-sm-12 btn-container mb-3"
             style={{ justifyContent: "space-evenly" }}
           >
             <div
@@ -348,15 +348,16 @@ export default function PLRBDomainList({ params }: any) {
                 fontSize: "14px",
                 fontWeight: "400",
                 alignItems: "center",
+                gap: "10px",
               }}
             >
               <span
                 style={{ color: "red", marginRight: "5px", fontWeight: 500 }}
               >
-                <p>Import CSV Spreadsheet :</p>
+                <p className="mb-0">Import CSV Spreadsheet :</p>
               </span>
 
-              <label className="plrb-import-btn" htmlFor="csv-file-input">
+              <label className="plrb-import-btn m-0" htmlFor="csv-file-input">
                 Browse File...
                 <input
                   id="csv-file-input"
@@ -383,7 +384,7 @@ export default function PLRBDomainList({ params }: any) {
             </div>
             <div>
               <button
-                className="plrb-import-btn"
+                className="plrb-import-btn table_add_btn"
                 onClick={() => importCSV(token, file)}
               >
                 Submit Query

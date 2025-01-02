@@ -679,8 +679,7 @@ export default function AskAnExpert({ }) {
         <h1>
           Code Queries
           <small>
-            <i className="ace-icon fa fa-angle-double-right"></i>
-            List
+            <i className="ace-icon fa fa-angle-double-right"></i> List
           </small>
           <div style={{ float: "right", fontSize: "14px" }}>
             <Link href="/admin/view_search_data" style={{ margin: 'auto', color: '#307ecc' }}>

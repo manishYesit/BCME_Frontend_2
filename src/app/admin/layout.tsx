@@ -14,6 +14,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   const pathName = usePathname();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -79,7 +80,7 @@ export default function RootLayout({
   return (
     <>
       <div className="wrapper">
-        <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav className="main-header navbar navbar-expand navbar-white navbar-light nav-wrap">
           <ul
             className="navbar-nav"
             style={{
@@ -93,7 +94,7 @@ export default function RootLayout({
               <a
                 className="nav-link"
                 data-widget="pushmenu"
-                href="#"
+                href="javascript:void(0);"
                 role="button"
                 onClick={handleToggle}
               >
@@ -101,32 +102,23 @@ export default function RootLayout({
               </a>
             </li>
             <li className="nav-item">
-              <div className="admin-menu">
+              <div className="admin-menu" onClick={toggleDropdown}>
                 <div ref={dropdownRef}>
-                  <div
-                    className="user-panel mt-3 d-flex"
-                    onClick={toggleDropdown}
-                  >
+                  <div className="user-panel d-flex">
                     <div className="image">
                       <img
                         src="/dist/img/user2-160x160.jpg"
-                        className="img-circle elevation-2"
+                        className="img-circle"
                         alt="User Image"
                       />
                     </div>
                     <div className="info" style={{ cursor: "pointer" }}>
-                      <a className="d-block">Admin</a>
+                      <a className="d-block">Admin <i class="fa-solid fa-caret-down"></i></a>
                     </div>
                   </div>
-                  <div
-                    style={{
-                      backgroundColor: "white",
-                      position: "absolute",
-                      width: "150px",
-                    }}
-                  >
+                  <div className="admin-menu-dropdown">
                     {isOpen && (
-                      <ul style={{ listStyle: "none", paddingLeft: "5px" }}>
+                      <ul>
                         <li
                           onClick={(e) => {
                             handleLiClick(e);
@@ -166,18 +158,19 @@ export default function RootLayout({
           </ul>
         </nav>
 
-        <aside className="main-sidebar sidebar-dark-primary elevation-4">
+        <aside className="main-sidebar sidebar-dark-primary elevation-4 sidebar-wrap">
           <div className="sidebar">
             <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-              {/* <div className="image">
-                <img
+              <div className="image">
+                {/* <img
                   src="/dist/img/user2-160x160.jpg"
                   className="img-circle elevation-2"
                   alt="User Image"
-                />
-              </div> */}
+                /> */}
+                <i className="fa-solid fa-building"></i>
+              </div>
               <div className="info">
-                <a className="d-block">BCME Admin</a>
+                <a>BCme Admin</a>
               </div>
             </div>
 
@@ -208,7 +201,7 @@ export default function RootLayout({
                       (pathName == "/admin/setting" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-th"></i>
+                    <i className="fa-solid fa-users"></i>
                     <p>Admin Setting</p>
                   </Link>
                 </li>
@@ -220,7 +213,7 @@ export default function RootLayout({
                       (pathName == "/admin/user_management" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-copy"></i>
+                    <i className="fa-solid fa-users"></i>
                     <p>User Management</p>
                   </Link>
                 </li>
@@ -232,7 +225,7 @@ export default function RootLayout({
                       (pathName == "/admin/plrb_member_domain" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-chart-pie"></i>
+                    <i className="fa-solid fa-users"></i>
                     <p>PLRB Member Domain</p>
                   </Link>
                 </li>
@@ -244,7 +237,7 @@ export default function RootLayout({
                       (pathName == "/admin/add_profession" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-tree"></i>
+                    <i className="nav-icon fa-solid fa-user-tie"></i>
                     <p>Add Profession</p>
                   </Link>
                 </li>
@@ -256,7 +249,7 @@ export default function RootLayout({
                       (pathName == "/admin/roof_list" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-edit"></i>
+                    <i className="nav-icon fa-solid fa-people-roof"></i>
                     <p>Roof</p>
                   </Link>
                 </li>
@@ -268,7 +261,7 @@ export default function RootLayout({
                       (pathName == "/admin/stair_list" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-table"></i>
+                    <i className="nav-icon fa-solid fa-stairs"></i>
                     <p>Stairs</p>
                   </Link>
                 </li>
@@ -280,7 +273,7 @@ export default function RootLayout({
                       (pathName == "/admin/roof_tools_list" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-table"></i>
+                    <i className="nav-icon fa-solid fa-screwdriver-wrench"></i>
                     <p>Roof Tools</p>
                   </Link>
                 </li>
@@ -292,7 +285,7 @@ export default function RootLayout({
                       (pathName == "/admin/stair_tools_list" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-table"></i>
+                    <i className="nav-icon fa-solid fa-screwdriver-wrench"></i>
                     <p>Stairs Tools</p>
                   </Link>
                 </li>
@@ -318,7 +311,7 @@ export default function RootLayout({
                       (pathName == "/admin/faq_data" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-table"></i>
+                    <i className="nav-icon fa-solid fa-circle-question"></i>
                     <p>FAQ</p>
                   </Link>
                 </li>
@@ -330,7 +323,7 @@ export default function RootLayout({
                       (pathName == "/admin/clicks_track" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-table"></i>
+                    <i className="nav-icon fa-solid fa-computer-mouse"></i>
                     <p>Clicks Tracking</p>
                   </Link>
                 </li>
@@ -354,7 +347,7 @@ export default function RootLayout({
                       (pathName == "/admin/payment_transaction" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-table"></i>
+                    <i className="nav-icon fa-solid fa-dollar-sign"></i>
                     <p>Payment transaction</p>
                   </Link>
                 </li>
@@ -366,7 +359,7 @@ export default function RootLayout({
                       (pathName == "/admin/email_updates" ? "active" : "")
                     }
                   >
-                    <i className="nav-icon fas fa-table"></i>
+                    <i className="fa-solid fa-envelope"></i>
                     <p>eMail Updates</p>
                   </Link>
                 </li>
@@ -377,14 +370,11 @@ export default function RootLayout({
 
         {/* <div className="content-wrapper" style={{ maxHeight: "4000px" }}>{children}</div> */}
         <div className="content-wrapper">{children}</div>
-        <footer className="main-footer" style={{ textAlign: "center" }}>
-          <strong>
-            Copyright &copy; 2024 <a href="https://adminlte.io">BCME</a>{" "}
-          </strong>
-          All rights reserved.
-          <div className="float-right d-none d-sm-inline-block">
+        <footer className="main-footer footer-wrap" style={{ textAlign: "center" }}>
+          Copyright &copy; 2024 <a href="https://adminlte.io">BCME</a> All rights reserved.
+          {/* <div className="float-right d-none d-sm-inline-block">
             <b>Version</b> 3.2.0
-          </div>
+          </div> */}
         </footer>
 
         <aside className="control-sidebar control-sidebar-dark"></aside>

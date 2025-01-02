@@ -120,8 +120,8 @@ const CustomTable = ({
   return (
     <div>
       <Toast ref={toast} />
-      <div className="card">
-        <div className="flex gap-2 m-1">
+      <div className="card my-card">
+        <div className="flex gap-2 mb-2">
           {showAddButton && (
             <Button
               className="table_add_btn"
@@ -168,14 +168,14 @@ const CustomTable = ({
             </Button>
           )}
         </div>
-        {headerText!=="Header" && (<div className="datatable-mainheader">{headingText}</div>)}
+        {headerText !== "Header" && (<div className="datatable-mainheader">{headingText}</div>)}
         <div
           className={`collapse ${!isCollapsed ? "show" : ""}`}
           id="collapseExample"
         >
           <div className="table_header">
             {showGlobalSearch && (
-              <div className="m-2" style={{ textAlign: "end" }}>
+              <div className="mt-2 mb-2" style={{ textAlign: "end" }}>
                 <IconField>
                   <InputIcon className="pi pi-search" iconPosition="left" />
                   <InputText
@@ -198,7 +198,7 @@ const CustomTable = ({
               globalFilter={globalFilter}
               selectionMode={selectionMode}
               expandedRows={expandedRows}
-              onRowClick={() => {}}
+              onRowClick={() => { }}
               rowExpansionTemplate={rowExpansionTemplate}
             >
               {/* Expand Button Column - Always First */}
@@ -217,7 +217,7 @@ const CustomTable = ({
                       }}
                       icon={
                         expandedRows &&
-                        expandedRows.some((row) => row.sn === rowData.sn)
+                          expandedRows.some((row) => row.sn === rowData.sn)
                           ? "pi pi-minus"
                           : "pi pi-plus"
                       }

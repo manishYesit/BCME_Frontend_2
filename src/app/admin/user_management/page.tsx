@@ -199,7 +199,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { IoHome } from "react-icons/io5";
 
-export default function UserManagement({}) {
+export default function UserManagement({ }) {
   const [refresh, setRefresh] = useState<any>(false);
   interface RowData {
     [key: string]: any;
@@ -219,7 +219,7 @@ export default function UserManagement({}) {
   const [inputPassword, setInputPassword] = useState<string | null>(null);
   const [plrbStatus, setPlrbStatus] = useState<number>(0);
   const [termsCondition, setTermsCondition] = useState<number>(0);
-  const [emailSubscribed, setEmailSubscription ] = useState<number>(0);
+  const [emailSubscribed, setEmailSubscription] = useState<number>(0);
   const [formError, setFormError] = useState<string | null>(null);
   const [linkRowId, setLinkRowId] = useState<string | null>(null);
   const [open, setOpen] = useState<any>(false);
@@ -270,15 +270,15 @@ export default function UserManagement({}) {
     { field: "fullname", header: "Full Name" },
     { field: "email", header: "Email" },
     { field: "phone", header: "Phone" },
-    { 
-      field: "status_plrb", 
+    {
+      field: "status_plrb",
       header: "PLRB Member",
       body: (rowData: any) => (
         <p>{rowData.status_plrb === 1 ? "Yes" : "No"}</p>
       ),
     },
-    { 
-      field: "email_subscribed", 
+    {
+      field: "email_subscribed",
       header: "eMail Opt Out",
       body: (rowData: any) => (
         <p>{rowData.email_subscribed === 1 ? "Subscribed" : "Unsubscribed"}</p>
@@ -526,7 +526,7 @@ export default function UserManagement({}) {
         </div>
       </section>
       {data.length ? (
-        <div>
+        <div className="user-table">
           <CustomTable
             data={data}
             columns={columns}
@@ -560,13 +560,25 @@ export default function UserManagement({}) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={modalStyle}>
-            <div id="modal-modal-title" className="modal_header">
+            <div id="modal-modal-title"
+              style={{
+                backgroundColor: "#307ECC",
+                color: "#FFF",
+                fontSize: "14px",
+                lineHeight: "38px",
+                padding: "5px 15px",
+                marginBottom: "1px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+              className="modal_header">
+
               <div>{linkRowId ? "Update User" : "Add User"}</div>
               <div
                 style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
                 onClick={handleClose}
               >
-                X
+                <i className="fa-solid fa-xmark"></i>
               </div>
             </div>
 
@@ -650,64 +662,64 @@ export default function UserManagement({}) {
                   )}
                 </Box>
               </Box>)}
-              <div className="" style={{display:"flex", fontSize:"10px", flexDirection:"row", justifyContent:"space-between", marginLeft:"180px", marginTop:"10px"}}>
-                
-                {/* <div > */}
-                  <label>
-                    <input
-                      name="plrbstatus"
-                      id="plrbstatus"
-                      className="ace-checkbox-2"
-                      type="checkbox"
+              <div className="checkbox-in" style={{ display: "flex", fontSize: "10px", flexDirection: "row", justifyContent: "space-between", marginLeft: "180px", marginTop: "10px" }}>
 
-                      checked={plrbStatus === 1}
-                      onChange={
-                        (e: React.ChangeEvent<HTMLInputElement>) =>
+                {/* <div > */}
+                <label>
+                  <input
+                    name="plrbstatus"
+                    id="plrbstatus"
+                    className="ace-checkbox-2"
+                    type="checkbox"
+
+                    checked={plrbStatus === 1}
+                    onChange={
+                      (e: React.ChangeEvent<HTMLInputElement>) =>
                         setPlrbStatus(e.target.checked ? 1 : 0)
-                      }
-                    />
-                    <span className="lbl ml-2 mb-2">I am PLRB member</span>
-                  </label>
-                  {/* <div/> */}
-                  {/* <div> */}
+                    }
+                  />
+                  <span className="lbl ml-2 mb-2">I am PLRB member</span>
+                </label>
+                {/* <div/> */}
+                {/* <div> */}
+                <label >
+                  <input
+                    name="termscondition"
+                    id="termscondition"
+                    className="ace-checkbox-2"
+                    type="checkbox"
+                    checked={termsCondition === 1}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setTermsCondition(e.target.checked ? 1 : 0)
+                    }
+                  />
+                  <span className="lbl  ml-2 mb-2">Terms and Conditions*</span>
+                </label>
+                {/* </div> */}
+                {!termsCondition && (
+                  <Typography variant="body2" color="error">
+                    {formError}
+                  </Typography>
+                )}
+              </div>
+
+              {linkRowId && (
+                <div className="checkbox-in" style={{ display: "flex", fontSize: "10px", flexDirection: "row", marginLeft: "180px", marginTop: "10px" }}>
                   <label >
                     <input
-                      name="termscondition"
-                      id="termscondition"
+                      name="emailsubscribed"
+                      id="email_subscribed"
                       className="ace-checkbox-2"
                       type="checkbox"
-                      checked={termsCondition === 1}
+                      checked={emailSubscribed === 1}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setTermsCondition(e.target.checked ? 1 : 0)
+                        setEmailSubscription(e.target.checked ? 1 : 0)
                       }
                     />
-                    <span className="lbl  ml-2 mb-2">Terms and Conditions*</span>
+                    <span className="lbl  ml-2 mb-2">Subscribed to emails</span>
                   </label>
-                  {/* </div> */}
-                  {!termsCondition && (
-                    <Typography variant="body2" color="error">
-                      {formError}
-                    </Typography>
-                  )}
                 </div>
-
-                  {linkRowId && (
-                    <div className="" style={{display:"flex", fontSize:"10px", flexDirection:"row", marginLeft:"180px", marginTop:"10px"}}>
-                      <label >
-                        <input
-                          name="emailsubscribed"
-                          id="email_subscribed"
-                          className="ace-checkbox-2"
-                          type="checkbox"
-                          checked={emailSubscribed === 1}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setEmailSubscription(e.target.checked ? 1 : 0)
-                          }
-                        />
-                        <span className="lbl  ml-2 mb-2">Subscribed to emails</span>
-                      </label>
-                    </div>
-                  )}
+              )}
               {/* </div> */}
 
 
