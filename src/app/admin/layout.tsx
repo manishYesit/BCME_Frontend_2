@@ -113,7 +113,7 @@ export default function RootLayout({
                       />
                     </div>
                     <div className="info" style={{ cursor: "pointer" }}>
-                      <a className="d-block">Admin <i class="fa-solid fa-caret-down"></i></a>
+                      <a className="d-block">Admin <i className="fa-solid fa-caret-down"></i></a>
                     </div>
                   </div>
                   <div className="admin-menu-dropdown">
