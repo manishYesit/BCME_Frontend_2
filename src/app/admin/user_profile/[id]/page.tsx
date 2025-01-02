@@ -98,7 +98,7 @@ const UserProfile = ({ params }: UserProfileProps) => {
           </div>
         </div>
       </section>
-      <ul className="nav nav-tabs ">
+      <ul className="nav nav-tabs">
         <li
           className="nav-item toogle_tab"
           style={{ width: "6.25em", marginLeft: "24px" }}
@@ -115,7 +115,7 @@ const UserProfile = ({ params }: UserProfileProps) => {
       </ul>
 
       <div
-        className="card mt-3"
+        className="card m-0 mt-3"
         style={{
           width: "100%",
           border: "1px solid #ccc",

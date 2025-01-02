@@ -418,7 +418,7 @@ export default function RoofSetOnImage() {
               <h1>{"Dashboard >> Roof"}</h1>
             </div>
           </div>
-          <div className="col-sm-12 btn-container">
+          <div className="col-sm-12 btn-container mt-2">
             <div>
               <button className="add_btn" onClick={handleOpen}>
                 Add

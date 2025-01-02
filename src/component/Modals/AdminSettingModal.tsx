@@ -32,7 +32,7 @@ const modalStyle = {
   flexDirection: "column",
   width: "50%",
   gap: "16px",
-  border: "1px solid #000",
+  // border: "1px solid #000",
 };
 
 const headerStyle = {
@@ -158,7 +158,7 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
             color: "#FFF",
             fontSize: "14px",
             lineHeight: "38px",
-            padding: "5px",
+            padding: "5px 15px",
             marginBottom: "1px",
             display: "flex",
             justifyContent: "space-between",
@@ -169,7 +169,7 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
             style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
             onClick={handleClose}
           >
-            X
+            <i className="fa-solid fa-xmark"></i>
           </div>
         </div>
 
