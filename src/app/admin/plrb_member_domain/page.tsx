@@ -28,6 +28,7 @@ export default function PLRBDomainList({ params }: any) {
   const [domainStatus, setDomainStatus] = useState<string | null>(null);
   const [file, setFile] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
+  const [globalFilter, setGlobalFilter] = useState(null);
   const [open, setOpen] = useState<any>(false);
   const toast = useRef<Toast>(null);
 
@@ -400,8 +401,8 @@ export default function PLRBDomainList({ params }: any) {
             showDeleteButton={false}
             showImportButton={false}
             showExpandButton={false}
-            showGlobalSearch={false}
-            headerText="PLRB Member Domain List " onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
+            showGlobalSearch={true}
+            headerText="PLRB Member Domain List " onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
         </div>
       ) : (
         <div
