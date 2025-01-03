@@ -40,11 +40,17 @@ export default function Home() {
         Authorization: `Bearer ${token}`,
       },
     });
+    const totalCodeQueryList = await axios.get(apiEndpoints.getAskCodeData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setData({
       userCount: totalUsers.data.data.length,
       domainCount: totalDomains.data.data.length,
       roofListCount: totalRoofList.data.data.length,
-      stairListCount: totalStairList.data.data.length
+      stairListCount: totalStairList.data.data.length,
+      codeQueryCount: totalCodeQueryList.data.data.length
     });
   }
 
@@ -85,7 +91,7 @@ export default function Home() {
               <div className="small-box dashboard-box">
                 <div className="inner">
                   <i className="fa-solid fa-user"></i>
-                  {data.userCount ? (
+                  {data.domainCount ? (
                     <h3> {data.domainCount}</h3>
                   ) : (
                     <p>Loading...</p>
@@ -103,7 +109,7 @@ export default function Home() {
               <div className="small-box dashboard-box">
                 <div className="inner">
                   <i className="fa-solid fa-file"></i>
-                  {data.userCount ? (
+                  {data.roofListCount ? (
                     <h3> {data.roofListCount}</h3>
                   ) : (
                     <p>Loading...</p>
@@ -121,7 +127,7 @@ export default function Home() {
               <div className="small-box dashboard-box">
                 <div className="inner">
                   <i className="fa-solid fa-database"></i>
-                  {data.userCount ? (
+                  {data.stairListCount ? (
                     <h3> {data.stairListCount}</h3>
                   ) : (
                     <p>Loading...</p>
@@ -139,13 +145,17 @@ export default function Home() {
               <div className="small-box dashboard-box">
                 <div className="inner">
                   <i className="fa-solid fa-clipboard-question"></i>
-                  <h3>2493</h3>
+                  {data.codeQueryCount ? (
+                    <h3> {data.codeQueryCount}</h3>
+                  ) : (
+                    <p>Loading...</p>
+                  )}
                   <p>ASK Queries</p>
                 </div>
                 {/* <div className="icon">
                   <i className="ion ion-bag"></i>
                 </div> */}
-                <a href="#" className="small-box-footer">View Details<i className="fa-solid fa-chevron-right"></i></a>
+                <a href="ask_an_expert" className="small-box-footer">View Details<i className="fa-solid fa-chevron-right"></i></a>
               </div>
             </div>
           </div>
