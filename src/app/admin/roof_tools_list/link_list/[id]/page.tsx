@@ -274,14 +274,16 @@ export default function roofToolList({ params }: any) {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1>Roof List</h1>
+              <h1>Roof Tools List</h1>
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <Link href="dashboard">Home</Link>
+                  <Link href="/admin/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item active">Roof</li>
+                <li className="breadcrumb-item">
+                  <Link href="/admin/roof_tools_list">Roof Tools List</Link>
+                </li>
               </ol>
             </div>
           </div>

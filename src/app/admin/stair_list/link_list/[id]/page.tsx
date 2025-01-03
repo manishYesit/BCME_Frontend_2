@@ -286,9 +286,11 @@ export default function StairList({ params }: any) {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <Link href="dashboard">Home</Link>
+                  <Link href="/admin/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item active">Stair List</li>
+                <li className="breadcrumb-item">
+                  <Link href="/admin/stair_list">Stair List</Link>
+                </li>
               </ol>
             </div>
           </div>

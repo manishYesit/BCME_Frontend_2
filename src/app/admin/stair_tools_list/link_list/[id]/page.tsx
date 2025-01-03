@@ -274,14 +274,16 @@ export default function StairToolList({ params }: any) {
         <div className="container-fluid">
           <div className="row mb-2">
             <div className="col-sm-6">
-              <h1>Stair List</h1>
+              <h1>Stair Tools List</h1>
             </div>
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <Link href="dashboard">Home</Link>
+                  <Link href="/admin/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item active">Stair</li>
+                <li className="breadcrumb-item">
+                  <Link href="/admin/stair_tools_list">Stair Tools List</Link>
+                </li>
               </ol>
             </div>
           </div>

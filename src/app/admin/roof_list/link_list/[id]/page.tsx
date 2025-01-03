@@ -279,9 +279,11 @@ export default function roofList({ params }: any) {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <Link href="dashboard">Home</Link>
+                  <Link href="/admin/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item active">Roof</li>
+                <li className="breadcrumb-item">
+                  <Link href="/admin/roof_list">Roof List</Link>
+                </li>
               </ol>
             </div>
           </div>
