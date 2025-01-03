@@ -139,7 +139,7 @@ export default function viewList({ params }: any) {
       body: (rowData: any) =>
         rowData.img ? (
           <Link
-            href={`https://staging.mybcme.com/assets/fqa/${rowData.img}`}
+            href={`http://3.12.198.252/api/assets/fqa/${rowData.img}`}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -265,9 +265,11 @@ export default function viewList({ params }: any) {
             <div className="col-sm-6">
               <ol className="breadcrumb float-sm-right">
                 <li className="breadcrumb-item">
-                  <Link href="dashboard">Home</Link>
+                  <Link href="/admin/dashboard">Home</Link>
                 </li>
-                <li className="breadcrumb-item active">FAQ List</li>
+                <li className="breadcrumb-item">
+                  <Link href="/admin/faq_data">FAQ List</Link>
+                </li>
               </ol>
             </div>
           </div>
