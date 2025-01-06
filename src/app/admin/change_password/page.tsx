@@ -53,7 +53,7 @@
 // }
 
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styles from "../../../../public/dist/css/ChangePassword.module.css";
@@ -63,6 +63,7 @@ import { CiUnlock } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { RootState } from "@/store";
+import { Toast } from "primereact/toast";
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -84,6 +85,7 @@ const ChangePassword = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const toast = useRef<Toast>(null);
 
   // Toggle show password functionality
   const togglePasswordVisibility = (field: string) => {
@@ -134,113 +136,116 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.heading}>Change Password</h1>
-      <Formik
-        initialValues={{
-          oldPassword: "",
-          newPassword: "",
-          confirmPassword: "",
-        }}
-        validationSchema={validationSchema}
-        onSubmit={changePassword}
+    <>
+      <div className={styles.container}>
+        <h1 className={styles.heading}>Change Password</h1>
+        <Formik
+          initialValues={{
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          }}
+          validationSchema={validationSchema}
+          onSubmit={changePassword}
 
-        // changePassword("Form submitted", values);
-        // Handle form submission logic here
-        // }}
-      >
-        {({ setFieldValue, values }) => (
-          <Form className={styles.form}>
-            <div className={styles.formGroup}>
-              <label htmlFor="oldPassword" className={styles.label}>
-                Old Password
-              </label>
-              <div className="passwordContainer">
-                <Field
-                  type={showOldPassword ? "text" : "password"}
-                  id="oldPassword"
+          // changePassword("Form submitted", values);
+          // Handle form submission logic here
+          // }}
+        >
+          {({ setFieldValue, values }) => (
+            <Form className={styles.form}>
+              <div className={styles.formGroup}>
+                <label htmlFor="oldPassword" className={styles.label}>
+                  Old Password
+                </label>
+                <div className="passwordContainer">
+                  <Field
+                    type={showOldPassword ? "text" : "password"}
+                    id="oldPassword"
+                    name="oldPassword"
+                    className={styles.input}
+                  />
+                  <button
+                    id="passwordIcon"
+                    type="button"
+                    onClick={() => togglePasswordVisibility("oldPassword")}
+                    className={styles.toggleButton}
+                  >
+                    {showOldPassword ? <CiUnlock /> : <CiLock />}
+                  </button>
+                </div>
+                <ErrorMessage
                   name="oldPassword"
-                  className={styles.input}
+                  component="div"
+                  className="error"
                 />
-                <button
-                  id="passwordIcon"
-                  type="button"
-                  onClick={() => togglePasswordVisibility("oldPassword")}
-                  className={styles.toggleButton}
-                >
-                  {showOldPassword ? <CiUnlock /> : <CiLock />}
-                </button>
               </div>
-              <ErrorMessage
-                name="oldPassword"
-                component="div"
-                className="error"
-              />
-            </div>
 
-            <div className={styles.formGroup}>
-              <label htmlFor="newPassword" className={styles.label}>
-                New Password
-              </label>
-              <div className={styles.passwordContainer}>
-                <Field
-                  type={showNewPassword ? "text" : "password"}
-                  id="newPassword"
+              <div className={styles.formGroup}>
+                <label htmlFor="newPassword" className={styles.label}>
+                  New Password
+                </label>
+                <div className={styles.passwordContainer}>
+                  <Field
+                    type={showNewPassword ? "text" : "password"}
+                    id="newPassword"
+                    name="newPassword"
+                    className={styles.input}
+                  />
+                  <button
+                    id="passwordIcon"
+                    type="button"
+                    onClick={() => togglePasswordVisibility("newPassword")}
+                    className={styles.toggleButton}
+                  >
+                    {showNewPassword ? <CiUnlock /> : <CiLock />}
+                  </button>
+                </div>
+                <ErrorMessage
                   name="newPassword"
-                  className={styles.input}
+                  component="div"
+                  className="error"
                 />
-                <button
-                  id="passwordIcon"
-                  type="button"
-                  onClick={() => togglePasswordVisibility("newPassword")}
-                  className={styles.toggleButton}
-                >
-                  {showNewPassword ? <CiUnlock /> : <CiLock />}
-                </button>
               </div>
-              <ErrorMessage
-                name="newPassword"
-                component="div"
-                className="error"
-              />
-            </div>
 
-            <div className={styles.formGroup}>
-              <label htmlFor="confirmPassword" className="label">
-                Confirm Password
-              </label>
-              <div className="passwordContainer">
-                <Field
-                  type={showConfirmPassword ? "text" : "password"}
-                  id="confirmPassword"
+              <div className={styles.formGroup}>
+                <label htmlFor="confirmPassword" className="label">
+                  Confirm Password
+                </label>
+                <div className="passwordContainer">
+                  <Field
+                    type={showConfirmPassword ? "text" : "password"}
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    className={styles.input}
+                  />
+                  <button
+                    type="button"
+                    id="passwordIcon"
+                    onClick={() => togglePasswordVisibility("confirmPassword")}
+                    className={styles.toggleButton}
+                  >
+                    {showConfirmPassword ? <CiUnlock /> : <CiLock />}
+                  </button>
+                </div>
+                <ErrorMessage
                   name="confirmPassword"
-                  className={styles.input}
+                  component="div"
+                  className="error"
                 />
-                <button
-                  type="button"
-                  id="passwordIcon"
-                  onClick={() => togglePasswordVisibility("confirmPassword")}
-                  className={styles.toggleButton}
-                >
-                  {showConfirmPassword ? <CiUnlock /> : <CiLock />}
+              </div>
+
+              <div className={styles.buttonContainer}>
+                <button type="submit" className={styles.saveButton}>
+                  Save
                 </button>
               </div>
-              <ErrorMessage
-                name="confirmPassword"
-                component="div"
-                className="error"
-              />
-            </div>
-
-            <div className={styles.buttonContainer}>
-              <button type="submit" className={styles.saveButton}>
-                Save
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+      <Toast ref={toast} />
+    </>
   );
 };
 
