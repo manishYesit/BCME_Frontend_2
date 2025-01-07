@@ -247,7 +247,7 @@ export default function AskAnExpert({ }) {
       fetchData(token);
       fetchChatData(token);
     }
-  }, [refresh, token, statusFilter, dateFilter]);
+  }, [refresh, token, statusFilter, dateFilter, selectedQueryRows]);
 
   const handleStatusFilter = (e: any) => {
     setStatusFilter(e.value);
