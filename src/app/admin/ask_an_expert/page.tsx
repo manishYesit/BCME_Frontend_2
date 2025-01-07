@@ -217,6 +217,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { IoHome } from "react-icons/io5";
 import { Dropdown } from "primereact/dropdown";
+import { Dialog } from "primereact/dialog";
 
 export default function AskAnExpert({ }) {
   const [refresh, setRefresh] = useState<any>(false);
@@ -231,6 +232,10 @@ export default function AskAnExpert({ }) {
   const [showAmountField, setShowAmountField] = useState<any | boolean>(false);
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [dateFilter, setDateFilter] = useState<string>("all");
+  const [filters, setFilters] = useState<any[]>([]);
+  const [applyMode, setApplyMode] = useState<string>('AND');
+  const [applyFilter, setApplyFilter] = useState<boolean>(false);
+  const [dialogVisible, setDialogVisible] = useState<boolean>(false);
 
   console.log("checkiiinpuQuil", chatData);
   const toast = useRef<Toast>(null);
@@ -247,7 +252,7 @@ export default function AskAnExpert({ }) {
       fetchData(token);
       fetchChatData(token);
     }
-  }, [refresh, token, statusFilter, dateFilter, selectedQueryRows]);
+  }, [refresh, token, statusFilter, dateFilter, selectedQueryRows, applyFilter]);
 
   const handleStatusFilter = (e: any) => {
     setStatusFilter(e.value);
@@ -256,6 +261,20 @@ export default function AskAnExpert({ }) {
   const handleDateFilter = (e: any) => {
     setDateFilter(e.value);
   };
+
+  const handleApplyMode = (e: any) => {
+    setApplyMode(e.value);
+  };
+
+  const handleAddFilter = () => {
+    setFilters([...filters, { column: '', condition: '', value: '' }]);
+  }
+
+  function updateFilter(index: number, key: string | number, value: any) {
+    const updatedFilters = [...filters];
+    updatedFilters[index][key] = value;
+    setFilters(updatedFilters);
+  }
 
   async function fetchData(token: any) {
     try {
@@ -311,6 +330,26 @@ export default function AskAnExpert({ }) {
           updatedData = updatedData.filter(
             (row: any) => row.contact_created.includes(`${thisYear}`)
           );
+        }
+
+        if (applyFilter) {
+          updatedData = updatedData.filter((row: any) => {
+            return filters.every((filter: any) => {
+              const columnValue = row[filter.column];
+              switch (filter.condition) {
+                case 'equals':
+                  return columnValue === filter.value;
+                case 'contains':
+                  return columnValue.includes(filter.value);
+                case 'greater than':
+                  return columnValue > filter.value;
+                case 'less than':
+                  return columnValue < filter.value;
+                default:
+                  return true;
+              }
+            });
+          });
         }
 
         setData(updatedData);
@@ -438,7 +477,7 @@ export default function AskAnExpert({ }) {
     });
   };
 
-  const handleMultiDelete = (selectedRows:any) => {
+  const handleMultiDelete = (selectedRows: any) => {
     console.log("selected rows is", selectedRows);
     // return;
     confirmDialog({
@@ -479,6 +518,115 @@ export default function AskAnExpert({ }) {
     });
   };
 
+  const handleApply = () => {
+    const applyFilters = () => {
+      return data.filter((row: any) => {
+        console.log("applyMode is", applyMode);
+        
+        if (applyMode === 'AND') {
+          return filters.every((filter) => matchCondition(row[filter.column], filter));
+        } else {
+          return filters.some((filter) => matchCondition(row[filter.column], filter));
+        }
+      });
+    };
+
+    const matchCondition = (fieldValue: any, filter: any) => {
+
+      if (!fieldValue || !filter.value) return false;
+      console.log("fieldValue & filter value is", fieldValue, filter.value, fieldValue === filter.value);
+      switch (filter.condition) {
+        case 'equals':
+          return fieldValue == filter.value;
+        case 'contains':
+          if(filter.value=="all") {
+            return true;
+          } else if(filter.value=="open" || filter.value == "closed"){
+            setStatusFilter(filter.value);
+          } else if(filter.value=="thisMonth" || filter.value == "thisYear"){
+            setDateFilter(filter.value);
+          } else {
+            return fieldValue.toString().includes(filter.value);
+          }
+        case 'greater than':
+          return fieldValue > filter.value;
+        case 'less than':
+          return fieldValue < filter.value;
+        default:
+          return true;
+      }
+    };
+
+    const result = applyFilters();
+    console.log("result is", result);
+    setData(result);
+    setDialogVisible(false); // Close dialog after applying
+  };
+
+  const removeFilter = (index:any) => {
+    const updatedFilters = filters.filter((_, i) => i !== index);
+    setFilters(updatedFilters);
+  };
+
+  const resetFilters = () => {
+    setFilters([]);
+  };
+
+  const getConditionOptions = (column:any) => {
+    if (['contact_status', 'contact_created'].includes(column)) {
+      return [{ label: 'Contains', value: 'contains' }];
+    }
+    return [
+      { label: 'Equals', value: 'equals' },
+      { label: 'Contains', value: 'contains' },
+      { label: 'Greater Than', value: 'greater than' },
+      { label: 'Less Than', value: 'less than' },
+    ];
+  };
+
+  const getValueInput = (filter: any, index: any) => {
+    if (filter.column === 'contact_status') {
+      // const statusOptions = ['All', 'Open', 'Closed'];
+      return (
+        <Dropdown
+          value={filter.value}
+          options={[
+            { label: "All", value: "all" },
+            { label: "Open", value: "open" },
+            { label: "Closed", value: "closed" },
+          ]}
+          onChange={(e) => updateFilter(index, 'value', e.value)}
+          placeholder="Select Status"
+          style={{ flex: 2 }}
+        />
+      );
+    } else if (filter.column === 'contact_created') {
+      const dateOptions = ['All', 'This Month', 'This Year'];
+      return (
+        <Dropdown
+          value={filter.value}
+          options={[
+            { label: "All", value: "all" },
+            { label: "This month", value: "thisMonth" },
+            { label: "This Year", value: "thisYear" },
+          ]}
+          onChange={(e) => updateFilter(index, 'value', e.value)}
+          placeholder="Select Date Range"
+          style={{ flex: 2 }}
+        />
+      );
+    } else {
+      return (
+        <input
+          type="text"
+          onChange={(e) => updateFilter(index, 'value', e.target.value)}
+          style={{ flex: 2 }}
+          placeholder="Enter value"
+          value={filter.value}
+        />
+      );
+    }
+  };
 
   const handleStatusUpdate = async (rowData: any, newStatus: number) => {
     try {
@@ -847,6 +995,105 @@ export default function AskAnExpert({ }) {
       )}
       <Toast ref={toast} />
       <ConfirmDialog />
+
+      <Button icon="pi pi-search" className="p-button-text" onClick={() => setDialogVisible(true)} />
+      <Dialog
+        visible={dialogVisible}
+        onHide={() => setDialogVisible(false)}
+        header="Custom Filters"
+        style={{ width: '50vw' }}
+        footer={
+          <div>
+            <Button label="Reset" icon="pi pi-refresh" onClick={resetFilters} className="p-button-danger" />
+            <Button label="Cancel" icon="pi pi-times" onClick={() => setDialogVisible(false)} className="p-button-text" />
+            <Button label="Apply Filter" icon="pi pi-check" onClick={handleApply} />
+          </div>
+        }
+      >
+
+        <div style={{ marginTop: '1rem', marginBottom:'1rem' }}>
+        <Button icon="pi pi-plus"  onClick={handleAddFilter} />
+        <Dropdown
+            value={applyMode}
+            options={[
+              { label: "All", value: "AND" },
+              { label: "Any", value: "OR" },
+            ]}
+            onChange={handleApplyMode}
+            placeholder="Filter"
+            style={{ width: "7rem" }}
+          />
+          {/* <label style={{ marginRight: '1rem' }}>
+            <input
+              type="radio"
+              value="AND"
+              checked={applyMode === 'AND'}
+              onChange={() => setApplyMode('AND')}
+              style={{ marginRight: '0.5rem' }}
+            />
+            Apply All
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="OR"
+              checked={applyMode === 'OR'}
+              onChange={() => setApplyMode('OR')}
+              style={{ marginRight: '0.5rem' }}
+            />
+            Apply Any
+          </label> */}
+        </div>
+        <div className="filter-dialog">
+          {filters.map((filter, index) => (
+            <div key={index} className="filter-row" style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
+              <select
+                onChange={(e) => updateFilter(index, 'column', e.target.value)}
+                style={{ flex: 1 }}
+                value={filter.column}
+              >
+                <option value="">Select Column</option>
+                {columns.flatMap((item: any) => item.field).map((col: any) => (
+                  <option key={col} value={col}>
+                    {col}
+                  </option>
+                ))}
+              </select>
+              {/* <select
+                  onChange={(e) => updateFilter(index, 'condition', e.target.value)}
+                  style={{ flex: 1 }}
+                  value={filter.condition}
+                >
+                  <option value="">Select Condition</option>
+                  <option value="equals">Equals</option>
+                  <option value="contains">Contains</option>
+                  <option value="greater than">Greater Than</option>
+                  <option value="less than">Less Than</option>
+                </select>
+                <input
+                  type="text"
+                  onChange={(e) => updateFilter(index, 'value', e.target.value)}
+                  style={{ flex: 2 }}
+                  placeholder="Enter value"
+                  value={filter.value}
+                /> */}
+              <Dropdown
+                value={filter.condition}
+                options={getConditionOptions(filter.column)}
+                onChange={(e) => updateFilter(index, 'condition', e.value)}
+                placeholder="Select Condition"
+                style={{ flex: 1 }}
+              />
+              {getValueInput(filter, index)}
+              <Button
+                icon="pi pi-times"
+                className="p-button-text p-button-danger"
+                onClick={() => removeFilter(index)}
+              />
+            </div>
+          ))}
+        </div>
+      </Dialog>
     </>
   );
 }
