@@ -440,6 +440,43 @@ export default function AskAnExpert({ }) {
     }
   };
 
+  const handleEmailQuery = (rowData: any) => {
+    confirmDialog({
+      message: "Do you want to send query on email?",
+      header: "Email Confirmation",
+      icon: "pi pi-info-circle",
+      defaultFocus: "reject",
+      acceptClassName: "p-button-danger",
+
+      accept: async () => {
+        try {
+          await axios.post(
+            apiEndpoints.sendQueryOnEmail,
+            { id: rowData.contact_id, type: rowData.question_type },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          toast.current?.show({
+            severity: "warn",
+            detail: "Email sent successfully!",
+            life: 3000,
+          });
+          fetchData(token);
+        } catch (error) {
+          console.error("Error deleting:", error);
+          toast.current?.show({
+            severity: "error",
+            detail: "Error sending the email.",
+            life: 3000,
+          });
+        }
+      },
+    });
+  };
+
   const handleDelete = (rowData: any) => {
     confirmDialog({
       message: "Do you want to delete this record?",
@@ -570,6 +607,7 @@ export default function AskAnExpert({ }) {
 
   const resetFilters = () => {
     setFilters([]);
+    setRefresh(true);
   };
 
   const getConditionOptions = (column:any) => {
@@ -630,9 +668,9 @@ export default function AskAnExpert({ }) {
 
   const handleStatusUpdate = async (rowData: any, newStatus: number) => {
     try {
-      const payload = { domain_id: rowData.domain_id, status: newStatus };
+      const payload = { id: rowData.contact_id, status: newStatus };
 
-      const response = await axios.post(apiEndpoints.domainStatus, payload, {
+      const response = await axios.post(apiEndpoints.askQuestionStatus, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -657,17 +695,17 @@ export default function AskAnExpert({ }) {
     }
   };
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (rowData:any) => {
     try {
       const payload = {
         contactId: selectedQueryRows,
         msg: inpuChatValue,
         amount: inputAmount,
-        type: inputAmount ? "amount" : "",
+        type: inputAmount ? "amount" : rowData.userId,
       };
 
       const response = await axios.post(
-        apiEndpoints.send_QueryMessage,
+        apiEndpoints.saveCodeMessage,
         payload,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -751,6 +789,9 @@ export default function AskAnExpert({ }) {
             border: "none",
             height: "20px",
           }}
+          onClick={() =>
+            handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1)
+          }
         />
       ),
     },
@@ -788,6 +829,7 @@ export default function AskAnExpert({ }) {
           />
           <Button
             icon="pi pi-envelope"
+            onClick={() => handleEmailQuery(rowData)}
             style={{ background: "none", color: "#337ab7", border: "none" }}
           />
           <input
@@ -896,7 +938,7 @@ export default function AskAnExpert({ }) {
           <button
             type="button"
             className="modal_send_btn"
-            onClick={handleSendMessage}
+            onClick={() => handleSendMessage(data)}
           >
             <FaShare size={20} /> Send
           </button>

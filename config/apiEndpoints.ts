@@ -103,6 +103,9 @@ const apiEndpoints = {
   createXLS: `${API_BASE_URL}/tf_ask_code/createXLS`,
   exportSearchData: `${API_BASE_URL}/tf_ask_code/exportSearchData`,
   deleteCodeQuery: `${API_BASE_URL}/tf_ask_code/deleteData`,
+  sendQueryOnEmail: `${API_BASE_URL}/tf_ask_code/send_email`,
+  saveCodeMessage: `${API_BASE_URL}/tf_ask_code/saveCodeMessage`,
+  askQuestionStatus: `${API_BASE_URL}/tf_ask_code/askQuestionStatus`,
 
   sendEmailUpdates: `${API_BASE_URL}/mailqueue/sendEmailUpdates`,
   
