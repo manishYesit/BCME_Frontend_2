@@ -236,6 +236,7 @@ export default function AskAnExpert({ }) {
   const [applyMode, setApplyMode] = useState<string>('AND');
   const [applyFilter, setApplyFilter] = useState<boolean>(false);
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
+  const [filteredData, setFilteredData] = useState(data);
 
   console.log("checkiiinpuQuil", chatData);
   const toast = useRef<Toast>(null);
@@ -253,6 +254,11 @@ export default function AskAnExpert({ }) {
       fetchChatData(token);
     }
   }, [refresh, token, statusFilter, dateFilter, selectedQueryRows, applyFilter]);
+
+  useEffect(() => {
+    // Sync filteredData with data when data prop changes
+    setFilteredData(data);
+  }, [data]);
 
   const handleStatusFilter = (e: any) => {
     setStatusFilter(e.value);
@@ -460,7 +466,7 @@ export default function AskAnExpert({ }) {
             }
           );
           toast.current?.show({
-            severity: "warn",
+            severity: "success",
             detail: "Email sent successfully!",
             life: 3000,
           });
@@ -559,7 +565,7 @@ export default function AskAnExpert({ }) {
     const applyFilters = () => {
       return data.filter((row: any) => {
         console.log("applyMode is", applyMode);
-        
+
         if (applyMode === 'AND') {
           return filters.every((filter) => matchCondition(row[filter.column], filter));
         } else {
@@ -576,43 +582,93 @@ export default function AskAnExpert({ }) {
         case 'equals':
           return fieldValue == filter.value;
         case 'contains':
-          if(filter.value=="all") {
+          if (filter.value == "all") {
             return true;
-          } else if(filter.value=="open" || filter.value == "closed"){
+          } else if (filter.value == "open" || filter.value == "closed") {
             setStatusFilter(filter.value);
-          } else if(filter.value=="thisMonth" || filter.value == "thisYear"){
+          } else if (filter.value == "thisMonth" || filter.value == "thisYear") {
             setDateFilter(filter.value);
           } else {
             return fieldValue.toString().includes(filter.value);
           }
-        case 'greater than':
-          return fieldValue > filter.value;
-        case 'less than':
-          return fieldValue < filter.value;
-        default:
-          return true;
+          case 'less_than':
+            return fieldValue < filter.value;
+          case 'less_or_equal':
+            return fieldValue <= filter.value;
+          case 'greater than':
+            return fieldValue > filter.value;
+          case 'greater_or_equal':
+            return fieldValue >= filter.value;
+          case 'is_null':
+            return fieldValue === null || fieldValue === undefined;
+          case 'is_not_null':
+            return fieldValue !== null && fieldValue !== undefined;
+          case 'is_in':
+            return Array.isArray(filter.value) && filter.value.includes(fieldValue);
+          case 'is_not_in':
+            return Array.isArray(filter.value) && !filter.value.includes(fieldValue);
+          case 'begin_with':
+            return fieldValue?.toString().startsWith(filter.value);
+          case 'does_not_begin_with':
+            return !fieldValue?.toString().startsWith(filter.value);
+          case 'ends_with':
+            return fieldValue?.toString().endsWith(filter.value);
+          case 'does_not_end_with':
+            return !fieldValue?.toString().endsWith(filter.value);
+          default:
+            return true;
       }
     };
 
     const result = applyFilters();
-    console.log("result is", result);
-    setData(result);
+    // setData(result);
+    setFilteredData(result);
     setDialogVisible(false); // Close dialog after applying
   };
 
-  const removeFilter = (index:any) => {
+  const removeFilter = (index: any) => {
     const updatedFilters = filters.filter((_, i) => i !== index);
     setFilters(updatedFilters);
   };
 
   const resetFilters = () => {
     setFilters([]);
-    setRefresh(true);
+    fetchData(token);
   };
 
-  const getConditionOptions = (column:any) => {
+  const getConditionOptions = (column: any) => {
     if (['contact_status', 'contact_created'].includes(column)) {
-      return [{ label: 'Contains', value: 'contains' }];
+      return [{ label: 'contains', value: 'contains' }];
+    }
+    if (['sn'].includes(column)) {
+      return [
+        { label: 'equals', value: 'equals' },
+        { label: 'not equal', value: 'not_equal' },
+        { label: 'less', value: 'less_than' },
+        { label: 'less or equal', value: 'less_or_equal' },
+        { label: 'greater', value: 'greater_than' },
+        { label: 'greater or equal', value: 'greater_or_equal' },
+        { label: 'is null', value: 'is_null' },
+        { label: 'is not null', value: 'is_not_null' },
+        { label: 'is in', value: 'is_in' },
+        { label: 'is not in', value: 'is_not_in' },
+      ];
+    }
+    if (['fullname'].includes(column)) {
+      return [
+        { label: 'equals', value: 'equals' },
+        { label: 'not equal', value: 'not_equal' },
+        { label: 'begin with', value: 'begin_with' },
+        { label: 'does not begin with', value: 'does_not_begin_with' },
+        { label: 'ends with', value: 'ends_with' },
+        { label: 'does not end with', value: 'does_not_end_with' },
+        { label: 'contains', value: 'contains' },
+        { label: 'does not contain', value: 'does_not_contain' },
+        { label: 'is null', value: 'is_null' },
+        { label: 'is not null', value: 'is_not_null' },
+        { label: 'is in', value: 'is_in' },
+        { label: 'is not in', value: 'is_not_in' },
+      ];
     }
     return [
       { label: 'Equals', value: 'equals' },
@@ -695,7 +751,7 @@ export default function AskAnExpert({ }) {
     }
   };
 
-  const handleSendMessage = async (rowData:any) => {
+  const handleSendMessage = async (rowData: any) => {
     try {
       const payload = {
         contactId: selectedQueryRows,
@@ -728,6 +784,34 @@ export default function AskAnExpert({ }) {
       });
     }
   };
+
+  const columnMapping = [
+    {
+      field: "sn",
+      header: "S. No.",
+    },
+    {
+      field: "fullname",
+      header: "Full Name",
+    },
+    {
+      field: "contact_price",
+      header: "Amount",
+    },
+    {
+      field: "contact_status",
+      header: "Status"
+    },
+    {
+      field: "contact_created",
+      header: "Date",
+    },
+    {
+      field: "actions",
+      header: "Actions",
+    }
+
+  ];
 
   const columns = [
     {
@@ -1005,10 +1089,10 @@ export default function AskAnExpert({ }) {
           </div>
         </h1>
       </div>
-      {data.length ? (
+      {filteredData.length ? (
         <div>
           <CustomTable
-            data={data}
+            data={filteredData}
             columns={columns}
             selectedRows={selectedRows}
             setSelectedRows={setSelectedRows}
@@ -1042,20 +1126,20 @@ export default function AskAnExpert({ }) {
       <Dialog
         visible={dialogVisible}
         onHide={() => setDialogVisible(false)}
-        header="Custom Filters"
-        style={{ width: '50vw' }}
+        header="Search..."
+        style={{ width: '55vw' }}
         footer={
-          <div>
+          <div style={{display: "flex", justifyContent: "space-between"}}>
             <Button label="Reset" icon="pi pi-refresh" onClick={resetFilters} className="p-button-danger" />
-            <Button label="Cancel" icon="pi pi-times" onClick={() => setDialogVisible(false)} className="p-button-text" />
+            {/* <Button label="Cancel" icon="pi pi-times" onClick={() => setDialogVisible(false)} className="p-button-text" /> */}
             <Button label="Apply Filter" icon="pi pi-check" onClick={handleApply} />
           </div>
         }
       >
 
-        <div style={{ marginTop: '1rem', marginBottom:'1rem' }}>
-        <Button icon="pi pi-plus"  onClick={handleAddFilter} />
-        <Dropdown
+        <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+          <Button icon="pi pi-plus" onClick={handleAddFilter} />
+          <Dropdown
             value={applyMode}
             options={[
               { label: "All", value: "AND" },
@@ -1089,7 +1173,17 @@ export default function AskAnExpert({ }) {
         <div className="filter-dialog">
           {filters.map((filter, index) => (
             <div key={index} className="filter-row" style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
-              <select
+              <Dropdown
+                value={filter.column}
+                onChange={(e) => updateFilter(index, 'column', e.value)}
+                options={columnMapping.map((item: any) => ({
+                  label: item.header, // Replace `header` with the appropriate label property
+                  value: item.field,  // Replace `field` with the appropriate value property
+                }))}
+                placeholder="Select Column"
+                style={{ flex: 1 }}
+              />
+              {/* <select
                 onChange={(e) => updateFilter(index, 'column', e.target.value)}
                 style={{ flex: 1 }}
                 value={filter.column}
@@ -1100,7 +1194,7 @@ export default function AskAnExpert({ }) {
                     {col}
                   </option>
                 ))}
-              </select>
+              </select> */}
               {/* <select
                   onChange={(e) => updateFilter(index, 'condition', e.target.value)}
                   style={{ flex: 1 }}
