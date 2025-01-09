@@ -2,6 +2,8 @@ const API_BASE_URL = process.env.PUBLIC_API_BASE_URL;
 
 const apiEndpoints = {
   loginUser: `${API_BASE_URL}/auth/login`,
+  forgotPassword: `${API_BASE_URL}/auth/forgot-password`,
+  resetPassword: `${API_BASE_URL}/auth/reset-password`,
 
   //add_prfession
   getAllProfessions: `${API_BASE_URL}/tf_profession/getAllProfessions`,

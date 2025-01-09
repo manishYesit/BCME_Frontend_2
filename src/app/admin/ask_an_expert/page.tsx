@@ -564,7 +564,6 @@ export default function AskAnExpert({ }) {
   const handleApply = () => {
     const applyFilters = () => {
       return data.filter((row: any) => {
-        console.log("applyMode is", applyMode);
 
         if (applyMode === 'AND') {
           return filters.every((filter) => matchCondition(row[filter.column], filter));
@@ -577,10 +576,12 @@ export default function AskAnExpert({ }) {
     const matchCondition = (fieldValue: any, filter: any) => {
 
       if (!fieldValue || !filter.value) return false;
-      console.log("fieldValue & filter value is", fieldValue, filter.value, fieldValue === filter.value);
+      // console.log("fieldValue & filter value is", fieldValue, filter.value, fieldValue === filter.value);
       switch (filter.condition) {
         case 'equals':
           return fieldValue == filter.value;
+        case 'not_equal':
+          return fieldValue != filter.value;
         case 'contains':
           if (filter.value == "all") {
             return true;
@@ -633,6 +634,8 @@ export default function AskAnExpert({ }) {
 
   const resetFilters = () => {
     setFilters([]);
+    setStatusFilter('all');
+    setDateFilter('all');
     fetchData(token);
   };
 
@@ -654,7 +657,7 @@ export default function AskAnExpert({ }) {
         { label: 'is not in', value: 'is_not_in' },
       ];
     }
-    if (['fullname'].includes(column)) {
+    if (['fullname', 'actions', 'contact_price'].includes(column)) {
       return [
         { label: 'equals', value: 'equals' },
         { label: 'not equal', value: 'not_equal' },
@@ -691,7 +694,7 @@ export default function AskAnExpert({ }) {
           ]}
           onChange={(e) => updateFilter(index, 'value', e.value)}
           placeholder="Select Status"
-          style={{ flex: 2 }}
+          style={{ flexBasis: '30%', flexGrow: 0 }}
         />
       );
     } else if (filter.column === 'contact_created') {
@@ -706,7 +709,7 @@ export default function AskAnExpert({ }) {
           ]}
           onChange={(e) => updateFilter(index, 'value', e.value)}
           placeholder="Select Date Range"
-          style={{ flex: 2 }}
+          style={{ flexBasis: '30%', flexGrow: 0 }}
         />
       );
     } else {
@@ -714,7 +717,7 @@ export default function AskAnExpert({ }) {
         <input
           type="text"
           onChange={(e) => updateFilter(index, 'value', e.target.value)}
-          style={{ flex: 2 }}
+          style={{ flexBasis: '30%', flexGrow: 0 }}
           placeholder="Enter value"
           value={filter.value}
         />
@@ -1129,16 +1132,25 @@ export default function AskAnExpert({ }) {
         header="Search..."
         style={{ width: '55vw' }}
         footer={
-          <div style={{display: "flex", justifyContent: "space-between"}}>
-            <Button label="Reset" icon="pi pi-refresh" onClick={resetFilters} className="p-button-danger" />
+          <div style={{
+              display: "flex", 
+              justifyContent: "space-between", 
+              padding: "8px",
+              borderTop: "1px solid #D6E1EA",
+              marginTop: "5px",
+              width: "100%",
+              backgroundColor: "#EFF3F8"
+            }}
+          >
+            <Button label="Reset" icon="pi pi-refresh" style={{backgroundColor: "#6FB3E0", borderColor:"#6FB3E0", color: "#FFF"}} onClick={resetFilters} className="p-button-text" />
             {/* <Button label="Cancel" icon="pi pi-times" onClick={() => setDialogVisible(false)} className="p-button-text" /> */}
-            <Button label="Apply Filter" icon="pi pi-check" onClick={handleApply} />
+            <Button label="Find" icon="pi pi-search" style={{backgroundColor: "#9585BF", borderColor:"#9585BF"}} onClick={handleApply} />
           </div>
         }
       >
 
         <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-          <Button icon="pi pi-plus" onClick={handleAddFilter} />
+        
           <Dropdown
             value={applyMode}
             options={[
@@ -1149,6 +1161,7 @@ export default function AskAnExpert({ }) {
             placeholder="Filter"
             style={{ width: "7rem" }}
           />
+          <Button icon="pi pi-plus" onClick={handleAddFilter} style={{backgroundColor: "#428BCA", borderColor:"#428BCA", marginLeft: "0.5rem"}} />
           {/* <label style={{ marginRight: '1rem' }}>
             <input
               type="radio"
@@ -1181,7 +1194,7 @@ export default function AskAnExpert({ }) {
                   value: item.field,  // Replace `field` with the appropriate value property
                 }))}
                 placeholder="Select Column"
-                style={{ flex: 1 }}
+                style={{ flexBasis: '30%', flexGrow: 0 }}
               />
               {/* <select
                 onChange={(e) => updateFilter(index, 'column', e.target.value)}
@@ -1218,13 +1231,14 @@ export default function AskAnExpert({ }) {
                 options={getConditionOptions(filter.column)}
                 onChange={(e) => updateFilter(index, 'condition', e.value)}
                 placeholder="Select Condition"
-                style={{ flex: 1 }}
+                style={{ flexBasis: '30%', flexGrow: 0 }}
               />
               {getValueInput(filter, index)}
               <Button
                 icon="pi pi-times"
                 className="p-button-text p-button-danger"
                 onClick={() => removeFilter(index)}
+                style={{flexBasis: '10%', flexGrow: 0}}
               />
             </div>
           ))}
@@ -1921,4 +1935,3 @@ export default function AskAnExpert({ }) {
 //     </>
 //   );
 // }
-
