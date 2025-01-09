@@ -56216,5 +56216,52 @@ button.table_add_btn {
     align-items: center;
 }
 
+.login-page-in {
+    border: 6px solid #394557;
+    position: relative;
+    z-index: 1;
+    background: #F7F7F7;
+    width: 400px;
+    text-align: center;
+}
+
+a.bottom-btn {
+    display: flex;
+    width: 100%;
+    background: #428BCA;
+    padding: .8rem 1rem;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+}
+
+form.login-form {
+    width: 100%;
+    text-align: left;
+}
+
+span.lbl-text {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.login-page .login-page-in.retrieve-password .form h2 {
+    color: #D15B47;
+}
+
+.login-page .login-page-in.retrieve-password form.login-form button {
+    background-color: #D15B47;
+    border-color: #D15B47;
+}
+
+.login-page .login-page-in.retrieve-password a.bottom-btn {
+    background: #D15B47;
+}
+
+.login-page-in .otp-verify {
+    width: 100%;
+}
+
 
 /* DK-NEW-CSS-27-11-24 */

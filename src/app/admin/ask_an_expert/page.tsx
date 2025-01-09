@@ -217,6 +217,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { IoHome } from "react-icons/io5";
 import { Dropdown } from "primereact/dropdown";
+import { Dialog } from "primereact/dialog";
 
 export default function AskAnExpert({ }) {
   const [refresh, setRefresh] = useState<any>(false);
@@ -231,6 +232,11 @@ export default function AskAnExpert({ }) {
   const [showAmountField, setShowAmountField] = useState<any | boolean>(false);
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [dateFilter, setDateFilter] = useState<string>("all");
+  const [filters, setFilters] = useState<any[]>([]);
+  const [applyMode, setApplyMode] = useState<string>('AND');
+  const [applyFilter, setApplyFilter] = useState<boolean>(false);
+  const [dialogVisible, setDialogVisible] = useState<boolean>(false);
+  const [filteredData, setFilteredData] = useState(data);
 
   console.log("checkiiinpuQuil", chatData);
   const toast = useRef<Toast>(null);
@@ -247,7 +253,12 @@ export default function AskAnExpert({ }) {
       fetchData(token);
       fetchChatData(token);
     }
-  }, [refresh, token, statusFilter, dateFilter, selectedQueryRows]);
+  }, [refresh, token, statusFilter, dateFilter, selectedQueryRows, applyFilter]);
+
+  useEffect(() => {
+    // Sync filteredData with data when data prop changes
+    setFilteredData(data);
+  }, [data]);
 
   const handleStatusFilter = (e: any) => {
     setStatusFilter(e.value);
@@ -256,6 +267,20 @@ export default function AskAnExpert({ }) {
   const handleDateFilter = (e: any) => {
     setDateFilter(e.value);
   };
+
+  const handleApplyMode = (e: any) => {
+    setApplyMode(e.value);
+  };
+
+  const handleAddFilter = () => {
+    setFilters([...filters, { column: '', condition: '', value: '' }]);
+  }
+
+  function updateFilter(index: number, key: string | number, value: any) {
+    const updatedFilters = [...filters];
+    updatedFilters[index][key] = value;
+    setFilters(updatedFilters);
+  }
 
   async function fetchData(token: any) {
     try {
@@ -311,6 +336,26 @@ export default function AskAnExpert({ }) {
           updatedData = updatedData.filter(
             (row: any) => row.contact_created.includes(`${thisYear}`)
           );
+        }
+
+        if (applyFilter) {
+          updatedData = updatedData.filter((row: any) => {
+            return filters.every((filter: any) => {
+              const columnValue = row[filter.column];
+              switch (filter.condition) {
+                case 'equals':
+                  return columnValue === filter.value;
+                case 'contains':
+                  return columnValue.includes(filter.value);
+                case 'greater than':
+                  return columnValue > filter.value;
+                case 'less than':
+                  return columnValue < filter.value;
+                default:
+                  return true;
+              }
+            });
+          });
         }
 
         setData(updatedData);
@@ -401,6 +446,43 @@ export default function AskAnExpert({ }) {
     }
   };
 
+  const handleEmailQuery = (rowData: any) => {
+    confirmDialog({
+      message: "Do you want to send query on email?",
+      header: "Email Confirmation",
+      icon: "pi pi-info-circle",
+      defaultFocus: "reject",
+      acceptClassName: "p-button-danger",
+
+      accept: async () => {
+        try {
+          await axios.post(
+            apiEndpoints.sendQueryOnEmail,
+            { id: rowData.contact_id, type: rowData.question_type },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          toast.current?.show({
+            severity: "success",
+            detail: "Email sent successfully!",
+            life: 3000,
+          });
+          fetchData(token);
+        } catch (error) {
+          console.error("Error deleting:", error);
+          toast.current?.show({
+            severity: "error",
+            detail: "Error sending the email.",
+            life: 3000,
+          });
+        }
+      },
+    });
+  };
+
   const handleDelete = (rowData: any) => {
     confirmDialog({
       message: "Do you want to delete this record?",
@@ -438,7 +520,7 @@ export default function AskAnExpert({ }) {
     });
   };
 
-  const handleMultiDelete = (selectedRows:any) => {
+  const handleMultiDelete = (selectedRows: any) => {
     console.log("selected rows is", selectedRows);
     // return;
     confirmDialog({
@@ -479,12 +561,175 @@ export default function AskAnExpert({ }) {
     });
   };
 
+  const handleApply = () => {
+    const applyFilters = () => {
+      return data.filter((row: any) => {
+
+        if (applyMode === 'AND') {
+          return filters.every((filter) => matchCondition(row[filter.column], filter));
+        } else {
+          return filters.some((filter) => matchCondition(row[filter.column], filter));
+        }
+      });
+    };
+
+    const matchCondition = (fieldValue: any, filter: any) => {
+
+      if (!fieldValue || !filter.value) return false;
+      // console.log("fieldValue & filter value is", fieldValue, filter.value, fieldValue === filter.value);
+      switch (filter.condition) {
+        case 'equals':
+          return fieldValue == filter.value;
+        case 'not_equal':
+          return fieldValue != filter.value;
+        case 'contains':
+          if (filter.value == "all") {
+            return true;
+          } else if (filter.value == "open" || filter.value == "closed") {
+            setStatusFilter(filter.value);
+          } else if (filter.value == "thisMonth" || filter.value == "thisYear") {
+            setDateFilter(filter.value);
+          } else {
+            return fieldValue.toString().includes(filter.value);
+          }
+          case 'less_than':
+            return fieldValue < filter.value;
+          case 'less_or_equal':
+            return fieldValue <= filter.value;
+          case 'greater than':
+            return fieldValue > filter.value;
+          case 'greater_or_equal':
+            return fieldValue >= filter.value;
+          case 'is_null':
+            return fieldValue === null || fieldValue === undefined;
+          case 'is_not_null':
+            return fieldValue !== null && fieldValue !== undefined;
+          case 'is_in':
+            return Array.isArray(filter.value) && filter.value.includes(fieldValue);
+          case 'is_not_in':
+            return Array.isArray(filter.value) && !filter.value.includes(fieldValue);
+          case 'begin_with':
+            return fieldValue?.toString().startsWith(filter.value);
+          case 'does_not_begin_with':
+            return !fieldValue?.toString().startsWith(filter.value);
+          case 'ends_with':
+            return fieldValue?.toString().endsWith(filter.value);
+          case 'does_not_end_with':
+            return !fieldValue?.toString().endsWith(filter.value);
+          default:
+            return true;
+      }
+    };
+
+    const result = applyFilters();
+    // setData(result);
+    setFilteredData(result);
+    setDialogVisible(false); // Close dialog after applying
+  };
+
+  const removeFilter = (index: any) => {
+    const updatedFilters = filters.filter((_, i) => i !== index);
+    setFilters(updatedFilters);
+  };
+
+  const resetFilters = () => {
+    setFilters([]);
+    setStatusFilter('all');
+    setDateFilter('all');
+    fetchData(token);
+  };
+
+  const getConditionOptions = (column: any) => {
+    if (['contact_status', 'contact_created'].includes(column)) {
+      return [{ label: 'contains', value: 'contains' }];
+    }
+    if (['sn'].includes(column)) {
+      return [
+        { label: 'equals', value: 'equals' },
+        { label: 'not equal', value: 'not_equal' },
+        { label: 'less', value: 'less_than' },
+        { label: 'less or equal', value: 'less_or_equal' },
+        { label: 'greater', value: 'greater_than' },
+        { label: 'greater or equal', value: 'greater_or_equal' },
+        { label: 'is null', value: 'is_null' },
+        { label: 'is not null', value: 'is_not_null' },
+        { label: 'is in', value: 'is_in' },
+        { label: 'is not in', value: 'is_not_in' },
+      ];
+    }
+    if (['fullname', 'actions', 'contact_price'].includes(column)) {
+      return [
+        { label: 'equals', value: 'equals' },
+        { label: 'not equal', value: 'not_equal' },
+        { label: 'begin with', value: 'begin_with' },
+        { label: 'does not begin with', value: 'does_not_begin_with' },
+        { label: 'ends with', value: 'ends_with' },
+        { label: 'does not end with', value: 'does_not_end_with' },
+        { label: 'contains', value: 'contains' },
+        { label: 'does not contain', value: 'does_not_contain' },
+        { label: 'is null', value: 'is_null' },
+        { label: 'is not null', value: 'is_not_null' },
+        { label: 'is in', value: 'is_in' },
+        { label: 'is not in', value: 'is_not_in' },
+      ];
+    }
+    return [
+      { label: 'Equals', value: 'equals' },
+      { label: 'Contains', value: 'contains' },
+      { label: 'Greater Than', value: 'greater than' },
+      { label: 'Less Than', value: 'less than' },
+    ];
+  };
+
+  const getValueInput = (filter: any, index: any) => {
+    if (filter.column === 'contact_status') {
+      // const statusOptions = ['All', 'Open', 'Closed'];
+      return (
+        <Dropdown
+          value={filter.value}
+          options={[
+            { label: "All", value: "all" },
+            { label: "Open", value: "open" },
+            { label: "Closed", value: "closed" },
+          ]}
+          onChange={(e) => updateFilter(index, 'value', e.value)}
+          placeholder="Select Status"
+          style={{ flexBasis: '30%', flexGrow: 0 }}
+        />
+      );
+    } else if (filter.column === 'contact_created') {
+      const dateOptions = ['All', 'This Month', 'This Year'];
+      return (
+        <Dropdown
+          value={filter.value}
+          options={[
+            { label: "All", value: "all" },
+            { label: "This month", value: "thisMonth" },
+            { label: "This Year", value: "thisYear" },
+          ]}
+          onChange={(e) => updateFilter(index, 'value', e.value)}
+          placeholder="Select Date Range"
+          style={{ flexBasis: '30%', flexGrow: 0 }}
+        />
+      );
+    } else {
+      return (
+        <input
+          type="text"
+          onChange={(e) => updateFilter(index, 'value', e.target.value)}
+          style={{ flexBasis: '30%', flexGrow: 0 }}
+          placeholder="Enter value"
+          value={filter.value}
+        />
+      );
+    }
+  };
 
   const handleStatusUpdate = async (rowData: any, newStatus: number) => {
     try {
-      const payload = { domain_id: rowData.domain_id, status: newStatus };
+      const payload = { id: rowData.contact_id, status: newStatus };
 
-      const response = await axios.post(apiEndpoints.domainStatus, payload, {
+      const response = await axios.post(apiEndpoints.askQuestionStatus, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -509,17 +754,17 @@ export default function AskAnExpert({ }) {
     }
   };
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (rowData: any) => {
     try {
       const payload = {
         contactId: selectedQueryRows,
         msg: inpuChatValue,
         amount: inputAmount,
-        type: inputAmount ? "amount" : "",
+        type: inputAmount ? "amount" : rowData.userId,
       };
 
       const response = await axios.post(
-        apiEndpoints.send_QueryMessage,
+        apiEndpoints.saveCodeMessage,
         payload,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -542,6 +787,34 @@ export default function AskAnExpert({ }) {
       });
     }
   };
+
+  const columnMapping = [
+    {
+      field: "sn",
+      header: "S. No.",
+    },
+    {
+      field: "fullname",
+      header: "Full Name",
+    },
+    {
+      field: "contact_price",
+      header: "Amount",
+    },
+    {
+      field: "contact_status",
+      header: "Status"
+    },
+    {
+      field: "contact_created",
+      header: "Date",
+    },
+    {
+      field: "actions",
+      header: "Actions",
+    }
+
+  ];
 
   const columns = [
     {
@@ -603,6 +876,9 @@ export default function AskAnExpert({ }) {
             border: "none",
             height: "20px",
           }}
+          onClick={() =>
+            handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1)
+          }
         />
       ),
     },
@@ -640,6 +916,7 @@ export default function AskAnExpert({ }) {
           />
           <Button
             icon="pi pi-envelope"
+            onClick={() => handleEmailQuery(rowData)}
             style={{ background: "none", color: "#337ab7", border: "none" }}
           />
           <input
@@ -748,7 +1025,7 @@ export default function AskAnExpert({ }) {
           <button
             type="button"
             className="modal_send_btn"
-            onClick={handleSendMessage}
+            onClick={() => handleSendMessage(data)}
           >
             <FaShare size={20} /> Send
           </button>
@@ -815,10 +1092,10 @@ export default function AskAnExpert({ }) {
           </div>
         </h1>
       </div>
-      {data.length ? (
+      {filteredData.length ? (
         <div>
           <CustomTable
-            data={data}
+            data={filteredData}
             columns={columns}
             selectedRows={selectedRows}
             setSelectedRows={setSelectedRows}
@@ -847,6 +1124,126 @@ export default function AskAnExpert({ }) {
       )}
       <Toast ref={toast} />
       <ConfirmDialog />
+
+      <Button icon="pi pi-search" className="p-button-text" onClick={() => setDialogVisible(true)} />
+      <Dialog
+        visible={dialogVisible}
+        onHide={() => setDialogVisible(false)}
+        header="Search..."
+        style={{ width: '55vw' }}
+        footer={
+          <div style={{
+              display: "flex", 
+              justifyContent: "space-between", 
+              padding: "8px",
+              borderTop: "1px solid #D6E1EA",
+              marginTop: "5px",
+              width: "100%",
+              backgroundColor: "#EFF3F8"
+            }}
+          >
+            <Button label="Reset" icon="pi pi-refresh" style={{backgroundColor: "#6FB3E0", borderColor:"#6FB3E0", color: "#FFF"}} onClick={resetFilters} className="p-button-text" />
+            {/* <Button label="Cancel" icon="pi pi-times" onClick={() => setDialogVisible(false)} className="p-button-text" /> */}
+            <Button label="Find" icon="pi pi-search" style={{backgroundColor: "#9585BF", borderColor:"#9585BF"}} onClick={handleApply} />
+          </div>
+        }
+      >
+
+        <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+        
+          <Dropdown
+            value={applyMode}
+            options={[
+              { label: "All", value: "AND" },
+              { label: "Any", value: "OR" },
+            ]}
+            onChange={handleApplyMode}
+            placeholder="Filter"
+            style={{ width: "7rem" }}
+          />
+          <Button icon="pi pi-plus" onClick={handleAddFilter} style={{backgroundColor: "#428BCA", borderColor:"#428BCA", marginLeft: "0.5rem"}} />
+          {/* <label style={{ marginRight: '1rem' }}>
+            <input
+              type="radio"
+              value="AND"
+              checked={applyMode === 'AND'}
+              onChange={() => setApplyMode('AND')}
+              style={{ marginRight: '0.5rem' }}
+            />
+            Apply All
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="OR"
+              checked={applyMode === 'OR'}
+              onChange={() => setApplyMode('OR')}
+              style={{ marginRight: '0.5rem' }}
+            />
+            Apply Any
+          </label> */}
+        </div>
+        <div className="filter-dialog">
+          {filters.map((filter, index) => (
+            <div key={index} className="filter-row" style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
+              <Dropdown
+                value={filter.column}
+                onChange={(e) => updateFilter(index, 'column', e.value)}
+                options={columnMapping.map((item: any) => ({
+                  label: item.header, // Replace `header` with the appropriate label property
+                  value: item.field,  // Replace `field` with the appropriate value property
+                }))}
+                placeholder="Select Column"
+                style={{ flexBasis: '30%', flexGrow: 0 }}
+              />
+              {/* <select
+                onChange={(e) => updateFilter(index, 'column', e.target.value)}
+                style={{ flex: 1 }}
+                value={filter.column}
+              >
+                <option value="">Select Column</option>
+                {columns.flatMap((item: any) => item.field).map((col: any) => (
+                  <option key={col} value={col}>
+                    {col}
+                  </option>
+                ))}
+              </select> */}
+              {/* <select
+                  onChange={(e) => updateFilter(index, 'condition', e.target.value)}
+                  style={{ flex: 1 }}
+                  value={filter.condition}
+                >
+                  <option value="">Select Condition</option>
+                  <option value="equals">Equals</option>
+                  <option value="contains">Contains</option>
+                  <option value="greater than">Greater Than</option>
+                  <option value="less than">Less Than</option>
+                </select>
+                <input
+                  type="text"
+                  onChange={(e) => updateFilter(index, 'value', e.target.value)}
+                  style={{ flex: 2 }}
+                  placeholder="Enter value"
+                  value={filter.value}
+                /> */}
+              <Dropdown
+                value={filter.condition}
+                options={getConditionOptions(filter.column)}
+                onChange={(e) => updateFilter(index, 'condition', e.value)}
+                placeholder="Select Condition"
+                style={{ flexBasis: '30%', flexGrow: 0 }}
+              />
+              {getValueInput(filter, index)}
+              <Button
+                icon="pi pi-times"
+                className="p-button-text p-button-danger"
+                onClick={() => removeFilter(index)}
+                style={{flexBasis: '10%', flexGrow: 0}}
+              />
+            </div>
+          ))}
+        </div>
+      </Dialog>
     </>
   );
 }
@@ -1538,4 +1935,3 @@ export default function AskAnExpert({ }) {
 //     </>
 //   );
 // }
-
