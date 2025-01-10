@@ -60,10 +60,12 @@ import styles from "../../../../public/dist/css/ChangePassword.module.css";
 import apiEndpoints from "../../../../config/apiEndpoints";
 import { CiLock } from "react-icons/ci";
 import { CiUnlock } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { RootState } from "@/store";
+import { clearToken } from "@/store/reducers/authSlice";
 import { Toast } from "primereact/toast";
+import { useRouter } from "next/navigation";
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -86,6 +88,8 @@ const ChangePassword = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const toast = useRef<Toast>(null);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   // Toggle show password functionality
   const togglePasswordVisibility = (field: string) => {
@@ -124,13 +128,34 @@ const ChangePassword = () => {
       });
 
       // Check if response is successful
-      if (response.status !== 200) {
-        throw new Error("Failed to change password");
-      }
+      // if (response.status !== 200) {
+      //   throw new Error("Failed to change password");
+      // }
 
-      // Handle the response data from the API
-      console.log("Password changed successfully:", response.data);
+      if (response.data.status){
+        dispatch(clearToken());
+        localStorage.removeItem("adminToken");
+        toast.current?.show({
+          severity: "success",
+          detail: "Password changed successfully! Redirecting to login page.",
+          life: 3000,
+        });
+        setTimeout(() => {
+          router.push(`/`);
+        }, 2000);
+      } else {
+        toast.current?.show({
+          severity: "error",
+          detail: response.data.message,
+          life: 3000,
+        });
+      }
     } catch (error) {
+      toast.current?.show({
+        severity: "error",
+        detail: "Error changing password",
+        life: 3000,
+      });
       console.error("Error changing password:", error);
     }
   };
