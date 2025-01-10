@@ -105,14 +105,25 @@ export default function SignIn() {
                     type="password"
                     placeholder="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                      setPassword(e.target.value); // Update the password
+                      setError(""); // Clear the error message
+                    }}
                   />
                 </label>
                 <button type="submit"><i className="fa-solid fa-key"></i> login</button>
                 {error && <p className="error-message">{error}</p>}
               </form>
             </div>
-            <a href="javascript:void(0);" className="bottom-btn go-forgot" onClick={() => setSection("forgotPassword")}><i className="fas fa-arrow-left"></i> I forgot my password</a>
+            <a href="javascript:void(0);" 
+              className="bottom-btn go-forgot" 
+              onClick={() => {
+                setSection("forgotPassword");
+                setError(""); // Clear the error message
+                setEmail("");
+                setPassword("");
+              }}
+            ><i className="fas fa-arrow-left"></i> I forgot my password</a>
           </div>
         )}
         {/* LOGIN-SECTION */}
