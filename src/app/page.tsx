@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../store/reducers/authSlice";
 import apiEndpoints from "../../config/apiEndpoints";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Toast } from "primereact/toast";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -17,6 +18,7 @@ export default function SignIn() {
   const [section, setSection] = useState("login"); // Tracks current section
   const dispatch = useDispatch();
   const router = useRouter();
+  const toast = useRef<Toast>(null);
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,7 +48,13 @@ export default function SignIn() {
     try {
       const response = await axios.post(apiEndpoints.forgotPassword, { email });
       if (response.data.status) {
+        setEmail('');
         setReceivedOtp(response.data.otp); // Store OTP from API
+        toast.current?.show({
+          severity: "success",
+          detail: "Password reset link sent successfully! Please check your email.",
+          life: 3000,
+        });
       }
     } catch (err) {
       setError("Error sending OTP");
@@ -72,76 +80,79 @@ export default function SignIn() {
   };
 
   return (
-    <div className="login-page">
-      <h1><i className="fa-solid fa-building"></i> <span>BCme</span> Application</h1>
-      <p>© Building Codes Made Eaiser</p>
-      {/* LOGIN-SECTION */}
-      {section === "login" && (
-        <div className="login-page-in admin-login">
-          <div className="form">
-            <h2><i className="fa-solid fa-mug-saucer"></i> Please Enter Your Information</h2>
-            <form className="login-form" onSubmit={handleLogin}>
-              <label>
-                <i className="fa-solid fa-envelope"></i>
-                <input
-                  type="text"
-                  placeholder="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </label>
-              <label>
-                <i className="fa-solid fa-lock"></i>
-                <input
-                  type="password"
-                  placeholder="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </label>
-              <button type="submit"><i className="fa-solid fa-key"></i> login</button>
-              {error && <p className="error-message">{error}</p>}
-            </form>
+    <>
+      <div className="login-page">
+        <h1><i className="fa-solid fa-building"></i> <span>BCme</span> Application</h1>
+        <p>© Building Codes Made Eaiser</p>
+        {/* LOGIN-SECTION */}
+        {section === "login" && (
+          <div className="login-page-in admin-login">
+            <div className="form">
+              <h2><i className="fa-solid fa-mug-saucer"></i> Please Enter Your Information</h2>
+              <form className="login-form" onSubmit={handleLogin}>
+                <label>
+                  <i className="fa-solid fa-envelope"></i>
+                  <input
+                    type="text"
+                    placeholder="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </label>
+                <label>
+                  <i className="fa-solid fa-lock"></i>
+                  <input
+                    type="password"
+                    placeholder="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </label>
+                <button type="submit"><i className="fa-solid fa-key"></i> login</button>
+                {error && <p className="error-message">{error}</p>}
+              </form>
+            </div>
+            <a href="javascript:void(0);" className="bottom-btn go-forgot" onClick={() => setSection("forgotPassword")}><i className="fas fa-arrow-left"></i> I forgot my password</a>
           </div>
-          <a href="javascript:void(0);" className="bottom-btn go-forgot" onClick={() => setSection("forgotPassword")}><i className="fas fa-arrow-left"></i> I forgot my password</a>
-        </div>
-      )}
-      {/* LOGIN-SECTION */}
-      {/* RETRIEVE-PASSWORD-SECTION */}
-      {section === "forgotPassword" && (
-        <div className="login-page-in retrieve-password">
-          <div className="form">
-            <h2><i className="fa-solid fa-key"></i> Retrieve Password</h2>
-            <form className="login-form" onSubmit={handleForgotPassword}>
-              <span className="lbl-text">Enter your email and to receive instructions</span>
-              <label>
-                <i className="fa-solid fa-envelope"></i>
-                <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-              </label>
-              <button type="submit"><i className="fas fa-lightbulb"></i> Send Me</button>
-              {error && <p className="error-message">{error}</p>}
-            </form>
+        )}
+        {/* LOGIN-SECTION */}
+        {/* RETRIEVE-PASSWORD-SECTION */}
+        {section === "forgotPassword" && (
+          <div className="login-page-in retrieve-password">
+            <div className="form">
+              <h2><i className="fa-solid fa-key"></i> Retrieve Password</h2>
+              <form className="login-form" onSubmit={handleForgotPassword}>
+                <span className="lbl-text">Enter your email and to receive instructions</span>
+                <label>
+                  <i className="fa-solid fa-envelope"></i>
+                  <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </label>
+                <button type="submit"><i className="fas fa-lightbulb"></i> Send Me</button>
+                {error && <p className="error-message">{error}</p>}
+              </form>
+            </div>
+            <a href="javascript:void(0);" className="bottom-btn go-login justify-content-center" onClick={() => setSection("login")}><i className="fas fa-arrow-left"></i>Back to login</a>
           </div>
-          <a href="javascript:void(0);" className="bottom-btn go-login justify-content-center" onClick={() => setSection("login")}><i className="fas fa-arrow-left"></i>Back to login</a>
-        </div>
-      )}
-      {/* RETRIEVE-PASSWORD-SECTION */}
-      {/* OTP-VERIFICATION-SECTION */}
-      {section === "otpVerification" && (
-        <div className="login-page-in otp-verify retrieve-password">
-          <div className="form">
-            <h2><i className="fas fa-user-check"></i> Verification Code</h2>
-            <form className="login-form" onSubmit={handleOtpVerification}>
-              <label>
-                <input type="text" placeholder="Enter OTP" value={otp} onChange={(e:any) => setOtp(e.target.value)} />
-              </label>
-              <button type="submit">Verify</button>
-              {error && <p className="error-message">{error}</p>}
-            </form>
+        )}
+        {/* RETRIEVE-PASSWORD-SECTION */}
+        {/* OTP-VERIFICATION-SECTION */}
+        {section === "otpVerification" && (
+          <div className="login-page-in otp-verify retrieve-password">
+            <div className="form">
+              <h2><i className="fas fa-user-check"></i> Verification Code</h2>
+              <form className="login-form" onSubmit={handleOtpVerification}>
+                <label>
+                  <input type="text" placeholder="Enter OTP" value={otp} onChange={(e:any) => setOtp(e.target.value)} />
+                </label>
+                <button type="submit">Verify</button>
+                {error && <p className="error-message">{error}</p>}
+              </form>
+            </div>
           </div>
-        </div>
-      )}
-      {/* OTP-VERIFICATION-SECTION */}
-    </div >
+        )}
+        {/* OTP-VERIFICATION-SECTION */}
+      </div>
+      <Toast ref={toast} />
+    </>
   );
 }

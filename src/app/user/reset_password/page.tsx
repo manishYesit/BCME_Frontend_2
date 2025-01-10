@@ -1,11 +1,14 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import apiEndpoints from "../../../../config/apiEndpoints";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Toast } from "primereact/toast";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 
-export default function resetPassword() {
+function ResetPassword() {
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -95,5 +98,13 @@ export default function resetPassword() {
       </div >
       <Toast ref={toast} />
     </>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPassword />
+    </Suspense>
   );
 }
