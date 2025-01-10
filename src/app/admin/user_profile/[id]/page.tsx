@@ -137,8 +137,8 @@ const UserProfile = ({ params }: UserProfileProps) => {
           <div className="card-body">
             <img
               src={
-                profileDetails?.profile_image ||
-                "https://staging.mybcme.com/assets/images/profile_image/1587136455669.png"
+                profileDetails.profile_image ? `http://3.12.198.252/api/assets/images/profile_image/${profileDetails?.profile_image}`:
+                "http://3.12.198.252/api/assets/images/profile_image/1587136455669.png"
               }
               alt="Profile"
               style={{ height: "260px", width: "100%" }}
