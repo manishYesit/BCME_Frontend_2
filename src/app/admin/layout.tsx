@@ -183,7 +183,7 @@ export default function RootLayout({
               >
                 <li className="nav-item menu-open">
                   <Link
-                    href="dashboard"
+                    href="/admin/dashboard"
                     className={
                       "nav-link " +
                       (pathName == "/admin/dashboard" ? "active" : "")
@@ -195,7 +195,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="setting"
+                    href="/admin/setting"
                     className={
                       "nav-link " +
                       (pathName == "/admin/setting" ? "active" : "")
@@ -207,7 +207,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="user_management"
+                    href="/admin/user_management"
                     className={
                       "nav-link " +
                       (pathName == "/admin/user_management" ? "active" : "")
@@ -219,7 +219,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="plrb_member_domain"
+                    href="/admin/plrb_member_domain"
                     className={
                       "nav-link " +
                       (pathName == "/admin/plrb_member_domain" ? "active" : "")
@@ -231,7 +231,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="add_profession"
+                    href="/admin/add_profession"
                     className={
                       "nav-link " +
                       (pathName == "/admin/add_profession" ? "active" : "")
@@ -243,7 +243,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="roof_list"
+                    href="/admin/roof_list"
                     className={
                       "nav-link " +
                       (pathName == "/admin/roof_list" ? "active" : "")
@@ -255,7 +255,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="stair_list"
+                    href="/admin/stair_list"
                     className={
                       "nav-link " +
                       (pathName == "/admin/stair_list" ? "active" : "")
@@ -267,7 +267,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="roof_tools_list"
+                    href="/admin/roof_tools_list"
                     className={
                       "nav-link " +
                       (pathName == "/admin/roof_tools_list" ? "active" : "")
@@ -279,7 +279,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="stair_tools_list"
+                    href="/admin/stair_tools_list"
                     className={
                       "nav-link " +
                       (pathName == "/admin/stair_tools_list" ? "active" : "")
@@ -292,7 +292,7 @@ export default function RootLayout({
 
                 <li className="nav-item">
                   <Link
-                    href="ask_an_expert"
+                    href="/admin/ask_an_expert"
                     className={
                       "nav-link " +
                       (pathName == "/admin/ask_an_expert" ? "active" : "")
@@ -305,7 +305,7 @@ export default function RootLayout({
 
                 <li className="nav-item">
                   <Link
-                    href="faq_data"
+                    href="/admin/faq_data"
                     className={
                       "nav-link " +
                       (pathName == "/admin/faq_data" ? "active" : "")
@@ -317,7 +317,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="clicks_track"
+                    href="/admin/clicks_track"
                     className={
                       "nav-link " +
                       (pathName == "/admin/clicks_track" ? "active" : "")
@@ -329,7 +329,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="contact_query"
+                    href="/admin/contact_query"
                     className={
                       "nav-link " +
                       (pathName == "/admin/contact_query" ? "active" : "")
@@ -341,7 +341,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="payment_transaction"
+                    href="/admin/payment_transaction"
                     className={
                       "nav-link " +
                       (pathName == "/admin/payment_transaction" ? "active" : "")
@@ -353,7 +353,7 @@ export default function RootLayout({
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="email_updates"
+                    href="/admin/email_updates"
                     className={
                       "nav-link " +
                       (pathName == "/admin/email_updates" ? "active" : "")

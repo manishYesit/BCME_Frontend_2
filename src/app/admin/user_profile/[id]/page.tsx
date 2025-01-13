@@ -90,7 +90,7 @@ const UserProfile = ({ params }: UserProfileProps) => {
                 <span className="homeIcon">
                   <IoHome style={{ margin: "5px", marginBottom: "6px" }} />
                 </span>
-                <Link href="dashboard">Home</Link>
+                <Link href="/admin/dashboard">Home</Link>
               </li>
               <li className="breadcrumb-item active"> User List</li>
               <li className="breadcrumb-item active"> User Profile</li>
