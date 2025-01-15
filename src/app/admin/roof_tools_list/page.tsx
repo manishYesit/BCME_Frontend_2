@@ -169,6 +169,14 @@ export default function roofToolList({}) {
     border: "1px solid #000",
   };
 
+  const boxStyle = {
+    marginBottom: "20px",
+    marginTop: "20px",
+    backgroundColor: "#F5F5F5",
+    borderTop: "1px solid #E5E5E5",
+    padding: "19px 20px 20px"
+  }
+
   const headerStyle = {
     fontWeight: 400,
     fontSize: "14px",
@@ -411,7 +419,7 @@ export default function roofToolList({}) {
         >
           <Box sx={modalStyle}>
             <div id="modal-modal-title" className="modal_header">
-              <div>{linkRowId ? "Update" : "Add"}</div>
+              <div>{linkRowId ? "Update Roof Tool" : "Add Roof Tool"}</div>
               <div
                 style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
                 onClick={handleClose}
@@ -467,29 +475,38 @@ export default function roofToolList({}) {
                 </Box>
               </Box>
 
-              <Box ml={8}>
-                <button
-                  type="button"
-                  className="modal_submit_btn"
-                  onClick={handleSubmit}
-                >
-                  <MdDone size={20} /> {linkRowId ? "Update" : "Submit"}
-                </button>
-                <button
-                  type="button"
-                  className="modal_submit_btn"
-                  style={{
-                    backgroundColor: "#8B9AA3",
-                  }}
-                  onClick={resetForm}
-                >
-                  <VscDebugRestart size={20} /> Reset
-                </button>
+              <Box sx={modalStyle}>
+                <Box ml={8}>
+                  <button
+                    type="button"
+                    className="modal_submit_btn"
+                    onClick={handleSubmit}
+                  >
+                    <MdDone size={20} /> {linkRowId ? "Update" : "Submit"}
+                  </button>
+                  <button
+                    type="button"
+                    className="modal_submit_btn"
+                    style={{
+                      backgroundColor: "#8B9AA3",
+                    }}
+                    onClick={resetForm}
+                  >
+                    <VscDebugRestart size={20} /> Reset
+                  </button>
+                </Box>
               </Box>
             </Box>
 
             {/* Close Button */}
-            <div>
+            <div style={{
+              paddingTop: "12px",
+              paddingBottom: "14px",
+              backgroundColor: "#EFF3F8", 
+              borderTopColor: "#E4E9EE", 
+              padding: "15px",
+              borderTop: "1px solid #e5e5e5"
+            }}>
               <button
                 type="button"
                 className="modal_close_btn"
