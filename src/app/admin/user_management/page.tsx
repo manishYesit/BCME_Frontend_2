@@ -671,7 +671,7 @@ export default function UserManagement({ }) {
                     id="plrbstatus"
                     className="ace-checkbox-2"
                     type="checkbox"
-
+                    style={{accentColor:"darkgoldenrod"}}
                     checked={plrbStatus === 1}
                     onChange={
                       (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -688,6 +688,7 @@ export default function UserManagement({ }) {
                     id="termscondition"
                     className="ace-checkbox-2"
                     type="checkbox"
+                    style={{accentColor:"darkgoldenrod"}}
                     checked={termsCondition === 1}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setTermsCondition(e.target.checked ? 1 : 0)
@@ -711,6 +712,7 @@ export default function UserManagement({ }) {
                       id="email_subscribed"
                       className="ace-checkbox-2"
                       type="checkbox"
+                      style={{accentColor:"darkgoldenrod"}}
                       checked={emailSubscribed === 1}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setEmailSubscription(e.target.checked ? 1 : 0)

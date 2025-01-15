@@ -21,6 +21,7 @@ export default function Settings() {
   const [data, setData]: [any, Function] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedDetails, setSelectedDetails] = useState<any | null>(null);
+  const [refresh, setRefresh] = useState(false);
 
   //   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -37,7 +38,7 @@ export default function Settings() {
     if (token) {
       fetchData(token);
     }
-  }, [token]);
+  }, [token, refresh]);
 
   async function fetchData(token: any) {
     const result = await axios.get(apiEndpoints.getAllSettings, {
@@ -132,7 +133,10 @@ export default function Settings() {
           description="This is a customizable modal description."
           buttonText="Confirm"
           selectedDetails={selectedDetails}
-          onButtonClick={() => console.log("Button clicked!")}
+          onButtonClick={() => {
+            console.log("Button clicked!");
+            setRefresh((prev) => !prev);
+          }}
         />
       </div>
     </>
