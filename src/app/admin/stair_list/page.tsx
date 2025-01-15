@@ -585,7 +585,7 @@ export default function StairList({}) {
                 </Box>
               </Box>
 
-              <Box sx={modalStyle}>
+              <Box sx={boxStyle}>
                 <Box ml={8}>
                   <button
                     type="button"
@@ -594,7 +594,7 @@ export default function StairList({}) {
                   >
                     <MdDone size={20} /> {linkRowId ? "Update" : "Submit"}
                   </button>
-                  <button
+                  {!linkRowId && (<button
                     type="button"
                     className="modal_submit_btn"
                     style={{
@@ -603,7 +603,7 @@ export default function StairList({}) {
                     onClick={resetForm}
                   >
                     <VscDebugRestart size={20} /> Reset
-                  </button>
+                  </button>)}
                 </Box>
               </Box>
             </Box>
