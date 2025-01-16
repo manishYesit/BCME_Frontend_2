@@ -155,7 +155,6 @@ export default function StairList({ params }: any) {
     {
       field: "sn",
       header: "S.N",
-      sortable: true,
       body: (_: any, { rowIndex }: any) => rowIndex + 1,
     },
     { field: "title", header: "Title", sortable: true },
@@ -163,12 +162,10 @@ export default function StairList({ params }: any) {
     {
       field: "row_order",
       header: "Order",
-      sortable: true,
     },
     {
       field: "Status",
       header: "Status",
-      sortable: true,
       body: (rowData: any) => (
         <Button
           label={rowData.status === 1 ? "Active" : "Inactive"}

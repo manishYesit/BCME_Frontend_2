@@ -221,6 +221,13 @@ export default function UserManagement({ }) {
   const [termsCondition, setTermsCondition] = useState<number>(0);
   const [emailSubscribed, setEmailSubscription] = useState<number>(0);
   const [formError, setFormError] = useState<string | null>(null);
+  // const [emailFormatError, setEmailFormatError] = useState<string | null>(null);
+  // const [phoneFormatError, setPhoneFormatError] = useState<string | null>(null);
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [termsError, setTermsError] = useState<string | null>(null);
   const [linkRowId, setLinkRowId] = useState<string | null>(null);
   const [open, setOpen] = useState<any>(false);
   const toast = useRef<Toast>(null);
@@ -338,29 +345,76 @@ export default function UserManagement({ }) {
 
   ///crud------------
 
+  // const handleValidationForm = () => {
+  //   if (!inputName) {
+  //     setFormError("Required.");
+  //     return false;
+  //   }
+  //   if (!inputEmail) {
+  //     setFormError("Required.");
+  //     return false;
+  //   }
+  //   if (!inputPhone) {
+  //     setFormError("Required.");
+  //     return false;
+  //   }
+  //   if (!inputPassword) {
+  //     setFormError("Required.");
+  //     return false;
+  //   }
+  //   if (!termsCondition) {
+  //     setFormError("Required.");
+  //     return false;
+  //   }
+  //   setFormError(null);
+  //   return true;
+  // };
+
   const handleValidationForm = () => {
+    let isValid = true;
+
     if (!inputName) {
-      setFormError("Required.");
-      return false;
+      setNameError("Name is required.");
+      isValid = false;
+    } else {
+      setNameError(null);
     }
+
     if (!inputEmail) {
-      setFormError("Required.");
-      return false;
+      setEmailError("Email is required.");
+      isValid = false;
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(inputEmail)) {
+      setEmailError("Invalid email format.");
+      isValid = false;
+    } else {
+      setEmailError(null);
     }
+
     if (!inputPhone) {
-      setFormError("Required.");
-      return false;
+      setPhoneError("Phone number is required.");
+      isValid = false;
+    } else if (!/^\+\d{1,3}\s\d{10}$/.test(inputPhone)) {
+      setPhoneError("Phone number must include a country code (e.g., +91 9876543210).");
+      isValid = false;
+    } else {
+      setPhoneError(null);
     }
+
     if (!inputPassword) {
-      setFormError("Required.");
-      return false;
+      setPasswordError("Password is required.");
+      isValid = false;
+    } else {
+      setPasswordError(null);
     }
+
     if (!termsCondition) {
-      setFormError("Required.");
-      return false;
+      setTermsError("You must accept the terms and conditions.");
+      isValid = false;
+    } else {
+      setTermsError(null);
     }
-    setFormError(null);
-    return true;
+
+    return isValid;
   };
 
   const handleSubmit = async () => {
@@ -455,7 +509,7 @@ export default function UserManagement({ }) {
   const handleStatusUpdate = async (rowData: any, newStatus: number) => {
     try {
       const payload = { token: rowData.token, status: newStatus };
-      if(!payload.token){
+      if (!payload.token) {
         window.confirm("Token not present for the user");
         return;
       }
@@ -503,7 +557,12 @@ export default function UserManagement({ }) {
     setInputEmail(null);
     setInputPhone(null);
     setInputPassword(null);
-    setFormError(null);
+    // setFormError(null);
+    setNameError(null);
+    setEmailError(null);
+    setPhoneError(null);
+    setTermsError(null)
+    setPasswordError(null)
   };
 
   return (
@@ -599,12 +658,21 @@ export default function UserManagement({ }) {
                     className="form-control"
                     placeholder="Full Name"
                     value={inputName || ""}
-                    onChange={(e) => setInputName(e.target.value)}
+                    // onChange={(e) => setInputName(e.target.value)}
+                    onChange={(e) => {
+                      setInputName(e.target.value);
+                      if (e.target.value) setNameError(null); // Clear error if input is valid
+                    }}
                     style={{ width: "80%" }}
                   />
-                  {!inputName && (
+                  {/* {!inputName && (
                     <Typography variant="body2" color="error">
                       {formError}
+                    </Typography>
+                  )} */}
+                  {nameError && (
+                    <Typography variant="body2" color="error">
+                      {nameError}
                     </Typography>
                   )}
                 </Box>
@@ -619,12 +687,23 @@ export default function UserManagement({ }) {
                     className="form-control"
                     placeholder="Email"
                     value={inputEmail || ""}
-                    onChange={(e) => setInputEmail(e.target.value)}
+                    // onChange={(e) => setInputEmail(e.target.value)}
+                    onChange={(e) => {
+                      setInputEmail(e.target.value);
+                      if (e.target.value && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(e.target.value)) {
+                        setEmailError(null); // Clear error if email is valid
+                      }
+                    }}
                     style={{ width: "80%" }}
                   />
-                  {!inputEmail && (
+                  {/* {!inputEmail && (
                     <Typography variant="body2" color="error">
                       {formError}
+                    </Typography>
+                  )} */}
+                  {emailError && (
+                    <Typography variant="body2" color="error">
+                      {emailError}
                     </Typography>
                   )}
                 </Box>
@@ -639,12 +718,23 @@ export default function UserManagement({ }) {
                     className="form-control"
                     placeholder="Phone"
                     value={inputPhone || ""}
-                    onChange={(e) => setInputPhone(e.target.value)}
+                    // onChange={(e) => setInputPhone(e.target.value)}
+                    onChange={(e) => {
+                      setInputPhone(e.target.value);
+                      if (e.target.value && /^\+\d{1,3}\s\d{10}$/.test(e.target.value)) {
+                        setPhoneError(null); // Clear error if phone number is valid
+                      }
+                    }}
                     style={{ width: "80%" }}
                   />
-                  {!inputPhone && (
+                  {/* {!inputPhone && (
                     <Typography variant="body2" color="error">
                       {formError}
+                    </Typography>
+                  )} */}
+                  {phoneError && (
+                    <Typography variant="body2" color="error">
+                      {phoneError}
                     </Typography>
                   )}
                 </Box>
@@ -658,12 +748,21 @@ export default function UserManagement({ }) {
                     type="text"
                     className="form-control"
                     value={inputPassword || ""}
-                    onChange={(e) => setInputPassword(e.target.value)}
+                    // onChange={(e) => setInputPassword(e.target.value)}
+                    onChange={(e) => {
+                      setInputPassword(e.target.value);
+                      if (e.target.value) setPasswordError(null); // Clear error if input is valid
+                    }}
                     style={{ width: "80%" }}
                   />
-                  {!inputPassword && (
+                  {/* {!inputPassword && (
                     <Typography variant="body2" color="error">
                       {formError}
+                    </Typography>
+                  )} */}
+                  {passwordError && (
+                    <Typography variant="body2" color="error">
+                      {passwordError}
                     </Typography>
                   )}
                 </Box>
@@ -680,7 +779,7 @@ export default function UserManagement({ }) {
                     style={{ accentColor: "darkgoldenrod" }}
                     checked={plrbStatus === 1}
                     onChange={
-                      (e: React.ChangeEvent<HTMLInputElement>) =>
+                      (e: React.ChangeEvent<HTMLInputElement>) => 
                         setPlrbStatus(e.target.checked ? 1 : 0)
                     }
                   />
@@ -696,16 +795,22 @@ export default function UserManagement({ }) {
                     type="checkbox"
                     style={{ accentColor: "darkgoldenrod" }}
                     checked={termsCondition === 1}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setTermsCondition(e.target.checked ? 1 : 0)
-                    }
+                      if (e.target.checked) setTermsError(null);
+                    }}
                   />
                   <span className="lbl  ml-2 mb-2">Terms and Conditions*</span>
                 </label>
                 {/* </div> */}
-                {!termsCondition && (
+                {/* {!termsCondition && (
                   <Typography variant="body2" color="error">
                     {formError}
+                  </Typography>
+                )} */}
+                {termsError && (
+                  <Typography variant="body2" color="error">
+                    {termsError}
                   </Typography>
                 )}
               </div>
