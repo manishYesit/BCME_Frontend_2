@@ -206,7 +206,7 @@ export default function roofToolList({}) {
       body: (_: RowData, { rowIndex }: ColumnOptions) => rowIndex + 1,
     },
     { field: "title", header: "Title" },
-    { field: "details", header: "Data" },
+    { field: "details", header: "Details" },
     {
       field: "id",
       header: "Link",
@@ -223,7 +223,7 @@ export default function roofToolList({}) {
 
     {
       field: "actions",
-      header: "Actions",
+      header: "Action",
       body: (rowData: any) => (
         <div className="" style={{ width: "120px" }}>
           <Button
@@ -451,7 +451,7 @@ export default function roofToolList({}) {
               </Box>
               <Box display="flex" alignItems="center" gap="12px" mt={2} ml={2}>
                 <Box flex={1}>
-                  <label style={headerStyle}>Information</label>
+                  <label style={headerStyle}>Details</label>
                 </Box>
                 <Box flex={3}>
                   <textarea

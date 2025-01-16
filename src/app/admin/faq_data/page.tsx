@@ -266,7 +266,7 @@ export default function FaqList({}) {
 
     {
       field: "actions",
-      header: "Actions",
+      header: "Action",
       width: "100px",
       body: (rowData: any) => (
         <div className="" style={{ width: "120px" }}>
