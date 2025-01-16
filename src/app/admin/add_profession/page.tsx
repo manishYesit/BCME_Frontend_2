@@ -88,10 +88,11 @@ export default function addProfession({ }) {
       header: "S.N",
       body: (_: RowData, { rowIndex }: ColumnOptions) => rowIndex + 1,
     },
-    { field: "profession", header: "Profession" },
+    { field: "profession", header: "Profession", sortable:true },
     {
       field: "Status",
       header: "Status",
+      sortable:true,
       body: (rowData: any) => (
         <Button
           label={rowData.status === 1 ? "Active" : "Inactive"}

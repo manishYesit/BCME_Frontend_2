@@ -92,8 +92,8 @@ export default function roofList({}) {
       header: "S.N",
       body: (_: RowData, { rowIndex }: ColumnOptions) => rowIndex + 1,
     },
-    { field: "title", header: "Title" },
-    { field: "information", header: "Data" },
+    { field: "title", header: "Title", sortable:true },
+    { field: "information", header: "Data", sortable:true },
     {
       field: "id",
       header: "Link",
@@ -110,6 +110,7 @@ export default function roofList({}) {
     {
       field: "Status",
       header: "Status",
+      sortable:true,
       body: (rowData: any) => (
         <Button
           label={rowData.status === true ? "Active" : "Inactive"}
