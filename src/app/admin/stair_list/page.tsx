@@ -438,7 +438,7 @@ export default function StairList({}) {
 
       if (response.status === 200) {
         toast.current?.show({
-          severity: "success",
+          severity: newStatus === 1 ? "success" : "error",
           detail:
             newStatus === 1
               ? "Activated successfully!"
