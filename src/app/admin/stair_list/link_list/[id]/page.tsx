@@ -178,8 +178,13 @@ export default function StairList({ params }: any) {
             border: "none",
             height: "20px",
           }}
-          onClick={() =>
-            handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
+          onClick={() => {
+            const action = rowData.status === 1 ? "deactivate" : "activate";
+            if (window.confirm(`Are you sure you want to ${action} ?`)) {
+              handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
+            }
+          }
+            // handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
           }
         />
       ),

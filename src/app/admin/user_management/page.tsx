@@ -296,9 +296,12 @@ export default function UserManagement({ }) {
             border: "none",
             height: "20px",
           }}
-          onClick={() =>
-            handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
-          }
+          onClick={() => {
+            const action = rowData.status === 1 ? "deactivate" : "activate";
+            if (window.confirm(`Are you sure you want to ${action} this user?`)) {
+              handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
+            }
+          }}
         />
       ),
     },
@@ -452,7 +455,10 @@ export default function UserManagement({ }) {
   const handleStatusUpdate = async (rowData: any, newStatus: number) => {
     try {
       const payload = { token: rowData.token, status: newStatus };
-
+      if(!payload.token){
+        window.confirm("Token not present for the user");
+        return;
+      }
       const response = await axios.post(
         apiEndpoints.userStatus,
         payload,
@@ -539,7 +545,7 @@ export default function UserManagement({ }) {
             showDeleteButton={false}
             showImportButton={false}
             showExpandButton={false}
-            headerText="User List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
+            headerText="User List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div
@@ -671,7 +677,7 @@ export default function UserManagement({ }) {
                     id="plrbstatus"
                     className="ace-checkbox-2"
                     type="checkbox"
-                    style={{accentColor:"darkgoldenrod"}}
+                    style={{ accentColor: "darkgoldenrod" }}
                     checked={plrbStatus === 1}
                     onChange={
                       (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -688,7 +694,7 @@ export default function UserManagement({ }) {
                     id="termscondition"
                     className="ace-checkbox-2"
                     type="checkbox"
-                    style={{accentColor:"darkgoldenrod"}}
+                    style={{ accentColor: "darkgoldenrod" }}
                     checked={termsCondition === 1}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setTermsCondition(e.target.checked ? 1 : 0)
@@ -712,7 +718,7 @@ export default function UserManagement({ }) {
                       id="email_subscribed"
                       className="ace-checkbox-2"
                       type="checkbox"
-                      style={{accentColor:"darkgoldenrod"}}
+                      style={{ accentColor: "darkgoldenrod" }}
                       checked={emailSubscribed === 1}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setEmailSubscription(e.target.checked ? 1 : 0)
