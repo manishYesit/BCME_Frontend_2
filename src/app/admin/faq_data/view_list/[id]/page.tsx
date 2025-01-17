@@ -21,7 +21,7 @@ export default function viewList({ params }: any) {
   const [refresh, setRefresh] = useState<any>(false);
   const token = useSelector((state: RootState) => state.auth.token);
   const [data, setData]: [any, Function] = useState([]);
-  const [inputTitle, setInputTitle] = useState<string | null>(null);
+  const [inputTitle, setInputTitle] = useState<any>(null);
   const [inputDetails, setInputDetails] = useState<any>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const [linkRowId, setLinkRowId] = useState<any>(null);
@@ -43,6 +43,14 @@ export default function viewList({ params }: any) {
     gap: "16px",
     border: "1px solid #000",
   };
+
+  const boxStyle = {
+    marginBottom: "20px",
+    marginTop: "20px",
+    backgroundColor: "#F5F5F5",
+    borderTop: "1px solid #E5E5E5",
+    padding: "19px 20px 20px"
+  }
 
   const headerStyle = {
     fontWeight: 400,
@@ -202,6 +210,10 @@ export default function viewList({ params }: any) {
       formData.append("id", linkRowId);
       formData.append("details", inputDetails);
 
+      if(!linkRowId) {
+        formData.append("title", inputTitle);
+      }
+
       let apiUrl = linkRowId
         ? apiEndpoints.Update_FAQ
         : apiEndpoints.register_FAQ;
@@ -309,7 +321,7 @@ export default function viewList({ params }: any) {
         >
           <Box sx={modalStyle}>
             <div id="modal-modal-title" className="modal_header">
-              <div>{linkRowId ? "Update" : "Add"}</div>
+              <div>{linkRowId ? "Update FAQ" : "Add FAQ"}</div>
               <div
                 style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
                 onClick={handleClose}
@@ -399,31 +411,40 @@ export default function viewList({ params }: any) {
                 </Box>
               </Box>
 
-              <Box ml={8}>
-                <button
-                  type="button"
-                  className="modal_submit_btn"
-                  onClick={handleSubmit}
-                >
-                  <MdDone size={20} /> {linkRowId ? "Update" : "Submit"}
-                </button>
-                {!linkRowId && (
+              <Box sx={boxStyle}>
+                <Box ml={8}>
                   <button
                     type="button"
                     className="modal_submit_btn"
-                    style={{
-                      backgroundColor: "#8B9AA3",
-                    }}
-                    onClick={resetForm}
+                    onClick={handleSubmit}
                   >
-                    <VscDebugRestart size={20} /> Reset
+                    <MdDone size={20} /> {linkRowId ? "Update" : "Submit"}
                   </button>
-                )}
+                  {!linkRowId && (
+                    <button
+                      type="button"
+                      className="modal_submit_btn"
+                      style={{
+                        backgroundColor: "#8B9AA3",
+                      }}
+                      onClick={resetForm}
+                    >
+                      <VscDebugRestart size={20} /> Reset
+                    </button>
+                  )}
+                </Box>
               </Box>
             </Box>
 
             {/* Close Button */}
-            <div>
+            <div style={{
+              paddingTop: "12px",
+              paddingBottom: "14px",
+              backgroundColor: "#EFF3F8", 
+              borderTopColor: "#E4E9EE", 
+              padding: "15px",
+              borderTop: "1px solid #e5e5e5"
+            }}>
               <button
                 type="button"
                 className="modal_close_btn"
