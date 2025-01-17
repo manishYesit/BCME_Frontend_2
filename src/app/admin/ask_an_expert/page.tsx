@@ -868,7 +868,7 @@ export default function AskAnExpert({ }) {
         <Button
           label={rowData.contact_status === 1 ? "Open" : "Closed"}
           style={{
-            background: rowData.contact_status === 1 ? "#F89406" : "#D9534F",
+            background: rowData.contact_status === 1 ? "#82AF6F" : "#F89406",
             color: "#FFF",
             border: "none",
             height: "20px",

@@ -56151,6 +56151,12 @@ button.table_add_btn {
     width: 100px;
 }
 
+.table_header .p-datatable .p-datatable-wrapper table tr td button[aria-label="Closed"] {
+    border-radius: 5px;
+    padding: 20px;
+    width: 100px;
+}
+
 .card.my-card .flex.gap-2.mb-2 button[aria-label="Export CSV"] {
     border-radius: 5px;
     padding: 10px 20px;
