@@ -295,7 +295,7 @@ export default function StairList({}) {
             height: "20px",
           }}
           onClick={() =>{
-            const action = rowData.status === 1 ? "deactivate" : "activate";
+            const action = rowData.status === true ? "deactivate" : "activate";
             if (window.confirm(`Are you sure you want to ${action} ?`)) {
               handleStatusUpdate(rowData, rowData.status === true ? 2 : 1);
             }

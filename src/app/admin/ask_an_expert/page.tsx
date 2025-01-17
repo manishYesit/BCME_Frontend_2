@@ -736,10 +736,7 @@ export default function AskAnExpert({ }) {
       if (response.status === 200) {
         toast.current?.show({
           severity: newStatus === 1 ? "success" : "error",
-          detail:
-            newStatus === 1
-              ? "Activated successfully!"
-              : "Deactivated successfully!",
+          detail: "Status updated successfully!",
           life: 3000,
         });
         fetchData(token);
@@ -877,8 +874,8 @@ export default function AskAnExpert({ }) {
             height: "20px",
           }}
           onClick={() => {
-            const action = rowData.status === 1 ? "deactivate" : "activate";
-            if (window.confirm(`Are you sure you want to ${action} ?`)) {
+            const action = rowData.contact_status === 1 ? "close" : "open";
+            if (window.confirm(`Are you sure you want to ${action} this query?`)) {
               handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1);
             }
           }

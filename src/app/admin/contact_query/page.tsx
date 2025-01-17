@@ -96,19 +96,16 @@ export default function ContactQuery({}) {
   }
   const handleStatusUpdate = async (rowData: any, newStatus: number) => {
     try {
-      const payload = { domain_id: rowData.domain_id, status: newStatus };
+      const payload = { id: rowData.contact_id, status: newStatus };
 
-      const response = await axios.post(apiEndpoints.domainStatus, payload, {
+      const response = await axios.post(apiEndpoints.contactQueryStatus, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.status === 200) {
         toast.current?.show({
           severity: newStatus === 1 ? "success" : "error",
-          detail:
-            newStatus === 1
-              ? "Activated successfully!"
-              : "Deactivated successfully!",
+          detail: "Status updated successfully!",
           life: 3000,
         });
         fetchData(token);
@@ -161,22 +158,19 @@ export default function ContactQuery({}) {
     {
       field: "contact_id",
       header: "ID",
-      sortable: true,
     },
     {
       field: "contact_name",
-      header: "Full Name",
-      sortable: true,
+      header: "fullname",
       width: "120px",
     },
     {
       field: "contact_name",
-      header: "Contact Name",
-      sortable: true,
+      header: "contact_name",
       width: "140px",
     },
-    { field: "contact_email_id", header: "Contact Email Id", sortable: true },
-    { field: "contact_price", header: "Amount", sortable: true },
+    { field: "contact_email_id", header: "contact_email_id" },
+    { field: "contact_price", header: "Amount" },
     {
       field: "contact_status",
       header: "Status",
@@ -191,8 +185,8 @@ export default function ContactQuery({}) {
             height: "20px",
           }}
           onClick={() => {
-            const action = rowData.status === 1 ? "deactivate" : "activate";
-            if (window.confirm(`Are you sure you want to ${action} ?`)) {
+            const action = rowData.contact_status === 1 ? "close" : "open";
+            if (window.confirm(`Are you sure you want to ${action} this query ?`)) {
               handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1);
             }
           }
@@ -323,6 +317,14 @@ export default function ContactQuery({}) {
           </div>
         </div>
       </section>
+      <div className="page-header">
+        <h1>
+          Contact Query
+          <small>
+            <i className="ace-icon fa fa-angle-double-right"></i> List
+          </small>
+        </h1>
+      </div>
       {data.length ? (
         <div>
           <CustomTable

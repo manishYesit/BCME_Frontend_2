@@ -98,6 +98,7 @@ const apiEndpoints = {
   getContact_Details: `${API_BASE_URL}/tf_contact/getAllData`,
   get_Queries_Chat: `${API_BASE_URL}/tf_contact/get_queries`,
   send_QueryMessage: `${API_BASE_URL}/tf_contact/saveMessage`,
+  contactQueryStatus: `${API_BASE_URL}/tf_contact/contact_query_status`,
 
   //code_query--
   getAskCodeData: `${API_BASE_URL}/tf_ask_code/getAllData`,
