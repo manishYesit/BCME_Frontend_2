@@ -1072,11 +1072,11 @@ export default function AskAnExpert({ }) {
             <Link href="/admin/view_search_data" style={{ margin: 'auto', color: '#307ecc' }}>
               View Data
             </Link>
-            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <Link href="/admin/map_view" style={{ margin: 'auto', color: '#307ecc' }}>
               View Data On Map
             </Link>
-            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <a
               href="#"
               style={{ margin: 'auto', color: '#307ecc' }}
@@ -1084,7 +1084,7 @@ export default function AskAnExpert({ }) {
             >
               Export Data
             </a>
-            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <a
               href="#"
               style={{ margin: 'auto', color: '#307ecc' }}

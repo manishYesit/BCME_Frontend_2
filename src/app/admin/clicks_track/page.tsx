@@ -72,7 +72,7 @@ export default function ClickTrackList({}) {
   const columns = [
     {
       field: "sn",
-      header: "S.N",
+      header: "S.No",
       sortable: true,
     },
     {
