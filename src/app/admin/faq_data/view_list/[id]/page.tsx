@@ -210,9 +210,9 @@ export default function viewList({ params }: any) {
       formData.append("id", linkRowId);
       formData.append("details", inputDetails);
 
-      if(!linkRowId) {
-        formData.append("title", inputTitle);
-      }
+      // if(!linkRowId) {
+      //   formData.append("title", inputTitle);
+      // }
 
       let apiUrl = linkRowId
         ? apiEndpoints.Update_FAQ
