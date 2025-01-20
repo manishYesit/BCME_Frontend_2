@@ -962,7 +962,7 @@ export default function AskAnExpert({ }) {
       <div className="chat-container">
         <div className="chat-header">
           <BsChatFill className="chat-icon" size={20} />
-          <span className="chat-header-text">{data?.contact_subject}</span>
+          <span className="chat-header-text">{data?.question_type === 1 ? 'Code by Address' : 'Ask Expert'}</span>
         </div>
 
         {chatData?.map((item: any, index: number) => (
@@ -993,7 +993,7 @@ export default function AskAnExpert({ }) {
           <a
             href="#/"
             style={{ color: "#478fca" }}
-            onClick={(e) => setShowAmountField(true)}
+            onClick={(e) => setShowAmountField((prev:any) => !prev)}
           >
             Ask for Payment
           </a>
