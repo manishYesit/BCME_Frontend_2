@@ -309,7 +309,7 @@ export default function RootLayout({
                     href="/admin/faq_data"
                     className={
                       "nav-link " +
-                      (pathName == "/admin/faq_data" ? "active" : "")
+                      (pathName.startsWith("/admin/faq_data") ? "active" : "")
                     }
                   >
                     <i className="nav-icon fa-solid fa-circle-question"></i>

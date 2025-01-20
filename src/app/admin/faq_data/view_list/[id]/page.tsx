@@ -194,6 +194,10 @@ export default function viewList({ params }: any) {
       setFormError("Required.");
       return false;
     }
+    if(!pdfFile) {
+      setFormError("Required.");
+      return false;
+    }
     setFormError(null);
     return true;
   };
@@ -255,6 +259,8 @@ export default function viewList({ params }: any) {
     setInputDetails(null);
     setFormError(null);
     setLinkRowId(null);
+    setPdfFile(null);
+    setPdfFileName(null);
   };
 
   // Handle file change
@@ -407,6 +413,11 @@ export default function viewList({ params }: any) {
                     >
                       {pdfFileName}
                     </span>
+                  )} 
+                  {!pdfFile && (
+                      <Typography variant="body2" color="error">
+                        {formError}
+                      </Typography>
                   )}
                 </Box>
               </Box>
