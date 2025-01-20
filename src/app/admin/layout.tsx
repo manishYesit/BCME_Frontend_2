@@ -123,6 +123,7 @@ export default function RootLayout({
                           onClick={(e) => {
                             handleLiClick(e);
                             handleChangePassword();
+                            setIsOpen(prev => !prev);
                           }}
                           style={{ cursor: "pointer" }}
                         >
@@ -246,7 +247,7 @@ export default function RootLayout({
                     href="/admin/roof_list"
                     className={
                       "nav-link " +
-                      (pathName == "/admin/roof_list" ? "active" : "")
+                      ((pathName.startsWith("/admin/roof_list") || pathName === "/admin/roof_set_image") ? "active" : "")
                     }
                   >
                     <i className="nav-icon fa-solid fa-people-roof"></i>
@@ -258,7 +259,7 @@ export default function RootLayout({
                     href="/admin/stair_list"
                     className={
                       "nav-link " +
-                      (pathName == "/admin/stair_list" ? "active" : "")
+                      ((pathName.startsWith("/admin/stair_list") || pathName === "/admin/stair_set_image") ? "active" : "")
                     }
                   >
                     <i className="nav-icon fa-solid fa-stairs"></i>
