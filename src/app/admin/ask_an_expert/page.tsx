@@ -1122,7 +1122,7 @@ export default function AskAnExpert({ }) {
             alignItems: "center",
           }}
         >
-          <CircularProgress size="3rem" />
+          {/* <CircularProgress size="3rem" /> */} <p>Data Not Found</p>
         </div>
       )}
       <Toast ref={toast} />
