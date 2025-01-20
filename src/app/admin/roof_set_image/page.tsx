@@ -473,7 +473,8 @@ export default function RoofSetOnImage() {
             }}
           >
             {draggedHammerId !== "Position : x = y=" && (
-              <div style={{ borderTop: "none", position: "absolute", top: "2px", marginLeft: "20px" }}>
+              <div style={{ borderTop: "none", position: "absolute", top: "2px", marginLeft: "20px", userSelect: "none" }} 
+                onMouseDown={(event) => event.preventDefault()}>
                 {hammerPositions
                   .find((hammer) => hammer.id === draggedHammerId)
                   ?
