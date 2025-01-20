@@ -409,6 +409,8 @@ export default function FaqList({}) {
     setInputTitle(null);
     setInputInformation(null);
     setFormError(null);
+    setSelectedListType(null);
+    setSelectedHammer(null);
   };
 
   return (
@@ -508,7 +510,7 @@ export default function FaqList({}) {
                     }
                     value={list.find(
                       (option) => option.value === selectedListType
-                    )}
+                    ) || null}
                     placeholder="Select"
                   />
                   {formError && !selectedListType && (
@@ -543,9 +545,9 @@ export default function FaqList({}) {
                         selectedOption ? selectedOption.value : null
                       )
                     }
-                    value={list.find(
-                      (option) => option.value === selectedHammer
-                    )}
+                    value={selectedHammer ? allHammerData.find(
+                      (option:any) => option.value === selectedHammer
+                    ): null}
                     placeholder="Select Hammer"
                   />
                   {formError && !selectedHammer && (
