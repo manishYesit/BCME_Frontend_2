@@ -86,7 +86,7 @@ const CustomTable = ({
         )}
       </div>
       {showCollapseButton && (
-        <div onClick={toggleCollapse}>
+        <div className="my-arrow" onClick={toggleCollapse}>
           {isCollapsed === false ? (
             <span>
               <IoIosArrowUp size={30} />
@@ -121,7 +121,7 @@ const CustomTable = ({
     <div>
       <Toast ref={toast} />
       <div className="card my-card">
-        <div className="flex gap-2 mb-2">
+        <div className="flex gap-2 mb-2 filter-buttons">
           {showAddButton && (
             <Button
               className="table_add_btn"

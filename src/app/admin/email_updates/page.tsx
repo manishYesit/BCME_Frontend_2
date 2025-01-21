@@ -154,7 +154,7 @@ const EmailUpdates: React.FC = () => {
 
     return (
         <div className="email-updates-wrap">
-            <h2>Email Updates</h2>
+            <h2>eMail Updates</h2>
             <form onSubmit={handleSubmit}>
                 <div className="send-options">
                     <label>
@@ -196,7 +196,7 @@ const EmailUpdates: React.FC = () => {
                             Test User Email:
                             <input
                                 type="text"
-                                placeholder="admin@example.com"
+                                placeholder="admin@example.com, sales@example.com"
                                 value={testUserEmail}
                                 onChange={(e) => setTestUserEmail(e.target.value)}
                             />

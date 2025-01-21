@@ -88,10 +88,11 @@ export default function addProfession({ }) {
       header: "S.N",
       body: (_: RowData, { rowIndex }: ColumnOptions) => rowIndex + 1,
     },
-    { field: "profession", header: "Profession" },
+    { field: "profession", header: "Profession", sortable:true },
     {
       field: "Status",
       header: "Status",
+      sortable:true,
       body: (rowData: any) => (
         <Button
           label={rowData.status === 1 ? "Active" : "Inactive"}
@@ -101,8 +102,13 @@ export default function addProfession({ }) {
             border: "none",
             height: "20px",
           }}
-          onClick={() =>
-            handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
+          onClick={() => {
+            const action = rowData.status === 1 ? "deactivate" : "activate";
+            if (window.confirm(`Are you sure you want to ${action} ?`)) {
+              handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
+            }
+          }
+            // handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
           }
         />
       ),
@@ -234,7 +240,7 @@ export default function addProfession({ }) {
 
       if (response.status === 200) {
         toast.current?.show({
-          severity: "success",
+          severity: newStatus === 1 ? "success" : "error",
           detail:
             newStatus === 1
               ? "Activated successfully!"

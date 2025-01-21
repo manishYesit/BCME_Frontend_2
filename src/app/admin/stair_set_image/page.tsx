@@ -405,13 +405,13 @@ export default function StairSetOnImage() {
               <h1>{"Dashboard >> Stair"}</h1>
             </div>
           </div>
-          <div className="col-sm-12 btn-container mt-2">
+          <div className="col-sm-12 btn-container mt-2 stair-set-filters align-items-center">
             <div>
-              <button className="add_btn" onClick={handleOpen}>
-                Add
+              <button className="table_add_btn p-button p-component add_btn" onClick={handleOpen}>
+                <span className="p-button-icon p-c pi pi-plus">Add</span>
               </button>
             </div>
-            <div>
+            <div className="ml-auto">
               <input
                 type="file"
                 accept="image/*"
@@ -420,7 +420,7 @@ export default function StairSetOnImage() {
             </div>
             <div>
               <button
-                className="submit_img"
+                className="plrb-import-btn submit_img"
                 style={{
                   background: "#629B58",
                   borderColor: "#87B87F",
@@ -435,7 +435,7 @@ export default function StairSetOnImage() {
         </div>
 
         {/* Display position for only the dragged hammer */}
-        {draggedHammerId !== "Position : x = y=" && (
+        {/* {draggedHammerId !== "Position : x = y=" && (
           <div style={{ marginTop: "10px", borderTop: "1px solid #E2E2E2" }}>
             <div>
               Position : x ={" "}
@@ -448,7 +448,7 @@ export default function StairSetOnImage() {
                 ?.y.toFixed(2)}
             </div>
           </div>
-        )}
+        )} */}
         <div className="" style={{ display: "flex" }}>
           {/* Canvas container */}
           <div
@@ -459,6 +459,24 @@ export default function StairSetOnImage() {
               height: "400px",
             }}
           >
+            {draggedHammerId !== "Position : x = y=" && (
+              <div style={{ borderTop: "none", position: "absolute", top: "2px", marginLeft: "20px", userSelect: "none" }}
+                onMouseDown={(event) => event.preventDefault()}>
+                {hammerPositions
+                  .find((hammer) => hammer.id === draggedHammerId)
+                  ?
+                  <div>
+                    Position : x ={" "}
+                    {hammerPositions
+                      .find((hammer) => hammer.id === draggedHammerId)
+                      ?.x.toFixed(2)}
+                    , y ={" "}
+                    {hammerPositions
+                      .find((hammer) => hammer.id === draggedHammerId)
+                      ?.y.toFixed(2)}
+                  </div>: null}
+              </div>
+            )}
             <canvas
               ref={canvasRef}
               width="600"

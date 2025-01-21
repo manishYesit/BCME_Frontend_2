@@ -635,7 +635,7 @@ form .button input:hover {
   border-radius: 5px;
   cursor: pointer;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 500 !important;
   margin-left: 0px;
   border: 1px solid #abb2b9;
   transition: background-color 0.3s ease;
@@ -754,8 +754,16 @@ form .button input:hover {
 .page-header {
   margin: 0 0 12px;
   border-bottom: 1px dotted #E2E2E2;
-  padding-bottom: 16px;
-  padding-top: 7px;
+  padding: 15px .5rem;
+}
+
+h1.queries-heading {
+  display: flex;
+  align-items: center;
+}
+
+.right-tags {
+  margin-left: auto;
 }
 
 .page-header h1 {
@@ -830,11 +838,11 @@ form .button input:hover {
     gap: 5px;
     cursor: pointer;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500 !important;
     color: #000;
 
     input[type="radio"] {
-      accent-color: #C6487E;
+      accent-color: #307ECC;
       display: block;
     }
   }
@@ -873,7 +881,7 @@ form .button input:hover {
   label {
     font-size: 14px;
     color: #000;
-    font-weight: 500;
+    font-weight: 500 !important;
   }
 
   input[type="text"] {
@@ -900,3 +908,200 @@ form .button input:hover {
 }
 
 /* EMAIL-UPDATES-SECTION */
+
+
+/* NEW-CSS */
+
+.card.my-card .filter-buttons {
+  order: 2;
+  margin-top: 1rem;
+}
+
+.card.my-card .datatable-mainheader {
+  order: 1;
+}
+
+.card.my-card div#collapseExample {
+  order: 3;
+}
+
+.ask-expert-table {
+  width: 100%;
+}
+
+.ask-expert-table table {
+  width: 100%;
+}
+
+.ask-expert-table table tr th {
+  vertical-align: baseline;
+}
+
+.ask-expert-table table tr td button span.p-button-icon.p-c.pi.pi-envelope {
+  color: #337ab7;
+}
+
+.my-arrow span svg {
+  stroke-width: 2;
+}
+
+
+.plrb-member-domain-table {
+  width: 100%;
+}
+
+.plrb-member-domain-table .card.my-card .filter-buttons {
+  order: 1;
+  margin-top: 0rem;
+}
+
+.plrb-member-domain-table .card.my-card .datatable-mainheader {
+  order: 2;
+}
+
+.plrb-member-domain-table .card.my-card div#collapseExample {
+  order: 3;
+}
+
+.stair-table .p-datatable table tr th:nth-child(1),
+.stair-table .p-datatable table tr th:nth-child(3),
+.stair-table .p-datatable table tr th:nth-child(3) svg {
+  color: #307ECC;
+}
+
+.p-datatable table tr th[aria-sort="none"] {
+  color: #707070;
+}
+
+.p-datatable table tr th[aria-sort="ascending"],
+.p-datatable table tr th[aria-sort="descending"],
+.p-datatable table tr th[aria-sort="ascending"] svg,
+.p-datatable table tr th[aria-sort="descending"] svg {
+  color: #307ECC;
+}
+
+
+/* SIDEBAR-HOVER */
+
+ul.sidebar-hover-wrap li:hover {
+  border-radius: .25rem;
+}
+
+ul.sidebar-hover-wrap li a {
+  color: #fff !important;
+}
+
+ul.sidebar-hover-wrap li:hover i {
+  color: #fff !important;
+}
+
+
+
+/* ALL-LIST */
+
+ul.sidebar-hover-wrap li:hover:nth-child(2) {
+  background-color: #6ab14a;
+}
+
+ul.sidebar-hover-wrap li:nth-child(2) i {
+  color: #6ab14a;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(3) {
+  background-color: #98bc1b;
+}
+
+ul.sidebar-hover-wrap li:nth-child(3) i {
+  color: #98bc1b;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(4) {
+  background-color: #b7c51c;
+}
+
+ul.sidebar-hover-wrap li:nth-child(4) i {
+  color: #b7c51c;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(5) {
+  background-color: #d9b41f;
+}
+
+ul.sidebar-hover-wrap li:nth-child(5) i {
+  color: #d9b41f;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(6) {
+  background-color: #dfa020;
+}
+
+ul.sidebar-hover-wrap li:nth-child(6) i {
+  color: #dfa020;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(7) {
+  background-color: #df7220;
+}
+
+ul.sidebar-hover-wrap li:nth-child(7) i {
+  color: #df7220;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(8) {
+  background-color: #d43a48;
+}
+
+ul.sidebar-hover-wrap li:nth-child(8) i {
+  color: #d43a48;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(9) {
+  background-color: #bd5289;
+}
+
+ul.sidebar-hover-wrap li:nth-child(9) i {
+  color: #bd5289;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(10) {
+  background-color: #c55ee7;
+}
+
+ul.sidebar-hover-wrap li:nth-child(10) i {
+  color: #c55ee7;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(11) {
+  background-color: #3f8ad0;
+}
+
+ul.sidebar-hover-wrap li:nth-child(11) i {
+  color: #3f8ad0;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(12) {
+  background-color: #4bb9ca;
+}
+
+ul.sidebar-hover-wrap li:nth-child(12) i {
+  color: #4bb9ca;
+}
+
+ul.sidebar-hover-wrap li:hover:nth-child(13),
+ul.sidebar-hover-wrap li:hover:nth-child(14),
+ul.sidebar-hover-wrap li:hover:nth-child(15) {
+  background-color: #bd5289;
+}
+
+ul.sidebar-hover-wrap li:nth-child(13) i,
+ul.sidebar-hover-wrap li:nth-child(14) i,
+ul.sidebar-hover-wrap li:nth-child(15) i {
+  color: #bd5289;
+}
+
+/* ALL-LIST */
+
+
+/* SIDEBAR-HOVER */
+
+/* NEW-CSS */

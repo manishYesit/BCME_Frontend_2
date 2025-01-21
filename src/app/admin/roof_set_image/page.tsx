@@ -448,7 +448,7 @@ export default function RoofSetOnImage() {
         </div>
 
         {/* Display position for only the dragged hammer */}
-        {draggedHammerId !== "Position : x = y=" && (
+        {/* {draggedHammerId !== "Position : x = y=" && (
           <div style={{ marginTop: "10px", borderTop: "1px solid #E2E2E2" }}>
             <div>
               Position : x ={" "}
@@ -461,7 +461,7 @@ export default function RoofSetOnImage() {
                 ?.y.toFixed(2)}
             </div>
           </div>
-        )}
+        )} */}
         <div className="" style={{ display: "flex" }}>
           {/* Canvas container */}
           <div
@@ -472,6 +472,25 @@ export default function RoofSetOnImage() {
               height: "400px",
             }}
           >
+            {draggedHammerId !== "Position : x = y=" && (
+              <div style={{ borderTop: "none", position: "absolute", top: "2px", marginLeft: "20px", userSelect: "none" }} 
+                onMouseDown={(event) => event.preventDefault()}>
+                {hammerPositions
+                  .find((hammer) => hammer.id === draggedHammerId)
+                  ?
+                  <div>
+                    Position : x ={" "}
+                    {hammerPositions
+                      .find((hammer) => hammer.id === draggedHammerId)
+                      ?.x.toFixed(2)}
+                    , y ={" "}
+                    {hammerPositions
+                      .find((hammer) => hammer.id === draggedHammerId)
+                      ?.y.toFixed(2)}
+                  </div>
+                  : null}
+              </div>
+            )}
             <canvas
               ref={canvasRef}
               width="600"

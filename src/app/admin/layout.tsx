@@ -123,6 +123,7 @@ export default function RootLayout({
                           onClick={(e) => {
                             handleLiClick(e);
                             handleChangePassword();
+                            setIsOpen(prev => !prev);
                           }}
                           style={{ cursor: "pointer" }}
                         >
@@ -176,12 +177,12 @@ export default function RootLayout({
 
             <nav className="mt-2">
               <ul
-                className="nav nav-pills nav-sidebar flex-column"
+                className="nav nav-pills nav-sidebar flex-column sidebar-hover-wrap"
                 data-widget="treeview"
                 role="menu"
                 data-accordion="false"
               >
-                <li className="nav-item menu-open">
+                <li className="nav-item dashboard">
                   <Link
                     href="/admin/dashboard"
                     className={
@@ -246,7 +247,7 @@ export default function RootLayout({
                     href="/admin/roof_list"
                     className={
                       "nav-link " +
-                      (pathName == "/admin/roof_list" ? "active" : "")
+                      ((pathName.startsWith("/admin/roof_list") || pathName === "/admin/roof_set_image") ? "active" : "")
                     }
                   >
                     <i className="nav-icon fa-solid fa-people-roof"></i>
@@ -258,7 +259,7 @@ export default function RootLayout({
                     href="/admin/stair_list"
                     className={
                       "nav-link " +
-                      (pathName == "/admin/stair_list" ? "active" : "")
+                      ((pathName.startsWith("/admin/stair_list") || pathName === "/admin/stair_set_image") ? "active" : "")
                     }
                   >
                     <i className="nav-icon fa-solid fa-stairs"></i>
@@ -308,7 +309,7 @@ export default function RootLayout({
                     href="/admin/faq_data"
                     className={
                       "nav-link " +
-                      (pathName == "/admin/faq_data" ? "active" : "")
+                      (pathName.startsWith("/admin/faq_data") ? "active" : "")
                     }
                   >
                     <i className="nav-icon fa-solid fa-circle-question"></i>

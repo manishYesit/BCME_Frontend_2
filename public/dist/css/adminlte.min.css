@@ -5601,7 +5601,7 @@ input[type=submit].btn-block {
     float: left;
     padding-right: .5rem;
     color: #6c757d;
-    content: "/"
+    content: ">";
 }
 
 .breadcrumb-item+.breadcrumb-item:hover::before {
@@ -56146,6 +56146,12 @@ button.table_add_btn {
 }
 
 .table_header .p-datatable .p-datatable-wrapper table tr td button[aria-label="Close"] {
+    border-radius: 5px;
+    padding: 20px;
+    width: 100px;
+}
+
+.table_header .p-datatable .p-datatable-wrapper table tr td button[aria-label="Closed"] {
     border-radius: 5px;
     padding: 20px;
     width: 100px;

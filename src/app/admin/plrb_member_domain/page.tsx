@@ -134,7 +134,7 @@ export default function PLRBDomainList({ params }: any) {
 
       if (response.status === 200) {
         toast.current?.show({
-          severity: "success",
+          severity: newStatus === 1 ? "success" : "error",
           detail:
             newStatus === 1
               ? "Activated successfully!"
@@ -174,8 +174,13 @@ export default function PLRBDomainList({ params }: any) {
             border: "none",
             height: "20px",
           }}
-          onClick={() =>
-            handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
+          onClick={() => {
+            const action = rowData.status === 1 ? "deactivate" : "activate";
+            if (window.confirm(`Are you sure you want to ${action} ?`)) {
+              handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
+            }
+          }
+            // handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
           }
         />
       ),
@@ -222,14 +227,14 @@ export default function PLRBDomainList({ params }: any) {
     try {
       const payload = linkRowId
         ? {
-            domain_id: linkRowId,
-            domain_name: inputDominName,
-            status: domainStatus,
-          }
+          domain_id: linkRowId,
+          domain_name: inputDominName,
+          status: domainStatus,
+        }
         : {
-            domain_id: linkRowId,
-            domain_name: inputDominName,
-          };
+          domain_id: linkRowId,
+          domain_name: inputDominName,
+        };
       let apiUrl = linkRowId
         ? apiEndpoints.updateDomain
         : apiEndpoints.addDomain;

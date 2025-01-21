@@ -132,7 +132,7 @@ export default function StairList({ params }: any) {
 
       if (response.status === 200) {
         toast.current?.show({
-          severity: "success",
+          severity: newStatus === 1 ? "success" : "error",
           detail:
             newStatus === 1
               ? "Activated successfully!"
@@ -155,7 +155,6 @@ export default function StairList({ params }: any) {
     {
       field: "sn",
       header: "S.N",
-      sortable: true,
       body: (_: any, { rowIndex }: any) => rowIndex + 1,
     },
     { field: "title", header: "Title", sortable: true },
@@ -163,12 +162,10 @@ export default function StairList({ params }: any) {
     {
       field: "row_order",
       header: "Order",
-      sortable: true,
     },
     {
       field: "Status",
       header: "Status",
-      sortable: true,
       body: (rowData: any) => (
         <Button
           label={rowData.status === 1 ? "Active" : "Inactive"}
@@ -178,8 +175,13 @@ export default function StairList({ params }: any) {
             border: "none",
             height: "20px",
           }}
-          onClick={() =>
-            handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
+          onClick={() => {
+            const action = rowData.status === 1 ? "deactivate" : "activate";
+            if (window.confirm(`Are you sure you want to ${action} ?`)) {
+              handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
+            }
+          }
+            // handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
           }
         />
       ),
