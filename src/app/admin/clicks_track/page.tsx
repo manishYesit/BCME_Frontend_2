@@ -12,7 +12,7 @@ import { Toast } from "primereact/toast";
 import { saveAs } from "file-saver";
 import { IoHome } from "react-icons/io5";
 
-export default function ClickTrackList({}) {
+export default function ClickTrackList({ }) {
   const [refresh, setRefresh] = useState<any>(false);
   const token = useSelector((state: RootState) => state.auth.token);
   const [data, setData]: [any, Function] = useState([]);
@@ -142,7 +142,7 @@ export default function ClickTrackList({}) {
             showImportButton={false}
             showExpandButton={false}
             showAddButton={false}
-            headerText="Clicks Tracking " onAdd={undefined} onDelete={undefined} rowExpansionTemplate={undefined} selectionMode={undefined}          />
+            headerText="Clicks Tracking " onAdd={undefined} onDelete={undefined} rowExpansionTemplate={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div

@@ -592,32 +592,32 @@ export default function AskAnExpert({ }) {
           } else {
             return fieldValue.toString().includes(filter.value);
           }
-          case 'less_than':
-            return fieldValue < filter.value;
-          case 'less_or_equal':
-            return fieldValue <= filter.value;
-          case 'greater than':
-            return fieldValue > filter.value;
-          case 'greater_or_equal':
-            return fieldValue >= filter.value;
-          case 'is_null':
-            return fieldValue === null || fieldValue === undefined;
-          case 'is_not_null':
-            return fieldValue !== null && fieldValue !== undefined;
-          case 'is_in':
-            return Array.isArray(filter.value) && filter.value.includes(fieldValue);
-          case 'is_not_in':
-            return Array.isArray(filter.value) && !filter.value.includes(fieldValue);
-          case 'begin_with':
-            return fieldValue?.toString().startsWith(filter.value);
-          case 'does_not_begin_with':
-            return !fieldValue?.toString().startsWith(filter.value);
-          case 'ends_with':
-            return fieldValue?.toString().endsWith(filter.value);
-          case 'does_not_end_with':
-            return !fieldValue?.toString().endsWith(filter.value);
-          default:
-            return true;
+        case 'less_than':
+          return fieldValue < filter.value;
+        case 'less_or_equal':
+          return fieldValue <= filter.value;
+        case 'greater than':
+          return fieldValue > filter.value;
+        case 'greater_or_equal':
+          return fieldValue >= filter.value;
+        case 'is_null':
+          return fieldValue === null || fieldValue === undefined;
+        case 'is_not_null':
+          return fieldValue !== null && fieldValue !== undefined;
+        case 'is_in':
+          return Array.isArray(filter.value) && filter.value.includes(fieldValue);
+        case 'is_not_in':
+          return Array.isArray(filter.value) && !filter.value.includes(fieldValue);
+        case 'begin_with':
+          return fieldValue?.toString().startsWith(filter.value);
+        case 'does_not_begin_with':
+          return !fieldValue?.toString().startsWith(filter.value);
+        case 'ends_with':
+          return fieldValue?.toString().endsWith(filter.value);
+        case 'does_not_end_with':
+          return !fieldValue?.toString().endsWith(filter.value);
+        default:
+          return true;
       }
     };
 
@@ -879,7 +879,7 @@ export default function AskAnExpert({ }) {
               handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1);
             }
           }
-            
+
             // handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1)
           }
         />
@@ -1063,12 +1063,10 @@ export default function AskAnExpert({ }) {
         </div>
       </section>
       <div className="page-header">
-        <h1>
+        <h1 className="queries-heading">
           Code Queries
-          <small>
-            <i className="ace-icon fa fa-angle-double-right"></i> List
-          </small>
-          <div style={{ float: "right", fontSize: "14px" }}>
+          <small> <i className="ace-icon fa fa-angle-double-right"></i> List </small>
+          <div className="right-tags" style={{ float: "right", fontSize: "14px" }}>
             <Link href="/admin/view_search_data" style={{ margin: 'auto', color: '#307ecc' }}>
               View Data
             </Link>
@@ -1096,7 +1094,7 @@ export default function AskAnExpert({ }) {
         </h1>
       </div>
       {filteredData.length ? (
-        <div>
+        <div className="ask-expert-table">
           <CustomTable
             data={filteredData}
             columns={columns}
@@ -1136,24 +1134,24 @@ export default function AskAnExpert({ }) {
         style={{ width: '55vw' }}
         footer={
           <div style={{
-              display: "flex", 
-              justifyContent: "space-between", 
-              padding: "8px",
-              borderTop: "1px solid #D6E1EA",
-              marginTop: "5px",
-              width: "100%",
-              backgroundColor: "#EFF3F8"
-            }}
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "8px",
+            borderTop: "1px solid #D6E1EA",
+            marginTop: "5px",
+            width: "100%",
+            backgroundColor: "#EFF3F8"
+          }}
           >
-            <Button label="Reset" icon="pi pi-refresh" style={{backgroundColor: "#6FB3E0", borderColor:"#6FB3E0", color: "#FFF"}} onClick={resetFilters} className="p-button-text" />
+            <Button label="Reset" icon="pi pi-refresh" style={{ backgroundColor: "#6FB3E0", borderColor: "#6FB3E0", color: "#FFF" }} onClick={resetFilters} className="p-button-text" />
             {/* <Button label="Cancel" icon="pi pi-times" onClick={() => setDialogVisible(false)} className="p-button-text" /> */}
-            <Button label="Find" icon="pi pi-search" style={{backgroundColor: "#9585BF", borderColor:"#9585BF"}} onClick={handleApply} />
+            <Button label="Find" icon="pi pi-search" style={{ backgroundColor: "#9585BF", borderColor: "#9585BF" }} onClick={handleApply} />
           </div>
         }
       >
 
         <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-        
+
           <Dropdown
             value={applyMode}
             options={[
@@ -1164,7 +1162,7 @@ export default function AskAnExpert({ }) {
             placeholder="Filter"
             style={{ width: "7rem" }}
           />
-          <Button icon="pi pi-plus" onClick={handleAddFilter} style={{backgroundColor: "#428BCA", borderColor:"#428BCA", marginLeft: "0.5rem"}} />
+          <Button icon="pi pi-plus" onClick={handleAddFilter} style={{ backgroundColor: "#428BCA", borderColor: "#428BCA", marginLeft: "0.5rem" }} />
           {/* <label style={{ marginRight: '1rem' }}>
             <input
               type="radio"
@@ -1241,7 +1239,7 @@ export default function AskAnExpert({ }) {
                 icon="pi pi-times"
                 className="p-button-text p-button-danger"
                 onClick={() => removeFilter(index)}
-                style={{flexBasis: '10%', flexGrow: 0}}
+                style={{ flexBasis: '10%', flexGrow: 0 }}
               />
             </div>
           ))}

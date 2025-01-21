@@ -143,7 +143,7 @@ import { ImEye } from "react-icons/im";
 import Select from "react-select";
 import { IoHome } from "react-icons/io5";
 
-export default function FaqList({}) {
+export default function FaqList({ }) {
   const [refresh, setRefresh] = useState<any>(false);
   interface RowData {
     [key: string]: any;
@@ -237,12 +237,12 @@ export default function FaqList({}) {
       selectedListType === 1
         ? apiEndpoints.getRoofData
         : selectedListType === 2
-        ? apiEndpoints.getStairData
-        : selectedListType === 3
-        ? apiEndpoints.getRoofToolsData
-        : selectedListType === 4
-        ? apiEndpoints.getStairToolsData
-        : "";
+          ? apiEndpoints.getStairData
+          : selectedListType === 3
+            ? apiEndpoints.getRoofToolsData
+            : selectedListType === 4
+              ? apiEndpoints.getStairToolsData
+              : "";
     try {
       const response = await axios.get(apiUrl, {
         headers: { Authorization: `Bearer ${token}` },
@@ -439,7 +439,7 @@ export default function FaqList({}) {
         </div>
       </section>
       {data.length ? (
-        <div>
+        <div className="faq-table">
           <CustomTable
             data={data}
             columns={columns}
@@ -452,7 +452,7 @@ export default function FaqList({}) {
             showDeleteButton={false}
             showImportButton={false}
             showExpandButton={false}
-            headerText="FAQ List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
+            headerText="FAQ List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div
@@ -606,8 +606,8 @@ export default function FaqList({}) {
             <div style={{
               paddingTop: "12px",
               paddingBottom: "14px",
-              backgroundColor: "#EFF3F8", 
-              borderTopColor: "#E4E9EE", 
+              backgroundColor: "#EFF3F8",
+              borderTopColor: "#E4E9EE",
               padding: "15px",
               borderTop: "1px solid #e5e5e5"
             }}>

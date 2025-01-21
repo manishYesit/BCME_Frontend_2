@@ -21,7 +21,7 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { IoHome } from "react-icons/io5";
 
-export default function ContactQuery({}) {
+export default function ContactQuery({ }) {
   const [refresh, setRefresh] = useState<any>(false);
   const token = useSelector((state: RootState) => state.auth.token);
   const [data, setData]: [any, Function] = useState([]);
@@ -341,7 +341,7 @@ export default function ContactQuery({}) {
             showExpandButton={true}
             showAddButton={false}
             showCollapseButton={true}
-            headerText="Contact Queries" onAdd={undefined} onDelete={undefined} exportToCSV={undefined} selectionMode={undefined}          />
+            headerText="Contact Queries" onAdd={undefined} onDelete={undefined} exportToCSV={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div

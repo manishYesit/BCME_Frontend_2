@@ -5601,7 +5601,7 @@ input[type=submit].btn-block {
     float: left;
     padding-right: .5rem;
     color: #6c757d;
-    content: "/"
+    content: ">";
 }
 
 .breadcrumb-item+.breadcrumb-item:hover::before {

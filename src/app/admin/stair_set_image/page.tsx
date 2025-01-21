@@ -405,13 +405,13 @@ export default function StairSetOnImage() {
               <h1>{"Dashboard >> Stair"}</h1>
             </div>
           </div>
-          <div className="col-sm-12 btn-container mt-2">
+          <div className="col-sm-12 btn-container mt-2 stair-set-filters align-items-center">
             <div>
-              <button className="add_btn" onClick={handleOpen}>
-                Add
+              <button className="table_add_btn p-button p-component add_btn" onClick={handleOpen}>
+                <span className="p-button-icon p-c pi pi-plus">Add</span>
               </button>
             </div>
-            <div>
+            <div className="ml-auto">
               <input
                 type="file"
                 accept="image/*"
@@ -420,7 +420,7 @@ export default function StairSetOnImage() {
             </div>
             <div>
               <button
-                className="submit_img"
+                className="plrb-import-btn submit_img"
                 style={{
                   background: "#629B58",
                   borderColor: "#87B87F",

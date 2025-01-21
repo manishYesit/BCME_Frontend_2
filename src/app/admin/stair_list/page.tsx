@@ -194,7 +194,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { IoHome } from "react-icons/io5";
 
-export default function StairList({}) {
+export default function StairList({ }) {
   const [refresh, setRefresh] = useState<any>(false);
   interface RowData {
     [key: string]: any;
@@ -266,8 +266,8 @@ export default function StairList({}) {
       header: "S.N",
       body: (_: RowData, { rowIndex }: ColumnOptions) => rowIndex + 1,
     },
-    { field: "title", header: "Title", sortable:true },
-    { field: "information", header: "Data", sortable:true },
+    { field: "title", header: "Title", sortable: true },
+    { field: "information", header: "Data", sortable: true },
     {
       field: "id",
       header: "Link",
@@ -284,7 +284,7 @@ export default function StairList({}) {
     {
       field: "Status",
       header: "Status",
-      sortable:true,
+      sortable: true,
       body: (rowData: any) => (
         <Button
           label={rowData.status === true ? "Active" : "Inactive"}
@@ -294,7 +294,7 @@ export default function StairList({}) {
             border: "none",
             height: "20px",
           }}
-          onClick={() =>{
+          onClick={() => {
             const action = rowData.status === true ? "deactivate" : "activate";
             if (window.confirm(`Are you sure you want to ${action} ?`)) {
               handleStatusUpdate(rowData, rowData.status === true ? 2 : 1);
@@ -499,7 +499,7 @@ export default function StairList({}) {
         </div>
       </section>
       {data.length ? (
-        <div>
+        <div className="stair-table">
           <CustomTable
             data={data}
             columns={columns}
@@ -513,7 +513,7 @@ export default function StairList({}) {
             showImportButton={false}
             showExpandButton={false}
             headerText="Stair List"
-            setImageHeaderText="Set On Image" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
+            setImageHeaderText="Set On Image" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div
@@ -618,8 +618,8 @@ export default function StairList({}) {
             <div style={{
               paddingTop: "12px",
               paddingBottom: "14px",
-              backgroundColor: "#EFF3F8", 
-              borderTopColor: "#E4E9EE", 
+              backgroundColor: "#EFF3F8",
+              borderTopColor: "#E4E9EE",
               padding: "15px",
               borderTop: "1px solid #e5e5e5"
             }}>

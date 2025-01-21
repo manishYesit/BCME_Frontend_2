@@ -174,7 +174,7 @@ export default function PLRBDomainList({ params }: any) {
             border: "none",
             height: "20px",
           }}
-          onClick={() =>{
+          onClick={() => {
             const action = rowData.status === 1 ? "deactivate" : "activate";
             if (window.confirm(`Are you sure you want to ${action} ?`)) {
               handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
@@ -227,14 +227,14 @@ export default function PLRBDomainList({ params }: any) {
     try {
       const payload = linkRowId
         ? {
-            domain_id: linkRowId,
-            domain_name: inputDominName,
-            status: domainStatus,
-          }
+          domain_id: linkRowId,
+          domain_name: inputDominName,
+          status: domainStatus,
+        }
         : {
-            domain_id: linkRowId,
-            domain_name: inputDominName,
-          };
+          domain_id: linkRowId,
+          domain_name: inputDominName,
+        };
       let apiUrl = linkRowId
         ? apiEndpoints.updateDomain
         : apiEndpoints.addDomain;

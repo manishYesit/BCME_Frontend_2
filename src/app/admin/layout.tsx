@@ -177,12 +177,12 @@ export default function RootLayout({
 
             <nav className="mt-2">
               <ul
-                className="nav nav-pills nav-sidebar flex-column"
+                className="nav nav-pills nav-sidebar flex-column sidebar-hover-wrap"
                 data-widget="treeview"
                 role="menu"
                 data-accordion="false"
               >
-                <li className="nav-item menu-open">
+                <li className="nav-item dashboard">
                   <Link
                     href="/admin/dashboard"
                     className={
