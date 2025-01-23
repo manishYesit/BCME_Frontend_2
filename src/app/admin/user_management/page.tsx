@@ -393,8 +393,8 @@ export default function UserManagement({ }) {
     if (!inputPhone) {
       setPhoneError("Phone number is required.");
       isValid = false;
-    } else if (!/^\+\d{1,3}\s\d{10}$/.test(inputPhone)) {
-      setPhoneError("Phone number must include a country code (e.g., +91 9876543210).");
+    } else if (!/^\+\d{1,3}\d{10}$/.test(inputPhone)) {
+      setPhoneError("Phone number must include a country code and include no spaces (e.g., +919876543210).");
       isValid = false;
     } else {
       setPhoneError(null);
