@@ -512,7 +512,7 @@ export default function StairList({ }) {
             showDeleteButton={false}
             showImportButton={false}
             showExpandButton={false}
-            headerText="Stair List"
+            headerText="Stairs List"
             setImageHeaderText="Set On Image" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined} />
         </div>
       ) : (
