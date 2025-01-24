@@ -195,10 +195,14 @@ export default function viewList({ params }: any) {
     if (!inputDetails) {
       setFormError("Required.");
       validationStatus = false;
+    } else {
+      setFormError(null);
     }
     if(!pdfFile) {
       setPdfError("Required File.");
       validationStatus = false;
+    } else {
+      setPdfError(null);
     }
     // setFormError(null);
     // setPdfError(null);
