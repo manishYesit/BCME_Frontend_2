@@ -27,6 +27,7 @@ export default function viewList({ params }: any) {
   const [linkRowId, setLinkRowId] = useState<any>(null);
   const [pdfFile, setPdfFile] = useState<any>(null);
   const [pdfFileName, setPdfFileName] = useState<string | null>(null);
+  const [pdfError, setPdfError] = useState<string | null>(null);
   const [open, setOpen] = useState<any>(false);
   const toast = useRef<Toast>(null);
 
@@ -190,16 +191,18 @@ export default function viewList({ params }: any) {
   ];
 
   const handleValidationForm = () => {
+    let validationStatus = true;
     if (!inputDetails) {
       setFormError("Required.");
-      return false;
+      validationStatus = false;
     }
     if(!pdfFile) {
-      setFormError("Required.");
-      return false;
+      setPdfError("Required File.");
+      validationStatus = false;
     }
-    setFormError(null);
-    return true;
+    // setFormError(null);
+    // setPdfError(null);
+    return validationStatus;
   };
 
   const handleSubmit = async () => {
@@ -258,6 +261,7 @@ export default function viewList({ params }: any) {
     setInputTitle(null);
     setInputDetails(null);
     setFormError(null);
+    setPdfError(null);
     setLinkRowId(null);
     setPdfFile(null);
     setPdfFileName(null);
@@ -416,7 +420,7 @@ export default function viewList({ params }: any) {
                   )} 
                   {!pdfFile && (
                       <Typography variant="body2" color="error">
-                        {formError}
+                        {pdfError}
                       </Typography>
                   )}
                 </Box>
