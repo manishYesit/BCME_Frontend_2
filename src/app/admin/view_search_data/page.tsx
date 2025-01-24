@@ -233,7 +233,7 @@ export default function AskAnExpert({ }) {
     const columns = [
         {
             field: "fullname",
-            header: "Full Name",
+            header: "User Name",
         },
         {
             field: "muniStr",
