@@ -132,7 +132,7 @@ const CustomTable = ({
           )}
           {showDeleteButton && (
             <Button
-              label="Delete"
+              label="Delete Multiple"
               icon="pi pi-trash"
               severity="danger"
               onClick={() => onDelete(selectedRows)}

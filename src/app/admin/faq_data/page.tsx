@@ -479,7 +479,7 @@ export default function FaqList({ }) {
                 style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
                 onClick={handleClose}
               >
-                X
+                <i className="fa-solid fa-xmark"></i>
               </div>
             </div>
 
@@ -546,8 +546,8 @@ export default function FaqList({ }) {
                       )
                     }
                     value={selectedHammer ? allHammerData.find(
-                      (option:any) => option.value === selectedHammer
-                    ): null}
+                      (option: any) => option.value === selectedHammer
+                    ) : null}
                     placeholder="Select Hammer"
                   />
                   {formError && !selectedHammer && (
@@ -616,7 +616,7 @@ export default function FaqList({ }) {
                 className="modal_close_btn"
                 onClick={handleClose}
               >
-                <span>X</span> Close
+                <span><i className="fa-solid fa-xmark"></i></span> Close
               </button>
             </div>
           </Box>

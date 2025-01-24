@@ -862,11 +862,11 @@ h1.queries-heading {
     gap: 5px;
     cursor: pointer;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 400 !important;
     color: #000;
 
     input[type="checkbox"] {
-      accent-color: #C6487E;
+      accent-color: #307ECC;
     }
   }
 }
@@ -911,19 +911,6 @@ h1.queries-heading {
 
 
 /* NEW-CSS */
-
-.card.my-card .filter-buttons {
-  order: 2;
-  margin-top: 1rem;
-}
-
-.card.my-card .datatable-mainheader {
-  order: 1;
-}
-
-.card.my-card div#collapseExample {
-  order: 3;
-}
 
 .ask-expert-table {
   width: 100%;
@@ -1097,6 +1084,10 @@ ul.sidebar-hover-wrap li:nth-child(13) i,
 ul.sidebar-hover-wrap li:nth-child(14) i,
 ul.sidebar-hover-wrap li:nth-child(15) i {
   color: #bd5289;
+}
+
+.page-header h1 small i {
+  margin-right: .4rem;
 }
 
 /* ALL-LIST */

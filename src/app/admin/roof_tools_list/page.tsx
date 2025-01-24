@@ -131,7 +131,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { IoHome } from "react-icons/io5";
 
-export default function roofToolList({}) {
+export default function roofToolList({ }) {
   const [refresh, setRefresh] = useState<any>(false);
   interface RowData {
     [key: string]: any;
@@ -397,7 +397,7 @@ export default function roofToolList({}) {
             showDeleteButton={false}
             showImportButton={false}
             showExpandButton={false}
-            headerText="Roof Repairing Tools List " onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
+            headerText="Roof Repairing Tools List " onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div
@@ -424,7 +424,7 @@ export default function roofToolList({}) {
                 style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
                 onClick={handleClose}
               >
-                X
+                <i className="fa-solid fa-xmark"></i>
               </div>
             </div>
 
@@ -502,8 +502,8 @@ export default function roofToolList({}) {
             <div style={{
               paddingTop: "12px",
               paddingBottom: "14px",
-              backgroundColor: "#EFF3F8", 
-              borderTopColor: "#E4E9EE", 
+              backgroundColor: "#EFF3F8",
+              borderTopColor: "#E4E9EE",
               padding: "15px",
               borderTop: "1px solid #e5e5e5"
             }}>
@@ -512,7 +512,7 @@ export default function roofToolList({}) {
                 className="modal_close_btn"
                 onClick={handleClose}
               >
-                <span>X</span> Close
+                <span><i className="fa-solid fa-xmark"></i></span> Close
               </button>
             </div>
           </Box>

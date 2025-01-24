@@ -512,7 +512,7 @@ export default function StairList({ }) {
             showDeleteButton={false}
             showImportButton={false}
             showExpandButton={false}
-            headerText="Stair List"
+            headerText="Stairs List"
             setImageHeaderText="Set On Image" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined} />
         </div>
       ) : (
@@ -540,7 +540,7 @@ export default function StairList({ }) {
                 style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
                 onClick={handleClose}
               >
-                X
+                <i className="fa-solid fa-xmark"></i>
               </div>
             </div>
 
@@ -628,7 +628,7 @@ export default function StairList({ }) {
                 className="modal_close_btn"
                 onClick={handleClose}
               >
-                <span>X</span> Close
+                <span><i className="fa-solid fa-xmark"></i></span> Close
               </button>
             </div>
           </Box>

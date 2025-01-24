@@ -407,7 +407,7 @@ export default function PLRBDomainList({ params }: any) {
             showImportButton={false}
             showExpandButton={false}
             showGlobalSearch={true}
-            headerText="PLRB Member Domain List " onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
+            headerText="PLRB Member Domain List " onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div
@@ -438,7 +438,7 @@ export default function PLRBDomainList({ params }: any) {
                 style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
                 onClick={handleClose}
               >
-                X
+                <i className="fa-solid fa-xmark"></i>
               </div>
             </div>
 
@@ -491,7 +491,7 @@ export default function PLRBDomainList({ params }: any) {
                 className="modal_close_btn"
                 onClick={handleClose}
               >
-                <span>X</span> Close
+                <span><i className="fa-solid fa-xmark"></i></span> Close
               </button>
             </div>
           </Box>
