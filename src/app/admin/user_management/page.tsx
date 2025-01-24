@@ -779,7 +779,7 @@ export default function UserManagement({ }) {
                     style={{ accentColor: "darkgoldenrod" }}
                     checked={plrbStatus === 1}
                     onChange={
-                      (e: React.ChangeEvent<HTMLInputElement>) => 
+                      (e: React.ChangeEvent<HTMLInputElement>) =>
                         setPlrbStatus(e.target.checked ? 1 : 0)
                     }
                   />
@@ -864,7 +864,7 @@ export default function UserManagement({ }) {
                 className="modal_close_btn"
                 onClick={handleClose}
               >
-                <span>X</span> Close
+                <span><i className="fa-solid fa-xmark"></i></span> Close
               </button>
             </div>
           </Box>

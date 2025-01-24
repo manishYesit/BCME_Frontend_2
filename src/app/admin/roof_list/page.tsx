@@ -18,7 +18,7 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { IoHome } from "react-icons/io5";
 
-export default function roofList({}) {
+export default function roofList({ }) {
   const [refresh, setRefresh] = useState<any>(false);
   interface RowData {
     [key: string]: any;
@@ -92,8 +92,8 @@ export default function roofList({}) {
       header: "S.N",
       body: (_: RowData, { rowIndex }: ColumnOptions) => rowIndex + 1,
     },
-    { field: "title", header: "Title", sortable:true },
-    { field: "information", header: "Data", sortable:true },
+    { field: "title", header: "Title", sortable: true },
+    { field: "information", header: "Data", sortable: true },
     {
       field: "id",
       header: "Link",
@@ -110,7 +110,7 @@ export default function roofList({}) {
     {
       field: "Status",
       header: "Status",
-      sortable:true,
+      sortable: true,
       body: (rowData: any) => (
         <Button
           label={rowData.status === true ? "Active" : "Inactive"}
@@ -340,7 +340,7 @@ export default function roofList({}) {
             showImportButton={false}
             showExpandButton={false}
             headerText="Roof List"
-            setImageHeaderText="Set On Image" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined}          />
+            setImageHeaderText="Set On Image" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div
@@ -367,7 +367,7 @@ export default function roofList({}) {
                 style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
                 onClick={handleClose}
               >
-                X
+                <i className="fa-solid fa-xmark"></i>
               </div>
             </div>
 
@@ -445,8 +445,8 @@ export default function roofList({}) {
             <div style={{
               paddingTop: "12px",
               paddingBottom: "14px",
-              backgroundColor: "#EFF3F8", 
-              borderTopColor: "#E4E9EE", 
+              backgroundColor: "#EFF3F8",
+              borderTopColor: "#E4E9EE",
               padding: "15px",
               borderTop: "1px solid #e5e5e5"
             }}>
@@ -455,7 +455,7 @@ export default function roofList({}) {
                 className="modal_close_btn"
                 onClick={handleClose}
               >
-                <span>X</span> Close
+                <span><i className="fa-solid fa-xmark"></i></span> Close
               </button>
             </div>
           </Box>
