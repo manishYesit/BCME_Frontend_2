@@ -146,7 +146,7 @@ const Actions: React.FC<ActionsProps> = ({ id, initialData, updateUrl, deleteUrl
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(result)
+      // console.log(result)
       if (result) {
         // setRefresh(true)
         setRefresh((prev: any) => !prev)

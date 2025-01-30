@@ -32,7 +32,7 @@ export default function ContactQuery({ }) {
   const [inputAmount, setInputAmount] = useState<any | null>(null);
   const [showAmountField, setShowAmountField] = useState<any | boolean>(false);
 
-  console.log("checkiiinpuQuil", chatData);
+  // console.log("checkiiinpuQuil", chatData);
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
@@ -186,9 +186,20 @@ export default function ContactQuery({ }) {
           }}
           onClick={() => {
             const action = rowData.contact_status === 1 ? "close" : "open";
-            if (window.confirm(`Are you sure you want to ${action} this query ?`)) {
-              handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1);
-            }
+            // if (window.confirm(`Are you sure you want to ${action} this query ?`)) {
+            //   handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1);
+            // }
+            confirmDialog({
+              message: `Are you sure you want to ${action} this query?`,
+              header: "Confirmation",
+              icon: "pi pi-info-circle",
+              defaultFocus: "reject",
+              acceptClassName: "p-button-danger",
+
+              accept: async () => {
+                await handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1);
+              }
+            })
           }
             // handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1)
           }

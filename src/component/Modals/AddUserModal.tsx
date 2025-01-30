@@ -75,7 +75,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ fields, apiUrl, token, titl
             const payload = {
                 ...formData
             };
-            console.log("Submitting payload:", payload);
+            // console.log("Submitting payload:", payload);
 
             // Call API (replace with actual API URL and logic)
             const result = await axios.post(apiUrl, payload, {
@@ -83,7 +83,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ fields, apiUrl, token, titl
                   Authorization: `Bearer ${token}`,
                 },
             })
-            console.log("API Response:", result);
+            // console.log("API Response:", result);
 
             // Show success toast
             toast.success(result.data.message || "Form submitted successfully!");

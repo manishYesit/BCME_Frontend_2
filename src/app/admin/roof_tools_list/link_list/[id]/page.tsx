@@ -152,7 +152,7 @@ export default function roofToolList({ params }: any) {
   };
 
   const columns = [
-    { field: "sn", header: "S.N", body: (_:any, { rowIndex }:any) => rowIndex + 1 },
+    { field: "sn", header: "S.N", body: (_: any, { rowIndex }: any) => rowIndex + 1 },
     { field: "title", header: "Title" },
     { field: "data", header: "Data" },
     {
@@ -173,9 +173,20 @@ export default function roofToolList({ params }: any) {
           }}
           onClick={() => {
             const action = rowData.status === 1 ? "deactivate" : "activate";
-            if (window.confirm(`Are you sure you want to ${action} ?`)) {
-              handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
-            }
+            // if (window.confirm(`Are you sure you want to ${action} ?`)) {
+            //   handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
+            // }
+            confirmDialog({
+              message: `Are you sure you want to ${action} ?`,
+              header: "Confirmation",
+              icon: "pi pi-info-circle",
+              defaultFocus: "reject",
+              acceptClassName: "p-button-danger",
+
+              accept: async () => {
+                await handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
+              }
+            })
           }
             // handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
           }
@@ -305,7 +316,7 @@ export default function roofToolList({ params }: any) {
             showImportButton={false}
             showExpandButton={false}
             showGlobalSearch={false}
-            headerText="Link List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
+            headerText="Link List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div

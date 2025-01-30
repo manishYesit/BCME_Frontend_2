@@ -177,9 +177,20 @@ export default function StairList({ params }: any) {
           }}
           onClick={() => {
             const action = rowData.status === 1 ? "deactivate" : "activate";
-            if (window.confirm(`Are you sure you want to ${action} ?`)) {
-              handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
-            }
+            // if (window.confirm(`Are you sure you want to ${action} ?`)) {
+            //   handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
+            // }
+            confirmDialog({
+              message: `Are you sure you want to ${action} ?`,
+              header: "Confirmation",
+              icon: "pi pi-info-circle",
+              defaultFocus: "reject",
+              acceptClassName: "p-button-danger",
+
+              accept: async () => {
+                await handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1);
+              }
+            })
           }
             // handleStatusUpdate(rowData, rowData.status === 1 ? 2 : 1)
           }
@@ -309,7 +320,7 @@ export default function StairList({ params }: any) {
             showImportButton={false}
             showExpandButton={false}
             showGlobalSearch={false}
-            headerText="Link List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
+            headerText="Link List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div
@@ -395,7 +406,7 @@ export default function StairList({ params }: any) {
                 >
                   <MdDone size={20} /> {linkRowId ? "Update" : "Submit"}
                 </button>
-                <button
+                {!linkRowId && (<button
                   type="button"
                   className="modal_submit_btn"
                   style={{
@@ -404,7 +415,7 @@ export default function StairList({ params }: any) {
                   onClick={resetForm}
                 >
                   <VscDebugRestart size={20} /> Reset
-                </button>
+                </button>)}
               </Box>
             </Box>
 

@@ -54,7 +54,7 @@ export default function RoofSetOnImage() {
   const toast = useRef<Toast>(null);
   const canvasRef = useRef<HTMLCanvasElement | any>(null);
 
-  console.log("checkroofimageDatatt--2", positionsValue?.x);
+  // console.log("checkroofimageDatatt--2", positionsValue?.x);
 
   const imgWidth = 45;
   const imgHeight = 45;

@@ -60,7 +60,7 @@ const CustomTable = ({
     setIsCollapsed(!isCollapsed);
   };
 
-  console.log("rowdataaaas", expandedRows);
+  // console.log("rowdataaaas", expandedRows);
 
   const headingText = (
     <div

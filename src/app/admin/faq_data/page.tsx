@@ -167,7 +167,7 @@ export default function FaqList({ }) {
   const [open, setOpen] = useState<any>(false);
   const toast = useRef<Toast>(null);
 
-  console.log("checkroofdataLinkgetFAQDataselectedListType", selectedHammer);
+  // console.log("checkroofdataLinkgetFAQDataselectedListType", selectedHammer);
 
   const modalStyle = {
     position: "absolute",
@@ -588,7 +588,7 @@ export default function FaqList({ }) {
                   >
                     <MdDone size={20} /> {linkRowId ? "Update" : "Submit"}
                   </button>
-                  <button
+                  {!linkRowId && (<button
                     type="button"
                     className="modal_submit_btn"
                     style={{
@@ -597,7 +597,7 @@ export default function FaqList({ }) {
                     onClick={resetForm}
                   >
                     <VscDebugRestart size={20} /> Reset
-                  </button>
+                  </button>)}
                 </Box>
               </Box>
             </Box>

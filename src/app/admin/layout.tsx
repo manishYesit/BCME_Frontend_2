@@ -372,7 +372,7 @@ export default function RootLayout({
         {/* <div className="content-wrapper" style={{ maxHeight: "4000px" }}>{children}</div> */}
         <div className="content-wrapper">{children}</div>
         <footer className="main-footer footer-wrap" style={{ textAlign: "center" }}>
-          Copyright &copy; 2024 <a href="https://adminlte.io">BCME</a> All rights reserved.
+          Copyright &copy; 2025 <a href="https://adminlte.io">BCME</a> All rights reserved.
           {/* <div className="float-right d-none d-sm-inline-block">
             <b>Version</b> 3.2.0
           </div> */}

@@ -152,7 +152,7 @@ export default function StairToolList({ }) {
   const [open, setOpen] = useState<any>(false);
   const toast = useRef<Toast>(null);
 
-  console.log("checkstairdataLink", data);
+  // console.log("checkstairdataLink", data);
 
   const modalStyle = {
     position: "absolute",

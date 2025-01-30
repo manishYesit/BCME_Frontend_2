@@ -238,7 +238,7 @@ export default function AskAnExpert({ }) {
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [filteredData, setFilteredData] = useState(data);
 
-  console.log("checkiiinpuQuil", chatData);
+  // console.log("checkiiinpuQuil", chatData);
   const toast = useRef<Toast>(null);
 
   // useEffect(() => {
@@ -521,7 +521,7 @@ export default function AskAnExpert({ }) {
   };
 
   const handleMultiDelete = (selectedRows: any) => {
-    console.log("selected rows is", selectedRows);
+    // console.log("selected rows is", selectedRows);
     // return;
     confirmDialog({
       message: "Do you want to delete these records?",
@@ -875,9 +875,20 @@ export default function AskAnExpert({ }) {
           }}
           onClick={() => {
             const action = rowData.contact_status === 1 ? "close" : "open";
-            if (window.confirm(`Are you sure you want to ${action} this query?`)) {
-              handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1);
-            }
+            // if (window.confirm(`Are you sure you want to ${action} this query?`)) {
+            //   handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1);
+            // }
+            confirmDialog({
+              message: `Are you sure you want to ${action} this query?`,
+              header: "Confirmation",
+              icon: "pi pi-info-circle",
+              defaultFocus: "reject",
+              acceptClassName: "p-button-danger",
+
+              accept: async () => {
+                await handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1);
+              }
+            })
           }
 
             // handleStatusUpdate(rowData, rowData.contact_status === 1 ? 2 : 1)
@@ -993,7 +1004,7 @@ export default function AskAnExpert({ }) {
           <a
             href="#/"
             style={{ color: "#478fca" }}
-            onClick={(e) => setShowAmountField((prev:any) => !prev)}
+            onClick={(e) => setShowAmountField((prev: any) => !prev)}
           >
             Ask for Payment
           </a>
