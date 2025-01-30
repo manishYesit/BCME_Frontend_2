@@ -54,7 +54,7 @@ export default function StairSetOnImage() {
   const toast = useRef<Toast>(null);
   const canvasRef = useRef<HTMLCanvasElement | any>(null);
 
-  console.log("checkroofimageDatatt-----2", clickHammerData);
+  // console.log("checkroofimageDatatt-----2", clickHammerData);
 
   const imgWidth = 45;
   const imgHeight = 45;
@@ -395,7 +395,7 @@ export default function StairSetOnImage() {
     setPositionsValue(null);
   };
 
-  console.log("checkhammerpositiondraggedHammerId", draggedHammerId);
+  // console.log("checkhammerpositiondraggedHammerId", draggedHammerId);
   return (
     <>
       <section className="content-header">

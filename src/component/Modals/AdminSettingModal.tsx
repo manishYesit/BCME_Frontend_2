@@ -108,7 +108,7 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
       });
 
       if (response.status === 200) {
-        console.log("Update Successful", response.data);
+        // console.log("Update Successful", response.data);
         if (onButtonClick) {
           onButtonClick();
         }

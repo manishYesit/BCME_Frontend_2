@@ -62,7 +62,7 @@ export default function Settings() {
     return templateObj;
   });
 
-  console.log("datafind", data);
+  // console.log("datafind", data);
 
   return (
     <>
@@ -134,7 +134,7 @@ export default function Settings() {
           buttonText="Confirm"
           selectedDetails={selectedDetails}
           onButtonClick={() => {
-            console.log("Button clicked!");
+            // console.log("Button clicked!");
             setRefresh((prev) => !prev);
           }}
         />

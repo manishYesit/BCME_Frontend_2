@@ -47,7 +47,7 @@ export default function transactions({}) {
           status: termscondtion_status === 1 ? "Paid" : "",
         };
       });
-      console.log(sanitizedData);
+      // console.log(sanitizedData);
 
       setData(sanitizedData);
     } catch (error) {

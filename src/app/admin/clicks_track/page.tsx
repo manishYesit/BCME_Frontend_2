@@ -87,8 +87,8 @@ export default function ClickTrackList({ }) {
       sortable: true,
       width: "140px",
     },
-    { field: "faq", header: "FAQ Buttons click Count", sortable: true },
-    { field: "doc", header: "Document Click Count", sortable: true },
+    { field: "faq", header: "FAQ Buttons Click Count", sortable: true },
+    { field: "doc", header: "Documents Click Count", sortable: true },
     { field: "lang", header: "Language Click Count", sortable: true },
     {
       field: "codelang",
@@ -97,7 +97,7 @@ export default function ClickTrackList({ }) {
     },
     {
       field: "rvalue",
-      header: "R-value estimator Buttons Click Count",
+      header: "R-value Estimator Buttons Click Count",
       sortable: true,
     },
   ];

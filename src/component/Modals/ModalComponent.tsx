@@ -57,13 +57,13 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ fields, apiUrl, token, 
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log("Form Submitted:", formData);
+        // console.log("Form Submitted:", formData);
         try {
 
             const payload = {
                 ...formData
             };
-            console.log("Submitting payload:", payload);
+            // console.log("Submitting payload:", payload);
 
             // Call API (replace with actual API URL and logic)
             const result = await axios.post(apiUrl, payload, {
@@ -71,7 +71,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ fields, apiUrl, token, 
                   Authorization: `Bearer ${token}`,
                 },
             })
-            console.log("API Response:", result);                                
+            // console.log("API Response:", result);                                
 
             // Show success toast
             toast.success(result.data.message || "Form submitted successfully!");

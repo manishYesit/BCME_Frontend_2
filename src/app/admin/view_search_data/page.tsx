@@ -32,7 +32,7 @@ export default function AskAnExpert({ }) {
     const [inputAmount, setInputAmount] = useState<any | null>(null);
     const [showAmountField, setShowAmountField] = useState<any | boolean>(false);
 
-    console.log("checkiiinpuQuil", chatData);
+    // console.log("checkiiinpuQuil", chatData);
     const toast = useRef<Toast>(null);
 
     const stateList:Record<string, string> = {

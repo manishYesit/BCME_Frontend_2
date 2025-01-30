@@ -32,7 +32,7 @@ const UserProfile = ({ params }: UserProfileProps) => {
     setActiveTab(index);
   };
 
-  console.log("checktableDatta", profileDetails);
+  // console.log("checktableDatta", profileDetails);
 
   useEffect(() => {
     if (token) {

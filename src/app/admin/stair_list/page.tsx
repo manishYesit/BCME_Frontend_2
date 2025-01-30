@@ -214,7 +214,7 @@ export default function StairList({ }) {
   const [open, setOpen] = useState<any>(false);
   const toast = useRef<Toast>(null);
 
-  console.log("stairCodeDataById", data);
+  // console.log("stairCodeDataById", data);
 
   const modalStyle = {
     position: "absolute",
@@ -296,9 +296,20 @@ export default function StairList({ }) {
           }}
           onClick={() => {
             const action = rowData.status === true ? "deactivate" : "activate";
-            if (window.confirm(`Are you sure you want to ${action} ?`)) {
-              handleStatusUpdate(rowData, rowData.status === true ? 2 : 1);
-            }
+            // if (window.confirm(`Are you sure you want to ${action} ?`)) {
+            //   handleStatusUpdate(rowData, rowData.status === true ? 2 : 1);
+            // }
+            confirmDialog({
+              message: `Are you sure you want to ${action} ?`,
+              header: "Confirmation",
+              icon: "pi pi-info-circle",
+              defaultFocus: "reject",
+              acceptClassName: "p-button-danger",
+
+              accept: async () => {
+                await handleStatusUpdate(rowData, rowData.status === true ? 2 : 1);
+              }
+            })
           }
             // handleStatusUpdate(rowData, rowData.status === true ? 2 : 1)
           }
