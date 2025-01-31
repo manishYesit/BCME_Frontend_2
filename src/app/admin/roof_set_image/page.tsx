@@ -597,9 +597,9 @@ export default function RoofSetOnImage() {
                   className="modal_submit_btn"
                   onClick={handleSubmit}
                 >
-                  <MdDone size={20} /> Submit
+                  <MdDone size={20} /> {linkRowId ? "Update" : "Submit"}
                 </button>
-                <button
+                {!linkRowId && (<button
                   type="button"
                   className="modal_submit_btn"
                   style={{
@@ -608,7 +608,7 @@ export default function RoofSetOnImage() {
                   onClick={resetForm}
                 >
                   <VscDebugRestart size={20} /> Reset
-                </button>
+                </button>)}
               </Box>
             </Box>
 

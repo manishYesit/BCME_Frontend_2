@@ -25,6 +25,7 @@ export default function ClickTrackList({ }) {
     try {
       const csvRows = [];
       const headers = columns.map((col) => col.header);
+      headers.splice(2, 0, "Year");
       csvRows.push(headers.join(","));
 
       data.forEach((row: any) => {

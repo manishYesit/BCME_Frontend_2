@@ -766,6 +766,11 @@ h1.queries-heading {
   margin-left: auto;
 }
 
+
+.right-tags a:hover {
+  text-decoration: underline;
+}
+
 .page-header h1 {
   padding: 0;
   margin: 0 8px;
