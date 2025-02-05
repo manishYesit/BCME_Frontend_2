@@ -128,8 +128,8 @@ export default function StairSetOnImage() {
     try {
       let payload = {
         id: positionsValue?.id,
-        abscissa: positionsValue?.x || 1,
-        ordinate: positionsValue?.y || 1,
+        abscissa: positionsValue?.x || 11,
+        ordinate: positionsValue?.y || 11,
       };
       clickHammerData;
       const result = await axios.post(

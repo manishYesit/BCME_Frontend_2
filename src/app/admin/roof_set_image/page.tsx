@@ -348,8 +348,8 @@ export default function RoofSetOnImage() {
         title: inputTitle,
         information: inputInformation,
         linkType: 0,
-        abscissa: positionsValue?.x || 1,
-        ordinate: positionsValue?.y || 1,
+        abscissa: positionsValue?.x || 11,
+        ordinate: positionsValue?.y || 11,
       };
       let apiUrl = clickHammerData
         ? apiEndpoints.updateRoofData
