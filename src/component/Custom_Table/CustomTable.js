@@ -238,7 +238,7 @@ const CustomTable = ({
                   header={col.header}
                   body={col.body}
                   sortable={col.sortable || false}
-                  style={{ width: col.width }}
+                  style={{ width: col.width, verticalAlign: "top"  }}
                 />
               ))}
             </DataTable>
