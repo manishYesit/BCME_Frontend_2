@@ -145,6 +145,7 @@ export default function RoofSetOnImage() {
         }
       );
       setData(result.data.data);
+      console.log("data is", data);
     } catch (error) {
       console.error("Error occurred:", error);
     }
@@ -342,14 +343,19 @@ export default function RoofSetOnImage() {
     if (!handleValidationForm()) {
       return;
     }
+
+    const currentHammer = hammerPositions.find(
+      (hammer) => hammer.id === draggedHammerId
+    );
+
     try {
       const payload = {
         id: linkRowId,
         title: inputTitle,
         information: inputInformation,
         linkType: 0,
-        abscissa: positionsValue?.x || 11,
-        ordinate: positionsValue?.y || 11,
+        abscissa: currentHammer?.x || 11,
+        ordinate: currentHammer?.y || 11,
       };
       let apiUrl = clickHammerData
         ? apiEndpoints.updateRoofData
