@@ -329,14 +329,19 @@ export default function StairSetOnImage() {
     if (!handleValidationForm()) {
       return;
     }
+
+    const currentHammer = hammerPositions.find(
+      (hammer) => hammer.id === draggedHammerId
+    );
+
     try {
       const payload = {
         id: linkRowId,
         title: inputTitle,
         information: inputInformation,
         linkType: 0,
-        abscissa: positionsValue?.x || 1,
-        ordinate: positionsValue?.y || 1,
+        abscissa: currentHammer?.x || 1,
+        ordinate: currentHammer?.y || 1,
       };
       let apiUrl = clickHammerData?.id
         ? apiEndpoints.updateStairData
