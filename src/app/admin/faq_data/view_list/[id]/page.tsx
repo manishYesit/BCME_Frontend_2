@@ -315,15 +315,19 @@ export default function viewList({ params }: any) {
             headerText="FAQ List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
         </div>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <p>Data Not found</p>
-          {/* <CircularProgress size="3rem" /> */}
+        <div className="card my-card">
+          <div className="flex gap-2 mb-2 filter-buttons">
+              <Button
+                className="table_add_btn"
+                label="Add"
+                icon="pi pi-plus"
+                onClick={handleOpen}
+              />
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <p>Data Not found</p>
+            {/* <CircularProgress size="3rem" /> */}
+          </div>
         </div>
       )}
       <div>
