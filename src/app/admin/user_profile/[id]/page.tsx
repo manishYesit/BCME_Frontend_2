@@ -92,7 +92,7 @@ const UserProfile = ({ params }: UserProfileProps) => {
                 </span>
                 <Link href="/admin/dashboard">Home</Link>
               </li>
-              <li className="breadcrumb-item active"> User List</li>
+              <li className="breadcrumb-item active"><Link href="/admin/user_management">User List</Link></li>
               <li className="breadcrumb-item active"> User Profile</li>
             </ol>
           </div>
