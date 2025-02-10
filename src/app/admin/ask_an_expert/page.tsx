@@ -330,6 +330,13 @@ export default function AskAnExpert({ }) {
           updatedData = updatedData.filter(
             (row: any) => row.contact_created.includes(thisMonth)
           );
+          
+          // Sorting based on the most recent date
+          updatedData.sort((a: any, b: any) => {
+            const dateA = new Date(a.contact_created);
+            const dateB = new Date(b.contact_created);
+            return dateB.getTime() - dateA.getTime(); // Sort in descending order
+          });
         }
 
         if (dateFilter === "thisYear") {
