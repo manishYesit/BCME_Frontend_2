@@ -15,12 +15,15 @@ import { MdDone } from "react-icons/md";
 import { VscDebugRestart } from "react-icons/vsc";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
+import Select from "react-select";
 
 export default function viewList({ params }: any) {
   const id = params["id"];
   const [refresh, setRefresh] = useState<any>(false);
   const token = useSelector((state: RootState) => state.auth.token);
   const [data, setData]: [any, Function] = useState([]);
+  const [titles, setTitles]: [any, Function] = useState([]);
+  const [selectedTitle, setSelectedTitle] = useState<any>(null);
   const [inputTitle, setInputTitle] = useState<any>(null);
   const [inputDetails, setInputDetails] = useState<any>(null);
   const [formError, setFormError] = useState<string | null>(null);
@@ -61,8 +64,38 @@ export default function viewList({ params }: any) {
   useEffect(() => {
     if (token) {
       fetchDataById(token);
+      fetchTitles(token)
     }
   }, [refresh, token, id]);
+
+  async function fetchTitles(token:any) {
+    try {
+      const fetchData = {
+        id: id,
+      };
+
+      const response = await axios.post(
+        apiEndpoints.getFAQTitles,
+        fetchData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        let updatedData = response.data.data.map((item:any)=>{
+          return {
+            label: item,
+            value: item
+          }
+        })
+        setTitles(updatedData);
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  }
 
   async function fetchDataById(token: any) {
     try {
@@ -192,13 +225,19 @@ export default function viewList({ params }: any) {
 
   const handleValidationForm = () => {
     let validationStatus = true;
+    if(!selectedTitle){
+      setFormError("Required.");
+      validationStatus = false;
+    } else {
+      setFormError(null);
+    }
     if (!inputDetails) {
       setFormError("Required.");
       validationStatus = false;
     } else {
       setFormError(null);
     }
-    if(!pdfFile) {
+    if (!pdfFile) {
       setPdfError("Required File.");
       validationStatus = false;
     } else {
@@ -263,6 +302,7 @@ export default function viewList({ params }: any) {
   // Reset form fields
   const resetForm = () => {
     setInputTitle(null);
+    setSelectedTitle(null);
     setInputDetails(null);
     setFormError(null);
     setPdfError(null);
@@ -280,6 +320,7 @@ export default function viewList({ params }: any) {
     }
   };
 
+  console.log("titles is",titles)
   return (
     <>
       <section className="content-header">
@@ -312,17 +353,17 @@ export default function viewList({ params }: any) {
             showImportButton={false}
             showExpandButton={false}
             showGlobalSearch={false}
-            headerText="FAQ List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined}          />
+            headerText="FAQ List" onDelete={undefined} rowExpansionTemplate={undefined} exportToCSV={undefined} globalFilter={undefined} setGlobalFilter={undefined} selectedRows={undefined} setSelectedRows={undefined} selectionMode={undefined} />
         </div>
       ) : (
         <div className="card my-card">
           <div className="flex gap-2 mb-2 filter-buttons">
-              <Button
-                className="table_add_btn"
-                label="Add"
-                icon="pi pi-plus"
-                onClick={handleOpen}
-              />
+            <Button
+              className="table_add_btn"
+              label="Add"
+              icon="pi pi-plus"
+              onClick={handleOpen}
+            />
           </div>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <p>Data Not found</p>
@@ -355,19 +396,48 @@ export default function viewList({ params }: any) {
                     <label style={headerStyle}>Title</label>
                   </Box>
                   <Box flex={3}>
-                    <input
+                    <Select
+                      options={titles}
+                      isSearchable
+                      styles={{
+                        container: (provided) => ({
+                          ...provided,
+                          width: 390,
+                        }),
+                        control: (provided) => ({
+                          ...provided,
+                          width: 390,
+                          backgroundColor: "transparent",
+                        }),
+                      }}
+                      onChange={(selectedOption) =>
+                        setSelectedTitle(
+                          selectedOption ? selectedOption.value : null
+                        )
+                      }
+                      value={titles.find(
+                        (option:any) => option.value === selectedTitle
+                      ) || null}
+                      placeholder="Select"
+                    />
+                    {formError && !selectedTitle && (
+                      <Typography variant="body2" color="error">
+                        {formError}
+                      </Typography>
+                    )}
+                    {/* <input
                       type="text"
                       className="form-control"
                       placeholder="Title"
                       value={inputTitle || ""}
                       onChange={(e) => setInputTitle(e.target.value)}
                       style={{ width: "80%" }}
-                    />
-                    {!inputTitle && (
+                    /> */}
+                    {/* {!inputTitle && (
                       <Typography variant="body2" color="error">
                         {formError}
                       </Typography>
-                    )}
+                    )} */}
                   </Box>
                 </Box>
               )}
@@ -425,11 +495,11 @@ export default function viewList({ params }: any) {
                     >
                       {pdfFileName}
                     </span>
-                  )} 
+                  )}
                   {!pdfFile && (
-                      <Typography variant="body2" color="error">
-                        {pdfError}
-                      </Typography>
+                    <Typography variant="body2" color="error">
+                      {pdfError}
+                    </Typography>
                   )}
                 </Box>
               </Box>
@@ -463,8 +533,8 @@ export default function viewList({ params }: any) {
             <div style={{
               paddingTop: "12px",
               paddingBottom: "14px",
-              backgroundColor: "#EFF3F8", 
-              borderTopColor: "#E4E9EE", 
+              backgroundColor: "#EFF3F8",
+              borderTopColor: "#E4E9EE",
               padding: "15px",
               borderTop: "1px solid #e5e5e5"
             }}>

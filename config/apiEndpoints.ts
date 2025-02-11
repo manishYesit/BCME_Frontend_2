@@ -87,6 +87,7 @@ const apiEndpoints = {
   addFAQData: `${API_BASE_URL}/tbl_faq_title/addData`,
   getFAQData: `${API_BASE_URL}/tbl_faq_title/getAllData`,
   deleteFAQData: `${API_BASE_URL}/tbl_faq_title/deleteData`,
+  getFAQTitles: `${API_BASE_URL}/tbl_faq_title/titles`,
 
   //faq_view_list--
   getFAQ_Details: `${API_BASE_URL}/tf_faq/faq_details`,
