@@ -1145,7 +1145,7 @@ export default function AskAnExpert({ }) {
       <Toast ref={toast} />
       <ConfirmDialog />
 
-      <Button icon="pi pi-search" className="p-button-text" onClick={() => setDialogVisible(true)} />
+      {/* <Button icon="pi pi-search" className="p-button-text" onClick={() => setDialogVisible(true)} /> */}
       <Dialog
         visible={dialogVisible}
         onHide={() => setDialogVisible(false)}
