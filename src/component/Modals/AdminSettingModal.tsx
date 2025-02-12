@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -9,6 +9,10 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import { MdDone } from "react-icons/md";
+import { Toast } from "primereact/toast";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css"
 import axios from "axios";
 
 interface ReusableModalProps {
@@ -53,6 +57,8 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
   const [inputInformation, setInputInformation] = useState<string | null>(null);
   const [titleError, setTitleError] = useState<string | null>(null);
   const [descriptionError, setDescriptionError] = useState<string | null>(null);
+
+  const toast = useRef<Toast>(null);
 
   // const token = localStorage.getItem("adminToken");
   let token = null;
@@ -109,6 +115,11 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
 
       if (response.status === 200) {
         // console.log("Update Successful", response.data);
+        toast.current?.show({
+          severity: "success",
+          detail: "Row updated successfully!",
+          life: 3000,
+        });
         if (onButtonClick) {
           onButtonClick();
         }
@@ -144,128 +155,131 @@ const ReusableModal: React.FC<ReusableModalProps> = ({
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={modalStyle}>
-        <div
-          id="modal-modal-title"
-          style={{
-            backgroundColor: "#307ECC",
-            color: "#FFF",
-            fontSize: "14px",
-            lineHeight: "38px",
-            padding: "5px 15px",
-            marginBottom: "1px",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <div>Update</div>
+    <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
           <div
-            style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
-            onClick={handleClose}
+            id="modal-modal-title"
+            style={{
+              backgroundColor: "#307ECC",
+              color: "#FFF",
+              fontSize: "14px",
+              lineHeight: "38px",
+              padding: "5px 15px",
+              marginBottom: "1px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
           >
-            <i className="fa-solid fa-xmark"></i>
+            <div>Update</div>
+            <div
+              style={{ fontWeight: 600, cursor: "pointer", fontSize: "18px" }}
+              onClick={handleClose}
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </div>
           </div>
-        </div>
 
-        <Box>
-          <Box display="flex" alignItems="center" gap="12px" ml={2}>
-            <Box flex={1}>
-              <label style={headerStyle}>Title</label>
+          <Box>
+            <Box display="flex" alignItems="center" gap="12px" ml={2}>
+              <Box flex={1}>
+                <label style={headerStyle}>Title</label>
+              </Box>
+              <Box flex={3}>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Title"
+                  value={inputTitle || ""}
+                  onChange={(e) => setInputTitle(e.target.value)}
+                  onBlur={validateTitle}
+                  style={{ width: "80%" }}
+                />
+                {titleError && (
+                  <Typography variant="body2" color="error">
+                    {titleError}
+                  </Typography>
+                )}
+              </Box>
             </Box>
-            <Box flex={3}>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Title"
-                value={inputTitle || ""}
-                onChange={(e) => setInputTitle(e.target.value)}
-                onBlur={validateTitle}
-                style={{ width: "80%" }}
-              />
-              {titleError && (
-                <Typography variant="body2" color="error">
-                  {titleError}
-                </Typography>
-              )}
-            </Box>
-          </Box>
 
-          <Box display="flex" alignItems="center" gap="12px" mt={2} ml={2}>
-            <Box flex={1}>
-              <label style={headerStyle}>Information</label>
+            <Box display="flex" alignItems="center" gap="12px" mt={2} ml={2}>
+              <Box flex={1}>
+                <label style={headerStyle}>Information</label>
+              </Box>
+              <Box flex={3}>
+                <ReactQuill
+                  value={inputInformation || ""}
+                  onChange={setInputInformation}
+                  theme="snow"
+                  placeholder="Enter Information here..."
+                  onBlur={validateDescription}
+                  style={{
+                    width: "98%",
+                    height: "300px",
+                    overflowY: "auto",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                  }}
+                  modules={modules}
+                />
+                {descriptionError && (
+                  <Typography variant="body2" color="error">
+                    {descriptionError}
+                  </Typography>
+                )}
+              </Box>
             </Box>
-            <Box flex={3}>
-              <ReactQuill
-                value={inputInformation || ""}
-                onChange={setInputInformation}
-                theme="snow"
-                placeholder="Enter Information here..."
-                onBlur={validateDescription}
+            <Box ml={8}>
+              <button
+                type="button"
                 style={{
-                  width: "98%",
-                  height: "300px",
-                  overflowY: "auto",
-                  border: "1px solid #ccc",
-                  borderRadius: "4px",
+                  backgroundColor: "#6fb3e0",
+                  color: "#FFF",
+                  fontWeight: 500,
+                  padding: "8px 0px",
+                  cursor: "pointer",
+                  border: "none",
+                  width: "18%",
+                  marginLeft: "126px",
+                  marginTop: "5px",
                 }}
-                modules={modules}
-              />
-              {descriptionError && (
-                <Typography variant="body2" color="error">
-                  {descriptionError}
-                </Typography>
-              )}
+                onClick={handleUpdate}
+              >
+                <MdDone size={20} /> Update
+              </button>
             </Box>
           </Box>
-          <Box ml={8}>
+
+          {/* Update Button */}
+          <div>
             <button
               type="button"
               style={{
-                backgroundColor: "#6fb3e0",
-                color: "#FFF",
+                backgroundColor: "#D15B47",
+                color: "white",
                 fontWeight: 500,
-                padding: "8px 0px",
+                height: "40px",
                 cursor: "pointer",
                 border: "none",
-                width: "18%",
-                marginLeft: "126px",
-                marginTop: "5px",
+                width: "14%",
+                borderColor: "D15B47",
+                margin: "5px",
               }}
-              onClick={handleUpdate}
+              onClick={handleClose}
             >
-              <MdDone size={20} /> Update
+              <span>X</span> Close
             </button>
-          </Box>
+          </div>
         </Box>
-
-        {/* Update Button */}
-        <div>
-          <button
-            type="button"
-            style={{
-              backgroundColor: "#D15B47",
-              color: "white",
-              fontWeight: 500,
-              height: "40px",
-              cursor: "pointer",
-              border: "none",
-              width: "14%",
-              borderColor: "D15B47",
-              margin: "5px",
-            }}
-            onClick={handleClose}
-          >
-            <span>X</span> Close
-          </button>
-        </div>
-      </Box>
-    </Modal>
+      </Modal>
+      <Toast ref={toast} />
+    </>
   );
 };
 
